@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clara", "Clara.csproj", "{8E57C275-8A19-4B18-B5CE-70D9736779F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E57C275-8A19-4B18-B5CE-70D9736779F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E57C275-8A19-4B18-B5CE-70D9736779F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E57C275-8A19-4B18-B5CE-70D9736779F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E57C275-8A19-4B18-B5CE-70D9736779F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1884BFF-7BA0-4F7B-AEA9-67BF7922518E}
+	EndGlobalSection
+EndGlobal
