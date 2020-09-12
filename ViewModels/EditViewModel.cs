@@ -8,7 +8,7 @@ namespace Clara.ViewModels
 {
     public class EditViewModel
     {
-        public int ServiceId { get; set; }
+        public Guid ServiceId { get; set; }
         public ServiceProviders ServiceType { get; set; }
         public string ServiceName { get; set; }
         public string Email { get; set; }

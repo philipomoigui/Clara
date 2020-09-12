@@ -1,4 +1,5 @@
 ﻿using Clara.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Clara.DataAccess
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
         {
@@ -17,5 +18,6 @@ namespace Clara.DataAccess
         public DbSet<Event> Events { get; set; }
         public DbSet<Occassion> Occassions { get; set; }
         public DbSet<Service> Services { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

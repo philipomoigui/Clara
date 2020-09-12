@@ -9,10 +9,10 @@ namespace Clara.Repository.Interface
     public interface IServicesRepository
     {
         IEnumerable<Service> GetAllService();
-        Service GetServiceById(int id);
+        Service GetServiceById(Guid id);
         Task CreateServiceAsync(Service service);
         void UpdateService(Service service);
-        void DeleteService(int id);
+        void DeleteService(Guid id);
         Task<bool> SaveAsync();
     }
 }

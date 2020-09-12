@@ -22,7 +22,7 @@ namespace Clara.Repository
             await _applicationDbContext.Services.AddAsync(service);
         }
 
-        public void DeleteService(int id)
+        public void DeleteService(Guid id)
         {
             var service = GetServiceById(id);
             _applicationDbContext.Services.Remove(service);
@@ -31,7 +31,7 @@ namespace Clara.Repository
         public IEnumerable<Service> GetAllService() => _applicationDbContext.Services;
         
 
-        public Service GetServiceById(int id)
+        public Service GetServiceById(Guid id)
         {
            return  _applicationDbContext.Services.Where(s => s.ServiceId == id).FirstOrDefault();
         }

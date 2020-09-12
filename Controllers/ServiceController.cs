@@ -34,13 +34,13 @@ namespace Clara.Controllers
                 var service = _mapper.Map<Service>(model);
                 await _serviceRepository.CreateServiceAsync(service);
                 await _serviceRepository.SaveAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Detail), new {id = service.ServiceId });
             }
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult Detail(int id)
+        public IActionResult Detail(Guid id)
         {
             var service = _serviceRepository.GetServiceById(id);
             if (service == null)
@@ -51,7 +51,7 @@ namespace Clara.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(Guid id)
         {
             Service service = _serviceRepository.GetServiceById(id);
             if(service == null)
@@ -80,8 +80,9 @@ namespace Clara.Controllers
             return View(model);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(Guid id)
         {
             _serviceRepository.DeleteService(id);
             await _serviceRepository.SaveAsync();

@@ -8,9 +8,10 @@ namespace Clara.Models.Enums
     public enum ServiceProviders
     {
         HallsProvider,
-        MediaCompany,
-        EntertainmentAgency,
+        MediaAndEntertainment,
         Logistics,
-        EventPlanners
+        EventPlanners,
+        FoodAndDrink,
+        Accomodation
     }
 }

@@ -17,28 +17,10 @@ namespace Clara.Repository
             _serviceList = new List<Service>()
             {
                 new Service(){
-                    ServiceId = 1,
-                    ServiceName = "Jane Bacch",
-                    ServiceType = ServiceProviders.EventPlanners,
-                    AddOns = new List<string>{"Free Event Advisory", "Always on Call"},
-                    Email = "Jane@events.com",
-                    PhoneNumber = "09012919871",
-                    AddressLine = "21, jarred Avenue",
-                    City = "Surulere",
-                    Price = 98900,
-                    State = "Lagos"
+                    
                 },
                 new Service(){
-                    ServiceId = 2,
-                    ServiceName = "The coque Dance group",
-                    ServiceType = ServiceProviders.EntertainmentAgency,
-                    AddOns = new List<string>{"Free Highlife Band", "Decentralised bands"},
-                    Email = "Jane@events.com",
-                    PhoneNumber = "0816998191",
-                    AddressLine = "15, Otta way",
-                    City = "Danfa",
-                    Price = 70000,
-                    State = "Ogun"
+                    
                 }
             };
         }
@@ -53,12 +35,22 @@ namespace Clara.Repository
             throw new NotImplementedException();
         }
 
+        public void DeleteService(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Service> GetAllService()
         {
             throw new NotImplementedException();
         }
 
         public Service GetServiceById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Service GetServiceById(Guid id)
         {
             throw new NotImplementedException();
         }
