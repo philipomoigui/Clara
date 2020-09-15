@@ -1,11 +1,13 @@
-﻿@{
+﻿@model CreateServiceViewModel
+
+@{
     Layout = "_PagesLayout";
 }
 
 <div class="progress rounded-0 sticky-top fixed-top" style="height: 8px; top: 71px;">
     <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
-<form>
+<form method="post" asp-action="Create" asp-controller="Service">
     <section class="py-5 d-block" id="form1">
         <div class="container">
             <p class="subtitle text-primary">Add new Service</p>
@@ -19,29 +21,30 @@
                 <div class="col-lg-7 ml-auto">
                     <div class="form-group"></div>
                     <div class="form-group">
-                        <label class="form-label" for="form_name">Business Name</label>
-                        <input class="form-control" name="name" id="form_name">
+                        <label asp-for="BusinessName" class="form-label">Business Name</label>
+                        <input asp-for="BusinessName" class="form-control" id="form_name">
+                        <span asp-validation-for="BusinessName"></span>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label" for="form_city">Business Name</label>
-                                <input class="form-control" name="name" id="form_city">
+                                <label asp-for="PhoneNumber" class="form-label">Business PhoneNumber</label>
+                                <input asp-for="PhoneNumber" class="form-control">
+                                <span asp-validation-for="PhoneNumber"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label" for="form_state">Business Email</label>
-                                <input class="form-control" name="name" id="form_state">
+                                <label asp-for="BusinessEmail" class="form-label">Business Email</label>
+                                <input asp-for="BusinessEmail" class="form-control" id="form_state">
+                                <span asp-validation-for="BusinessEmail"></span>
                             </div>
                         </div>
                     </div>
                     <div class="form-group" style="margin:auto !important">
                         <label class="form-label" for="form_type">Category</label>
-                        <select class="selectpicker form-control" name="type" id="form_type" data-style="btn-selectpicker" title="" aria-describedby="propertyTypeHelp">
-                            <option value="type_0">Halls</option>
-                            <option value="type_1">Catering Service</option>
-                            <option value="type_2">Accomodation</option>
+                        <select asp-items="Html.GetEnumSelectList<ServiceProviders>()" asp-for="ServiceType" class="selectpicker form-control" id="form_type" data-style="btn-selectpicker" title="" aria-describedby="propertyTypeHelp">
+                            <option value="">Please Select</option>
                         </select><small class="form-text text-muted mt-2" id="propertyTypeHelp">Select from our list of categorries</small>
                     </div>
                 </div>
@@ -56,7 +59,7 @@
                     <!-- Country-->
                     <div class="form-group">
                         <label class="form-label" for="form_country">Country / Region</label>
-                        <select class="selectpicker form-control" name="country" id="form_country" data-style="btn-selectpicker" title=" " data-live-search="true">
+                        <select class="selectpicker form-control" id="form_country" data-style="btn-selectpicker" asp-for="Country" title=" " data-live-search="true">
                             <option value="country_#{index}">Afghanistan             </option>
                             <option value="country_#{index}">Albania             </option>
                             <option value="country_#{index}">Algeria             </option>
@@ -266,21 +269,24 @@
                     </div>
                     <!-- Street-->
                     <div class="form-group">
-                        <label class="form-label" for="form_street">Street Address</label>
-                        <input class="form-control" name="name" id="form_street">
+                        <label asp-for="AddressLine" class="form-label">Street Address</label>
+                        <input asp-for="AddressLine" class="form-control"  id="form_street">
+                        <span asp-validation-for="AddressLine"></span>
                     </div>
                     <!-- City + State-->
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label" for="form_city">City</label>
-                                <input class="form-control" name="name" id="form_city">
+                                <label asp-for="City" class="form-label">City</label>
+                                <input asp-for="City" class="form-control" id="form_city">
+                                <span asp-validation-for="City"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label" for="form_state">State</label>
-                                <input class="form-control" name="name" id="form_state">
+                                <label asp-for="State" class="form-label">State</label>
+                                <input asp-for="State" class="form-control" id="form_state">
+                                <span asp-validation-for="State"></span>
                             </div>
                         </div>
                     </div>
@@ -288,8 +294,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label" for="form_zip">ZIP Code</label>
-                                <input class="form-control" name="name" id="form_zip">
+                                <label asp-for="ZipCode" class="form-label">ZIP Code</label>
+                                <input asp-for="ZipCode" class="form-control" id="form_zip">
+                                <span asp-validation-for="ZipCode"></span>
                             </div>
                         </div>
 
@@ -321,8 +328,9 @@
                 </div>
                 <div class="col-lg-7 ml-auto">
                     <div class="form-group mb-5">
-                        <label class="form-label" for="form_description">Describe your Service to Users</label>
-                        <textarea class="form-control" name="name" id="form_description" rows="5" aria-describedby="descriptionHelp"></textarea><small class="form-text text-muted mt-2" id="descriptionHelp">Maximum of 240 words, make the best use of it. </small>
+                        <label asp-for="Description" class="form-label">Describe your Service to Users</label>
+                        <textarea asp-for="Description" class="form-control" id="form_description" rows="3" aria-describedby="descriptionHelp"></textarea><small class="form-text text-muted mt-2" id="descriptionHelp">Maximum of 240 words, make the best use of it. </small>
+                        <span asp-validation-for="Description"></span>
                     </div>
                 </div>
             </div>
@@ -442,7 +450,7 @@
 
     <section class="py-5 d-none" id="form3">
         <div class="container">
-            <p class="subtitle text-primary">Add new listing</p>
+            <p class="subtitle text-primary">Add new Service</p>
             <h1 class="h2 mb-5"> Photos <span class="text-muted float-right">Step 3</span>      </h1>
             <div class="row form-block">
                 <div class="col-lg-4">
@@ -477,7 +485,8 @@
                 <div class="col text-center text-sm-left">
                     <a onclick="secondForm()" class="btn btn-link text-muted"> <i class="fa-chevron-left fa mr-2"></i>Back</a>
                 </div>
-                <div class="col text-center text-sm-right"><a asp-action="Create" asp-controller="Service" class="btn btn-primary px-3"> Finish<i class="fa-chevron-right fa ml-2"></i></a></div>
+                <div class="col text-center text-sm-right"><input type="submit" class="btn btn-primary px-3"> Finish<i class="fa-chevron-right fa ml-2"></i>></div>
+                
             </div>
         </div>
     </section>

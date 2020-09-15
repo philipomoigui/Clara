@@ -31,6 +31,12 @@ namespace Clara.Controllers
             return View();
         }
 
+        public IActionResult Success()
+        {
+
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateServiceViewModel model)
@@ -40,7 +46,8 @@ namespace Clara.Controllers
                 var service = _mapper.Map<Service>(model);
                 await _serviceRepository.CreateServiceAsync(service);
                 await _serviceRepository.SaveAsync();
-                return RedirectToAction(nameof(Detail), new {id = service.ServiceId });
+                //return RedirectToAction(nameof(Detail), new {id = service.ServiceId });
+                return RedirectToAction(nameof(Success));
             }
             return View(model);
         }

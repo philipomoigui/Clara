@@ -15,11 +15,11 @@ namespace Clara.Models
         public decimal EstimatedPrice { get; set; }
         public string ImageURL { get; set; }
         public string AddressLine { get; set; }
-        public string AddressLine2 { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
         public string Country { get; set; }
+        public string Description { get; set; }
         public List<AddOns> AddOns { get; set; }
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }
