@@ -23,6 +23,6 @@ namespace Clara.Models
         public List<AddOns> AddOns { get; set; }
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }
-
+        public Guid UserId { get; set; }
     }
 }

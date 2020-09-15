@@ -857,6 +857,7 @@ ol {
         font-weight: 700;
         color: #ffffff;
         background: #7a421b;
+        ;
         display: inline-block;
         border: none;
         position: absolute;
@@ -1607,7 +1608,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
 .listing {
-    width: 55%;
+    width: 100%;
     height: 100%;
     padding: 0 40px;
     padding-top: 140px;
@@ -3670,10 +3671,3 @@ h1, h2, h3, h4, h5, h6 {
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover {
     background-color: black;
 }
-
-/*Services Styles*/
-
-/*___________________________________________________________________________________*/
-
-
-

@@ -25,6 +25,12 @@ namespace Clara.Controllers
             return View();
         }
 
+        public IActionResult FirstCreateService()
+        {
+
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateServiceViewModel model)

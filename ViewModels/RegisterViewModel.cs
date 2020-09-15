@@ -11,13 +11,15 @@ namespace Clara.ViewModels
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         [Display(Name ="Confirm Password")]
-        [Compare(nameof(Password), ErrorMessage = "Sorry, Password and Confirm password do not match")]
+        [Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
     }
 }

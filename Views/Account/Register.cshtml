@@ -1,16 +1,51 @@
-﻿<form>
-    <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+﻿@model RegisterViewModel
+
+@{ 
+    Layout = "_pagesLayout";
+}
+
+<section>
+    <!-- Sign up form -->
+    <section class="signup">
+        <div class="container">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h2 class="form-title">Sign up</h2>
+                    <form method="post" asp-action="Register" asp-controller="Account" class="register-form" id="register-form">
+                        @*<div class="form-group">
+                            <label asp-for=""><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="name" id="name" placeholder="Your Name" />
+                        </div>*@
+                        <div class="form-group">
+                            <label asp-for="Email"><i class="zmdi zmdi-email"></i></label>
+                            <input asp-for="Email" type="email" name="email" id="email" placeholder="Your Email" />
+                            <span asp-validation-for="Email"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password"><i class="zmdi zmdi-lock"></i></label>
+                            <input asp-for="Password" type="password"  id="pass" placeholder="Password" />
+                            <span asp-validation-for="Password"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ConfirmPassword"><i class="zmdi zmdi-lock-outline"></i></label>
+                            <input asp-for="ConfirmPassword" type="password" id="re_pass" placeholder="Confirm password" />
+                            <span asp-validation-for="ConfirmPassword"></span>
+                        </div>
+                        @*<div class="form-group">
+                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                        </div>*@
+                        <div class="form-group form-button">
+                            <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
+                        </div>
+                    </form>
+                </div>
+                <div class="signup-image">
+                    <figure><img src="~/img/undraw_sign_in_e6hj.svg" alt="sing up image"></figure>
+                    <a asp-action="Login" asp-controller="Account" class="signup-image-link">I am already member</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</section>

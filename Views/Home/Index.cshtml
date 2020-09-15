@@ -1592,7 +1592,7 @@
             <div class="modal-c-tabs">
 
                 <!-- Nav tabs -->
-                <ul class="nav nav-tabs md-tabs tabs-2 bg-white my-modal darken-3" role="tablist">
+                <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
                     <li class="nav-item my-modal1">
                         <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab">
                             <i class="fa fa-user mr-1"></i>
@@ -1614,23 +1614,24 @@
 
                         <!--Body-->
                         <div class="modal-body mb-1">
-                            <form action="/" method="post">
+                            <form asp-action="Login" asp-controller="Account" method="post">
                                 <div class="md-form form-sm mb-5">
                                     <i class="fa fa-envelope prefix"></i>
-                                    <input type="email" id="modalLRInput10" class="form-control form-control-sm validate">
+                                    <input asp-for="Email" type="email" id="modalLRInput10" class="form-control form-control-sm validate">
                                     <label data-error="wrong" data-success="right" for="modalLRInput10">Your email</label>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
 
                                 <div class="md-form form-sm mb-4">
                                     <i class="fa fa-lock prefix"></i>
-                                    <input type="password" id="modalLRInput11" class="form-control form-control-sm validate">
+                                    <input asp-for="Password" type="password" id="modalLRInput11" class="form-control form-control-sm validate">
                                     <label data-error="wrong" data-success="right" for="modalLRInput11">Your password</label>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
                                 <div class="text-center mt-2">
-                                    <button type="submit" class="btn btn-info text-bold" style="background-color: #7a421b !important;">Log in <i class="fa fa-sign-in ml-1"></i></button>
+                                    <button class="btn btn-info text-bold" style="background-color: #7a421b !important;">Log in <i class="fa fa-sign-in ml-1"></i></button>
                                 </div>
-
-
+                                <input asp-for="ConfirmPassword" type="email" id="modalLRInput10" hidden value="a" class="form-control form-control-sm validate">
                             </form>
                             
                         </div>
@@ -1650,32 +1651,32 @@
 
                         <!--Body-->
                         <div class="modal-body">
-                            <form method="post" asp-action="Index" asp-controller="Home">
+                            <form asp-action="Register" asp-controller="Account" method="post">
                                 <div class="md-form form-sm mb-5">
                                     <i class="fa fa-envelope prefix"></i>
                                     <input asp-for="Email" type="email" id="modalLRInput12" class="form-control form-control-sm validate">
                                     <label data-error="wrong" data-success="right" for="modalLRInput12">Your email</label>
-                                    <span asp-validation-for="Email"></span>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
 
                                 <div class="md-form form-sm mb-5">
                                     <i class="fa fa-lock prefix"></i>
                                     <input asp-for="Password" type="password" id="modalLRInput13" class="form-control form-control-sm validate">
                                     <label data-error="wrong" data-success="right" for="modalLRInput13">Your password</label>
-                                    <span asp-validation-for="Password"></span>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
 
                                 <div class="md-form form-sm mb-4">
                                     <i class="fa fa-lock prefix"></i>
                                     <input asp-for="ConfirmPassword" type="password" id="modalLRInput14" class="form-control form-control-sm validate">
                                     <label data-error="wrong" data-success="right" for="modalLRInput14">Repeat password</label>
-                                    <span asp-validation-for="ConfirmPassword"></span>
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                 </div>
 
                                 <div class="text-center form-sm mt-2">
                                     <button class="btn btn-info" style="background-color:#7a421b !important;">Sign up <i class="fa fa-sign-in ml-1"></i></button>
                                 </div>
-                                <div asp-validation-summary="All"></div>
+                                <div asp-validation-summary="All" class="text-danger"></div>
                             </form>
                             
 

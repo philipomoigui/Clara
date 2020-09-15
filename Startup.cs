@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Clara.DataAccess;
+using Clara.Repository;
+using Clara.Repository.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,8 +36,11 @@ namespace Clara
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredUniqueChars = 0;
                 options.User.RequireUniqueEmail = true;
+                options.Password.RequireUppercase = false;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<IServicesRepository, ServiceRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
