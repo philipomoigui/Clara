@@ -28,7 +28,7 @@ namespace Clara.Repository
             _applicationDbContext.Services.Remove(service);
         }
 
-        public IEnumerable<Service> GetAllService() => _applicationDbContext.Services;
+        public IQueryable<Service> GetAllService() => _applicationDbContext.Services;
         
 
         public Service GetServiceById(Guid id)

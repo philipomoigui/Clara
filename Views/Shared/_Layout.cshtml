@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<IdentityUser> signInManager
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -46,19 +49,31 @@
                         <nav class="header__menu mobile-menu">
                             <ul>
                                 <li class="active"><a href="./index.html">Home</a></li>
-                                <li><a asp-action="AddService" asp-controller="Account">Services</a></li>
+                                <li><a asp-action="Index" asp-controller="Account">Services</a></li>
                                 <li><a href="#">Blog</a></li>
                                 <li><a href="#">Contact Us</a></li>
-                                <li>
-                                    <a href="" data-toggle="modal" data-target="#modalLRForm"><i class="fa fa-user"></i>  Login</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#">Sign Up</a></li>
-                                    </ul>
-                                </li>
+                                @if (signInManager.IsSignedIn(User))
+                                {
+                            <li>
+                                <form asp-action="Logout" asp-controller="Account" method="post">
+                                    <button class="btn-muted" href="#" data-toggle="modal" data-target="#logoutModal">logout</button>
+                                </form>
+                            </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a asp-action="Login" asp-controller="Account"><i class="fa fa-user"></i>  Login</a>
+                                        <ul class="dropdown">
+                                            <li><a asp-action="Register" asp-controller="Account">Sign Up</a></li>
+                                        </ul>
+                                    </li>
+                                }
+
                             </ul>
                         </nav>
                         <div class="header__menu__right">
-                            <a href="#" class="primary-btn"><i class="fa fa-plus"></i> Add Services</a>
+                            <a asp-action="Index" asp-controller="Service" class="primary-btn"><i class="fa fa-plus"></i> Add Services</a>
                             <a href="#" class="login-btn"><i class="fa fa-user"></i></a>
                         </div>
                     </div>

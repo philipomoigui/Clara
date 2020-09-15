@@ -25,7 +25,7 @@ namespace Clara.Controllers
             return View();
         }
 
-        public IActionResult FirstCreateService()
+        public IActionResult Create()
         {
 
             return View();

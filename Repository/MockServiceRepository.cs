@@ -40,7 +40,7 @@ namespace Clara.Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Service> GetAllService()
+        public IQueryable<Service> GetAllService()
         {
             throw new NotImplementedException();
         }

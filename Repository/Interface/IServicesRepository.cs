@@ -8,7 +8,7 @@ namespace Clara.Repository.Interface
 {
     public interface IServicesRepository
     {
-        IEnumerable<Service> GetAllService();
+        IQueryable<Service> GetAllService();
         Service GetServiceById(Guid id);
         Task CreateServiceAsync(Service service);
         void UpdateService(Service service);
