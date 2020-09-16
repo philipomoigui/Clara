@@ -43,7 +43,7 @@
                     </div>
                     <div class="form-group" style="margin:auto !important">
                         <label class="form-label" for="form_type">Category</label>
-                        <select asp-items="Html.GetEnumSelectList<ServiceProviders>()" asp-for="ServiceType" class="selectpicker form-control" id="form_type" data-style="btn-selectpicker" title="" aria-describedby="propertyTypeHelp">
+                        <select asp-items="Html.GetEnumSelectList<ServiceProviders>()" asp-for="CategoryServiceType" class="selectpicker form-control" id="form_type" data-style="btn-selectpicker" title="" aria-describedby="propertyTypeHelp">
                             <option value="">Please Select</option>
                         </select><small class="form-text text-muted mt-2" id="propertyTypeHelp">Select from our list of categorries</small>
                     </div>
@@ -319,7 +319,7 @@
     <section class="py-5 d-none" id="form2">
         <div class="container">
             <p class="subtitle text-primary">Add new Service</p>
-            <h1 class="h2 mb-5"> Texts <span class="text-muted float-right">Step 2</span>      </h1>
+            <h1 class="h2 mb-5">Amenities and Description<span class="text-muted float-right">Step 2</span>      </h1>
 
             <div class="row form-block">
                 <div class="col-lg-4">
@@ -485,7 +485,7 @@
                 <div class="col text-center text-sm-left">
                     <a onclick="secondForm()" class="btn btn-link text-muted"> <i class="fa-chevron-left fa mr-2"></i>Back</a>
                 </div>
-                <div class="col text-center text-sm-right"><input type="submit" class="btn btn-primary px-3"> Finish<i class="fa-chevron-right fa ml-2"></i>></div>
+                <div class="col text-center text-sm-right"><input type="submit" class="btn btn-primary px-3"><i class="fa-chevron-right fa ml-2"></i>></div>
                 
             </div>
         </div>

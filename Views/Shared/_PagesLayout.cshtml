@@ -13,7 +13,9 @@
     <!-- Google fonts - Poppins-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,400i,700">
     <!-- swiper-->
-    <link rel="stylesheet" href="cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/css/swiper.min.css">
+    <link rel="stylesheet" href="~/css/swiper.min.css">
+    <!--NoUis Slider-->
+    <link href="~/css/nouislider.css" rel="stylesheet" />
     <!-- Magnigic Popup-->
     <link rel="stylesheet" href="d19m59y37dris4.cloudfront.net/directory/1-5/vendor/magnific-popup/magnific-popup.css">
     <!-- theme stylesheet-->
@@ -72,18 +74,18 @@
                             <li class="nav-item dropdown ml-lg-3">
                                 <a id="userDropdownMenuLink" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="avatar avatar-sm avatar-border-white mr-2" src="~/img/Avatar/avatar-4.jpg" alt="Jack London"></a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdownMenuLink">
-                                    <a class="dropdown-item" href="">User Profile</a><a class="dropdown-item" href="">Booked Services </a>
+                                    <a class="dropdown-item" href="">User Profile</a><a class="dropdown-item">Booked Services </a>
                                     <div class="dropdown-divider"></div><a class="dropdown-item" href="login.html"><i class="fa fa-sign-out-alt mr-2 text-muted"></i> Sign out</a>
                                 </div>
                             </li>
                         }
                         else
                         {
-                            <li>
-                                <a asp-action="Login" asp-controller="Account"><i class="fa fa-user"></i>  Login</a>
-                                <ul class="dropdown">
-                                    <li><a asp-action="Register" asp-controller="Account">Sign Up</a></li>
-                                </ul>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle " id="homeDropdownMenuLink" asp-action="Login" asp-controller="Account" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-user"></i> Login
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="homeDropdownMenuLink"><a asp-action="Register" asp-controller="Account" class="dropdown-item" >Sign Up <span class="badge badge-info-light ml-1 mt-n1">New</span></a></div>
                             </li>
                             <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block"><a class="btn btn-primary" href="user-add-0.html">Add A Service</a></li>
                         }
@@ -100,26 +102,28 @@
     @RenderBody()
 
 
-
-
-
-
-
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <!-- Magnific Popup - Lightbox for the gallery-->
-    <script src="d19m59y37dris4.cloudfront.net/directory/1-5/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
     <!-- Smooth scroll-->
-    <script src="d19m59y37dris4.cloudfront.net/directory/1-5/vendor/smooth-scroll/smooth-scroll.polyfills.min.js"></script>
+    <script src="~/js/smooth-scroll.polyfills.min.js"></script>
     <!-- Bootstrap Select-->
     <script src="~/js/bootstrap-select.min.js"></script>
     <!-- Object Fit Images - Fallback for browsers that don't support object-fit-->
-    <script src="d19m59y37dris4.cloudfront.net/directory/1-5/vendor/object-fit-images/ofi.min.js"></script>
-    <!-- Swiper Carousel                       -->
-    <script src="cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js"></script>
-    <script src="d19m59y37dris4.cloudfront.net/directory/1-5/vendor/jquery.cookie/jquery.cookie.js"></script>
+    <script src="~/js/ofi.min.js"></script>
+    <!--Moment -->
+    <script src="~/js/moment.min.js"></script>
+    <!--Date Picker-->
+    <script src="~/js/jquery.daterangepicker.min.js"></script>
+    <!--Drop Zone-->
+    <script src="~/js/dropzone.js"></script>
+    <!--NoUIS Slider-->
+    <script src="~/js/nouislider.min.js"></script>
+    <!-- Swiper Carousel-->
+    <script src="~/js/swiper.min.js"></script>
+    <script src="~/js/jquery.cookie.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
     <script src="js/demo.36f8799a.js"></script>

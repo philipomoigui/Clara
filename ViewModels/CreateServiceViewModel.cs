@@ -13,7 +13,7 @@ namespace Clara.ViewModels
         public Guid ServiceId { get; set; }
 
         [Display(Name = "Category")]
-        public ServiceProviders? ServiceType { get; set; }
+        public ServiceProviders CategoryServiceType { get; set; }
 
         [Display(Name = "Business Name")]
         public string BusinessName { get; set; }
