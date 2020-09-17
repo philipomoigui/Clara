@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Category>
+
+<div class="form-group" style="margin:auto !important">
+    <label class="form-label" for="form_type">Category</label>
+
+    <select class="selectpicker form-control" id="form_type" data-style="btn-selectpicker" title="" aria-describedby="propertyTypeHelp">
+    <option value="">Please Select</option>
+    @foreach (var categoryName in ViewBag.Results)
+    {
+        <option value="@categoryName">@categoryName</option>
+    }
+
+</select><small class="form-text text-muted mt-2" id="propertyTypeHelp">Select from our list of categorries</small>
+</div>

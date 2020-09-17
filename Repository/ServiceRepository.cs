@@ -1,6 +1,7 @@
 ﻿using Clara.DataAccess;
 using Clara.Models;
 using Clara.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,9 @@ namespace Clara.Repository
             _applicationDbContext.Services.Remove(service);
         }
 
-        public IQueryable<Service> GetAllService() => _applicationDbContext.Services;
+        public IQueryable<Service> GetAllService() => _applicationDbContext.Services
+            .AsNoTracking()
+            .Include(s => s.Category);
         
 
         public Service GetServiceById(Guid id)
@@ -48,7 +51,5 @@ namespace Clara.Repository
             var updateService = GetServiceById(service.ServiceId);
             _applicationDbContext.Services.Update(updateService);
         }
-
-
     }
 }

@@ -1,5 +1,7 @@
-﻿using Clara.Models.Enums;
+﻿using Clara.Models;
+using Clara.Models.Enums;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,9 +13,6 @@ namespace Clara.ViewModels
     public class CreateServiceViewModel
     {
         public Guid ServiceId { get; set; }
-
-        [Display(Name = "Category")]
-        public ServiceProviders CategoryServiceType { get; set; }
 
         [Display(Name = "Business Name")]
         public string BusinessName { get; set; }
@@ -35,6 +34,7 @@ namespace Clara.ViewModels
 
         public string Description { get; set; }
         //public List<string> AddOns { get; set; }
-        public Guid CategoryId { get; set; }
+        public int CategoryId { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }

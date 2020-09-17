@@ -171,17 +171,17 @@
                 </div>
             </div>
             <div class="row">
-                <!-- venue item-->
-                <div class="col-sm-6 col-xl-4 mb-5 hover-animate" data-marker-id="59c0c8e33b1527bfe2abaf92">
-                    @foreach (var service in Model.Services)
-                    {
+                @foreach (var service in Model.Services)
+                {
+                    <!-- venue item-->
+                    <div class="col-sm-6 col-xl-4 mb-5 hover-animate" data-marker-id="59c0c8e33b1527bfe2abaf92">
                         <div class="card h-100 border-0 shadow">
                             <div class="card-img-top overflow-hidden dark-overlay bg-cover" style="background-image: url(../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/photo/restaurant-1430931071372-38127bd472b8.jpg); min-height: 200px;">
-                                <a class="tile-link" href="detail.html"></a>
+                                <a class="tile-link" href="#"></a>
                                 <div class="card-img-overlay-bottom z-index-20">
                                     <h4 class="text-white text-shadow">@service.BusinessName</h4>
                                     <p class="mb-2 text-xs">
-                                        <i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-gray-300"></i>
+                                        <i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-gray-300">                    </i>
                                     </p>
                                 </div>
                                 <div class="card-img-overlay-top d-flex justify-content-between align-items-center">
@@ -194,17 +194,18 @@
                             </div>
                             <div class="card-body">
                                 <p class="text-sm text-muted mb-3">@service.AddressLine</p>
-                                <p class="">By <a href="#" class="text-dark">Matt Damon</a></p>
+                                <p class="text-sm text-muted mb-3">@service.PhoneNumber</p>
+                                <p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">Matt Damon</a></p>
                                 <p class="text-sm mb-0">
-                                    <a class="mr-1" href="#">@service.Category.CategoryName</a><a class="mr-1" href="#">Contemporary</a>
+                                    <a class="mr-1" href="#">@service.Category.CategoryName,</a><a class="mr-1" href="#">Contemporary</a>
                                 </p>
                             </div>
                         </div>
-                    }
+                    </div>
+                }
 
-                </div>
             </div>
-            <!-- Pagination -->
+            <!--Pagination-->
             <nav aria-label="Page navigation example">
                 <ul class="pagination pagination-template d-flex justify-content-center">
                     <li class="page-item"><a class="page-link" href="#"> <i class="fa fa-angle-left"></i></a></li>

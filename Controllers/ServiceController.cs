@@ -7,6 +7,7 @@ using Clara.Models;
 using Clara.Repository.Interface;
 using Clara.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Clara.Controllers
 {
@@ -14,11 +15,13 @@ namespace Clara.Controllers
     {
         private readonly IServicesRepository _serviceRepository;
         private readonly IMapper _mapper;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public ServiceController(IServicesRepository serviceRepository, IMapper mapper)
+        public ServiceController(IServicesRepository serviceRepository, IMapper mapper, ICategoryRepository categoryRepository)
         {
             _serviceRepository = serviceRepository;
             _mapper = mapper;
+            _categoryRepository = categoryRepository;
         }
         public IActionResult Index()
         {
@@ -27,8 +30,15 @@ namespace Clara.Controllers
 
         public IActionResult Create()
         {
+            CreateServiceViewModel model = new CreateServiceViewModel();
 
-            return View();
+            var categoryList = _categoryRepository.GetAllCategories.OrderBy(c => c.CategoryName).ToList();
+
+            categoryList.Insert(0, new Category { CategoryId = 0, CategoryName = "--- Select A Category ---" });
+
+            model.Categories = categoryList;
+
+            return View(model);
         }
 
         public IActionResult Success()
@@ -48,7 +58,6 @@ namespace Clara.Controllers
 
                 await _serviceRepository.CreateServiceAsync(service);
                 await _serviceRepository.SaveAsync();
-                //return RedirectToAction(nameof(Detail), new {id = service.ServiceId });
                 return RedirectToAction(nameof(Success));
             }
             return View(model);
@@ -113,7 +122,8 @@ namespace Clara.Controllers
 
         public IActionResult Services()
         {
-           var services = _serviceRepository.GetAllService().ToList();
+           var services = _serviceRepository.GetAllService()
+                .ToList();
             ServicesViewModel model = new ServicesViewModel
             {
                 Services = services

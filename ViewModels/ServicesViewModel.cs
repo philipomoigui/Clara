@@ -8,7 +8,7 @@ namespace Clara.ViewModels
 {
     public class ServicesViewModel
     {
-        public IEnumerable<Service> Services { get; set; }
+        public List<Service> Services { get; set; }
         public string StreetAddress { get; set; }
         public string City { get; set; }
         public string State { get; set; }

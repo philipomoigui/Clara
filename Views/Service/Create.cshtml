@@ -43,8 +43,8 @@
                     </div>
                     <div class="form-group" style="margin:auto !important">
                         <label class="form-label" for="form_type">Category</label>
-                        <select asp-items="Html.GetEnumSelectList<ServiceProviders>()" asp-for="CategoryServiceType" class="selectpicker form-control" id="form_type" data-style="btn-selectpicker" title="" aria-describedby="propertyTypeHelp">
-                            <option value="">Please Select</option>
+                        <select asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))" asp-for="CategoryId" class="selectpicker form-control" id="form_type" data-style="btn-selectpicker" title="" aria-describedby="propertyTypeHelp">
+                            
                         </select><small class="form-text text-muted mt-2" id="propertyTypeHelp">Select from our list of categorries</small>
                     </div>
                 </div>
