@@ -7,6 +7,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200910140330_InitialMigration.cs" />
     <Compile Remove="Migrations\20200910140330_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200912130232_InitialMigration.cs" />
+    <Compile Remove="Migrations\20200912130232_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200912223412_AddedIdentityToDB.cs" />
+    <Compile Remove="Migrations\20200912223412_AddedIdentityToDB.Designer.cs" />
+    <Compile Remove="Migrations\20200916160554_RemovedPriceColumn.cs" />
+    <Compile Remove="Migrations\20200916160554_RemovedPriceColumn.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

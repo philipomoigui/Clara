@@ -1,4 +1,5 @@
-﻿using Clara.Models;
+﻿using Clara.Extension_Methods;
+using Clara.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,5 +20,11 @@ namespace Clara.DataAccess
         public DbSet<Occassion> Occassions { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Category> Categories { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Seed();
+        }
     }
 }

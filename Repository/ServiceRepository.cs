@@ -12,6 +12,8 @@ namespace Clara.Repository
     {
         private readonly ApplicationDbContext _applicationDbContext;
 
+        
+
         public ServiceRepository(ApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
@@ -46,5 +48,7 @@ namespace Clara.Repository
             var updateService = GetServiceById(service.ServiceId);
             _applicationDbContext.Services.Update(updateService);
         }
+
+
     }
 }

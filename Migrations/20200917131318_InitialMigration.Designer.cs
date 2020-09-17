@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clara.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200912223412_AddedIdentityToDB")]
-    partial class AddedIdentityToDB
+    [Migration("20200917131318_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,36 +21,15 @@ namespace Clara.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Clara.Models.AddOns", b =>
-                {
-                    b.Property<Guid>("AddOnsId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Addons")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Others")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ServiceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AddOnsId");
-
-                    b.HasIndex("ServiceId");
-
-                    b.ToTable("AddOns");
-                });
-
             modelBuilder.Entity("Clara.Models.Category", b =>
                 {
-                    b.Property<Guid>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryName")
-                        .HasColumnType("int");
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CategoryId");
 
@@ -103,28 +82,16 @@ namespace Clara.Migrations
                     b.Property<string>("AddressLine")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AddressLine2")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("BusinessEmail")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BusinessName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("EstimatedPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ImageURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
@@ -337,15 +304,6 @@ namespace Clara.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("Clara.Models.AddOns", b =>
-                {
-                    b.HasOne("Clara.Models.Service", "Service")
-                        .WithMany("AddOns")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Clara.Models.Service", b =>

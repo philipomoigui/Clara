@@ -24,16 +24,17 @@ namespace Clara.ViewModels
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
-        public string Country { get; set; }
+        //public string Country { get; set; }
 
         [Display(Name = "Contact Number")]
         public string PhoneNumber { get; set; }
 
         [DataType(DataType.Currency)]
-        public decimal Price { get; set; }
-        public IFormFile Photo { get; set; }
+        //public decimal Price { get; set; }
+        //public IFormFile Photo { get; set; }
 
         public string Description { get; set; }
-        public List<string> AddOns { get; set; }
+        //public List<string> AddOns { get; set; }
+        public Guid CategoryId { get; set; }
     }
 }
