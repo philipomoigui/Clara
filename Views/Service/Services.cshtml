@@ -22,9 +22,9 @@
                 <div class="mb-4">
                     <label class="form-label" for="form_neighbourhood">Neighbourhood</label>
                     <select class="selectpicker form-control" name="neighbourhood" id="form_neighbourhood" multiple data-style="btn-selectpicker" data-live-search="true" data-selected-text-format="count &gt; 1" title="">
-                        <option value="neighbourhood_0">Battery Park City    </option>
-                        <option value="neighbourhood_1">Bowery    </option>
-                        <option value="neighbourhood_41">Yorkville    </option>
+                        <option value="neighbourhood_0">Ajah</option>
+                        <option value="neighbourhood_1">Ikeja</option>
+                        <option value="neighbourhood_41">Ibadan</option>
                     </select>
                 </div>
                 <div class="mb-4">
@@ -157,7 +157,7 @@
         <div class="col-lg-9">
             <div class="d-flex justify-content-between align-items-center flex-column flex-md-row mb-4">
                 <div class="mr-3">
-                    <p class="mb-3 mb-md-0"><strong>12</strong> results found</p>
+                    <p class="mb-3 mb-md-0"><strong>@Model.Services.Count</strong> results found</p>
                 </div>
                 <div>
                     <label class="form-label mr-2" for="form_sort">Sort by</label>
@@ -177,7 +177,7 @@
                     <div class="col-sm-6 col-xl-4 mb-5 hover-animate" data-marker-id="59c0c8e33b1527bfe2abaf92">
                         <div class="card h-100 border-0 shadow">
                             <div class="card-img-top overflow-hidden dark-overlay bg-cover" style="background-image: url(../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/photo/restaurant-1430931071372-38127bd472b8.jpg); min-height: 200px;">
-                                <a class="tile-link" href="#"></a>
+                                <a class="tile-link" asp-action="Details" asp-controller="Service" asp-route-serviceId="@service.ServiceId" asp-route-categoryId="@service.CategoryId"></a>
                                 <div class="card-img-overlay-bottom z-index-20">
                                     <h4 class="text-white text-shadow">@service.BusinessName</h4>
                                     <p class="mb-2 text-xs">

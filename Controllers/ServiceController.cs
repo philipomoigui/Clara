@@ -120,13 +120,36 @@ namespace Clara.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Services()
         {
            var services = _serviceRepository.GetAllService()
                 .ToList();
+           var serviceCount = serv
             ServicesViewModel model = new ServicesViewModel
             {
                 Services = services
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Details(Guid serviceId, int categoryId)
+        {
+            var service = _serviceRepository.GetServiceById(serviceId);
+            if (service == null)
+                return NotFound();
+
+            var services = _serviceRepository.GetAllService()
+                .Where(s => s.CategoryId == categoryId)
+                .OrderBy(s => Guid.NewGuid())
+                .Take(3)
+                .ToList();
+            DetailsViewModel model = new DetailsViewModel
+            {
+                Service = service,
+                RandomServices = services
             };
 
             return View(model);

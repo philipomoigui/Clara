@@ -38,7 +38,10 @@ namespace Clara.Repository
 
         public Service GetServiceById(Guid id)
         {
-           return  _applicationDbContext.Services.Where(s => s.ServiceId == id).FirstOrDefault();
+           return  _applicationDbContext.Services
+                .AsNoTracking()
+                .Include(s => s.Category)
+                .FirstOrDefault(s => s.ServiceId == id);
         }
 
         public async Task<bool> SaveAsync()
