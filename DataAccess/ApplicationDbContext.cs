@@ -20,11 +20,17 @@ namespace Clara.DataAccess
         public DbSet<Occassion> Occassions { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Comment> comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.Seed();
+
+            builder.Entity<ApplicationUser>()
+                .HasOne(u => u.Comment)
+                .WithOne(c => c.User)
+                .HasForeignKey<Comment>(c => c.UserId);
         }
     }
 }

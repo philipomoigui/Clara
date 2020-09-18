@@ -125,7 +125,6 @@ namespace Clara.Controllers
         {
            var services = _serviceRepository.GetAllService()
                 .ToList();
-           var serviceCount = serv
             ServicesViewModel model = new ServicesViewModel
             {
                 Services = services

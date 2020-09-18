@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Clara.DataAccess;
+using Clara.Models;
 using Clara.Repository;
 using Clara.Repository.Interface;
 using Microsoft.AspNetCore.Builder;
@@ -31,7 +32,7 @@ namespace Clara
         {
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("Default")));
-            services.AddIdentity<IdentityUser, IdentityRole>(options => {
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredUniqueChars = 0;
