@@ -25,6 +25,6 @@ namespace Clara.Models
         public Category Category { get; set; }
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
-        List<Comment> comments { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

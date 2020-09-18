@@ -44,7 +44,7 @@ namespace Clara.Migrations
                 defaultValue: "");
 
             migrationBuilder.CreateTable(
-                name: "comments",
+                name: "Comments",
                 columns: table => new
                 {
                     CommentId = table.Column<Guid>(nullable: false),
@@ -55,15 +55,15 @@ namespace Clara.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_comments", x => x.CommentId);
+                    table.PrimaryKey("PK_Comments", x => x.CommentId);
                     table.ForeignKey(
-                        name: "FK_comments_Services_ServiceId",
+                        name: "FK_Comments_Services_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Services",
                         principalColumn: "ServiceId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_comments_AspNetUsers_UserId",
+                        name: "FK_Comments_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -73,17 +73,17 @@ namespace Clara.Migrations
             migrationBuilder.InsertData(
                 table: "Services",
                 columns: new[] { "ServiceId", "AddressLine", "BusinessEmail", "BusinessName", "CategoryId", "City", "PhoneNumber", "State", "UserId", "ZipCode" },
-                values: new object[] { new Guid("94245f52-dfae-43a4-b3df-6742af0caff6"), "21, barr. xpress omoigui strt", "philo@gmail.com", "Philo Inc", 235, "sagamu", "09021987212", "Lagos", null, "07162392" });
+                values: new object[] { new Guid("cdb523b8-0776-4d83-a8e4-0d9c98b8e885"), "21, barr. xpress omoigui strt", "philo@gmail.com", "Philo Inc", 235, "sagamu", "09021987212", "Lagos", null, "07162392" });
 
             migrationBuilder.InsertData(
                 table: "Services",
                 columns: new[] { "ServiceId", "AddressLine", "BusinessEmail", "BusinessName", "CategoryId", "City", "PhoneNumber", "State", "UserId", "ZipCode" },
-                values: new object[] { new Guid("f57d3485-7d35-4de2-b0b3-438562613ce9"), "11, Sangotedo strt", "dadesola@gmail.com", "Dade Designs", 235, "Lawanfe", "09021987212", "Lagos", null, "122392" });
+                values: new object[] { new Guid("4328e7f9-acfa-4512-80c5-8cff06fe0f3c"), "11, Sangotedo strt", "dadesola@gmail.com", "Dade Designs", 235, "Lawanfe", "09021987212", "Lagos", null, "122392" });
 
             migrationBuilder.InsertData(
                 table: "Services",
                 columns: new[] { "ServiceId", "AddressLine", "BusinessEmail", "BusinessName", "CategoryId", "City", "PhoneNumber", "State", "UserId", "ZipCode" },
-                values: new object[] { new Guid("97236203-0c0e-45f1-8c54-5de405b58091"), "115, barr. xpress omoigui strt", "SholpeDes@gmail.com", "Shola Catering", 236, "Ikorodu", "09021987212", "Kwara", null, "0122392" });
+                values: new object[] { new Guid("fecb4bb9-64e9-4cf1-b2c4-ed9679cf5b10"), "115, barr. xpress omoigui strt", "SholpeDes@gmail.com", "Shola Catering", 236, "Ikorodu", "09021987212", "Kwara", null, "0122392" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Services_UserId",
@@ -91,13 +91,13 @@ namespace Clara.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_comments_ServiceId",
-                table: "comments",
+                name: "IX_Comments_ServiceId",
+                table: "Comments",
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_comments_UserId",
-                table: "comments",
+                name: "IX_Comments_UserId",
+                table: "Comments",
                 column: "UserId",
                 unique: true,
                 filter: "[UserId] IS NOT NULL");
@@ -118,7 +118,7 @@ namespace Clara.Migrations
                 table: "Services");
 
             migrationBuilder.DropTable(
-                name: "comments");
+                name: "Comments");
 
             migrationBuilder.DropIndex(
                 name: "IX_Services_UserId",
@@ -127,17 +127,17 @@ namespace Clara.Migrations
             migrationBuilder.DeleteData(
                 table: "Services",
                 keyColumn: "ServiceId",
-                keyValue: new Guid("94245f52-dfae-43a4-b3df-6742af0caff6"));
+                keyValue: new Guid("4328e7f9-acfa-4512-80c5-8cff06fe0f3c"));
 
             migrationBuilder.DeleteData(
                 table: "Services",
                 keyColumn: "ServiceId",
-                keyValue: new Guid("97236203-0c0e-45f1-8c54-5de405b58091"));
+                keyValue: new Guid("cdb523b8-0776-4d83-a8e4-0d9c98b8e885"));
 
             migrationBuilder.DeleteData(
                 table: "Services",
                 keyColumn: "ServiceId",
-                keyValue: new Guid("f57d3485-7d35-4de2-b0b3-438562613ce9"));
+                keyValue: new Guid("fecb4bb9-64e9-4cf1-b2c4-ed9679cf5b10"));
 
             migrationBuilder.DropColumn(
                 name: "UserId",

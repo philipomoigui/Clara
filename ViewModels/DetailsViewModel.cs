@@ -10,5 +10,10 @@ namespace Clara.ViewModels
     {
         public Service Service { get; set; }
         public IEnumerable<Service> RandomServices { get; set; }
+        public string Message { get; set; }
+        public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+        public string UserId { get; set; }
+        public Guid ServiceId { get; set; }
+
     }
 }

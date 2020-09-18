@@ -35,6 +35,9 @@ namespace Clara.ViewModels
         public string Description { get; set; }
         //public List<string> AddOns { get; set; }
         public int CategoryId { get; set; }
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
+        public List<Comment> Comments { get; set; }
         public List<Category> Categories { get; set; }
     }
 }

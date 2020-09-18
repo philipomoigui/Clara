@@ -6,11 +6,13 @@ using AutoMapper;
 using Clara.Models;
 using Clara.Repository.Interface;
 using Clara.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Clara.Controllers
 {
+    [Authorize]
     public class ServiceController : Controller
     {
         private readonly IServicesRepository _serviceRepository;
@@ -55,7 +57,6 @@ namespace Clara.Controllers
             {
                 
                 var service = _mapper.Map<Service>(model);
-
                 await _serviceRepository.CreateServiceAsync(service);
                 await _serviceRepository.SaveAsync();
                 return RedirectToAction(nameof(Success));
@@ -150,6 +151,23 @@ namespace Clara.Controllers
                 Service = service,
                 RandomServices = services
             };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddReview(DetailsViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Comment comment = new Comment
+                {
+                    Message = model.Message,
+                    Timestamp = model.Timestamp,
+                    ServiceId = model.ServiceId,
+                    UserId = model.UserId
+                };
+            }
 
             return View(model);
         }

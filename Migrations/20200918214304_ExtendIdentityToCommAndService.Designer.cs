@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clara.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200918211426_ExtendIdentityToCommAndService")]
+    [Migration("20200918214304_ExtendIdentityToCommAndService")]
     partial class ExtendIdentityToCommAndService
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,7 +89,7 @@ namespace Clara.Migrations
                         .IsUnique()
                         .HasFilter("[UserId] IS NOT NULL");
 
-                    b.ToTable("comments");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Clara.Models.Event", b =>
@@ -173,7 +173,7 @@ namespace Clara.Migrations
                     b.HasData(
                         new
                         {
-                            ServiceId = new Guid("94245f52-dfae-43a4-b3df-6742af0caff6"),
+                            ServiceId = new Guid("cdb523b8-0776-4d83-a8e4-0d9c98b8e885"),
                             AddressLine = "21, barr. xpress omoigui strt",
                             BusinessEmail = "philo@gmail.com",
                             BusinessName = "Philo Inc",
@@ -185,7 +185,7 @@ namespace Clara.Migrations
                         },
                         new
                         {
-                            ServiceId = new Guid("f57d3485-7d35-4de2-b0b3-438562613ce9"),
+                            ServiceId = new Guid("4328e7f9-acfa-4512-80c5-8cff06fe0f3c"),
                             AddressLine = "11, Sangotedo strt",
                             BusinessEmail = "dadesola@gmail.com",
                             BusinessName = "Dade Designs",
@@ -197,7 +197,7 @@ namespace Clara.Migrations
                         },
                         new
                         {
-                            ServiceId = new Guid("97236203-0c0e-45f1-8c54-5de405b58091"),
+                            ServiceId = new Guid("fecb4bb9-64e9-4cf1-b2c4-ed9679cf5b10"),
                             AddressLine = "115, barr. xpress omoigui strt",
                             BusinessEmail = "SholpeDes@gmail.com",
                             BusinessName = "Shola Catering",

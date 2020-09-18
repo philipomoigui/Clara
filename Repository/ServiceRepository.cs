@@ -33,7 +33,9 @@ namespace Clara.Repository
 
         public IQueryable<Service> GetAllService() => _applicationDbContext.Services
             .AsNoTracking()
-            .Include(s => s.Category);
+            .Include(s => s.Category)
+            .Include(s => s.Comments)
+            .Include(s => s.User);
         
 
         public Service GetServiceById(Guid id)

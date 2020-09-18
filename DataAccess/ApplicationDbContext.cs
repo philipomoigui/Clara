@@ -20,7 +20,7 @@ namespace Clara.DataAccess
         public DbSet<Occassion> Occassions { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Comment> comments { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

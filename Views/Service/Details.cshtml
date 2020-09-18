@@ -1,8 +1,10 @@
 ﻿@model DetailsViewModel
+@inject UserManager<ApplicationUser> appUser
 
 
 @{
     Layout = "_PagesLayout";
+    var userId = appUser.GetUserId(User);
 }
 
 <!-- Hero Section-->
@@ -131,12 +133,14 @@
                         <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview">Leave a review</button>
                         <div class="collapse mt-4" id="leaveReview">
                             <h5 class="mb-4">Leave a review</h5>
-                            <form class="form" id="contact-form" method="get" action="#">
+                            <form class="form" id="contact-form" method="post" asp-action="AddComment" asp-controller="Service">
+                                <input type="hidden" asp-for="ServiceId" value="@Model.Service.ServiceId" />
+                                <input type="hidden" asp-for="UserId" value="@userId" />
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="form-label" for="name">Your name *</label>
-                                            <input class="form-control" type="text" name="name" id="name" placeholder="Enter your name" required="required">
+                                            <input class="form-control" type="text" name="name" id="name" placeholder="Enter your name">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -154,11 +158,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="email">Your email *</label>
-                                    <input class="form-control" type="email" name="email" id="email" placeholder="Enter your  email" required="required">
+                                    <input class="form-control" type="email" name="email" id="email" placeholder="Enter your  email">
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="review">Review text *</label>
-                                    <textarea class="form-control" rows="4" name="review" id="review" placeholder="Enter your review" required="required"></textarea>
+                                    <label class="form-label" asp-for="Message">Review *</label>
+                                    <textarea class="form-control" rows="4" asp-for="Message" id="review" placeholder="Enter your review" required="required"></textarea>
                                 </div>
                                 <button class="btn btn-primary" type="submit">Post review</button>
                             </form>
