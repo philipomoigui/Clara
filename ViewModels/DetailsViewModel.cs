@@ -14,6 +14,8 @@ namespace Clara.ViewModels
         public DateTime Timestamp { get; set; } = DateTime.UtcNow;
         public string UserId { get; set; }
         public Guid ServiceId { get; set; }
+        public int CategoryId { get; set; }
+        public List<Comment> Comments { get; set; }
 
     }
 }

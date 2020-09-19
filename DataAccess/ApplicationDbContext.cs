@@ -27,10 +27,10 @@ namespace Clara.DataAccess
             base.OnModelCreating(builder);
             builder.Seed();
 
-            builder.Entity<ApplicationUser>()
-                .HasOne(u => u.Comment)
-                .WithOne(c => c.User)
-                .HasForeignKey<Comment>(c => c.UserId);
+            //builder.Entity<ApplicationUser>()
+            //    .HasOne(u => u.Comment)
+            //    .WithOne(c => c.User)
+            //    .HasForeignKey<Comment>(c => c.UserId);
         }
     }
 }

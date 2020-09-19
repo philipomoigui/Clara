@@ -14,6 +14,7 @@ namespace Clara.Profiles
         {
             CreateMap<CreateServiceViewModel, Service>();
             CreateMap<Service, DetailViewModel>();
+            CreateMap<DetailsViewModel, Comment>();
         }
     }
 }

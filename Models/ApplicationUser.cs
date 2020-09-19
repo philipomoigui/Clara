@@ -10,7 +10,7 @@ namespace Clara.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<Service> services { get; set; }
-        public Comment Comment { get; set; }
+        public List<Service> Services { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

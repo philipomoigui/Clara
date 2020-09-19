@@ -18,12 +18,14 @@ namespace Clara.Controllers
         private readonly IServicesRepository _serviceRepository;
         private readonly IMapper _mapper;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ICommentRepository _commentRepository;
 
-        public ServiceController(IServicesRepository serviceRepository, IMapper mapper, ICategoryRepository categoryRepository)
+        public ServiceController(IServicesRepository serviceRepository, IMapper mapper, ICategoryRepository categoryRepository, ICommentRepository commentRepository)
         {
             _serviceRepository = serviceRepository;
             _mapper = mapper;
             _categoryRepository = categoryRepository;
+            _commentRepository = commentRepository;
         }
         public IActionResult Index()
         {
@@ -141,32 +143,45 @@ namespace Clara.Controllers
             if (service == null)
                 return NotFound();
 
+            //Random Services
             var services = _serviceRepository.GetAllService()
                 .Where(s => s.CategoryId == categoryId)
                 .OrderBy(s => Guid.NewGuid())
                 .Take(3)
                 .ToList();
+
+            //Comments
+            var comments = _commentRepository.GetComments(serviceId).ToList();
+
             DetailsViewModel model = new DetailsViewModel
             {
                 Service = service,
-                RandomServices = services
+                RandomServices = services,
+                Comments = comments
             };
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult AddReview(DetailsViewModel model)
+        public async Task<IActionResult> Details(DetailsViewModel model)
         {
             if (ModelState.IsValid)
             {
+                //var comment = _mapper.Map<Comment>(model);
                 Comment comment = new Comment
                 {
                     Message = model.Message,
                     Timestamp = model.Timestamp,
-                    ServiceId = model.ServiceId,
-                    UserId = model.UserId
+                    UserId = model.UserId,
+                    ServiceId = model.ServiceId
                 };
+
+                await _commentRepository.AddCommentAsync(comment);
+                await _commentRepository.CompleteAsync();
+                return RedirectToAction(nameof(Details), new {serviceId = model.ServiceId, categoryId = model.CategoryId });
+                //RedirectToAction("Services");
+                //return View();
             }
 
             return View(model);

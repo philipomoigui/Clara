@@ -33,17 +33,15 @@ namespace Clara.Repository
 
         public IQueryable<Service> GetAllService() => _applicationDbContext.Services
             .AsNoTracking()
-            .Include(s => s.Category)
-            .Include(s => s.Comments)
-            .Include(s => s.User);
+            .Include(s => s.Category);
         
 
-        public Service GetServiceById(Guid id)
+        public Service GetServiceById(Guid serviceId)
         {
            return  _applicationDbContext.Services
                 .AsNoTracking()
                 .Include(s => s.Category)
-                .FirstOrDefault(s => s.ServiceId == id);
+                .FirstOrDefault(s => s.ServiceId == serviceId);
         }
 
         public async Task<bool> SaveAsync()
