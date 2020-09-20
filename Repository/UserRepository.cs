@@ -18,6 +18,11 @@ namespace Clara.Repository
             _applicationDbContext = applicationDbContext;
         }
 
+        public async Task AddUserProfileAsync(UserProfile userProfile)
+        {
+            await _applicationDbContext.UserProfiles.AddAsync(userProfile);
+        }
+
         public async Task<bool> complete()
         {
             return (await _applicationDbContext.SaveChangesAsync() >= 0);

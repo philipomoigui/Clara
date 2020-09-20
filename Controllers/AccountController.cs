@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Clara.Models;
+using Clara.Repository.Interface;
 using Clara.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,13 @@ namespace Clara.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IUserRepository _userRepository;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserRepository userRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -30,7 +33,6 @@ namespace Clara.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
@@ -44,6 +46,9 @@ namespace Clara.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    await AddIdentityToUserProfile(model, model.Email);
+
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -91,6 +96,23 @@ namespace Clara.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        public async Task AddIdentityToUserProfile(RegisterViewModel model, string email)
+        {
+            var user = _userManager.FindByEmailAsync(email);
+            var userId = user.Result.Id;
+
+            UserProfile userProfile = new UserProfile
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                UserId = userId
+            };
+
+            await _userRepository.AddUserProfileAsync(userProfile);
+            await _userRepository.complete();
         }
 
     }

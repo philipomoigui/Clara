@@ -4,14 +4,16 @@ using Clara.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Clara.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200920094416_AddedPropToUserProfile")]
+    partial class AddedPropToUserProfile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,7 +171,7 @@ namespace Clara.Migrations
                     b.HasData(
                         new
                         {
-                            ServiceId = new Guid("1857250a-e0e0-4017-aa8d-9ab66a1e9603"),
+                            ServiceId = new Guid("6affc6c0-7ea0-4312-ab37-21ae113f9694"),
                             AddressLine = "21, barr. xpress omoigui strt",
                             BusinessEmail = "philo@gmail.com",
                             BusinessName = "Philo Inc",
@@ -181,7 +183,7 @@ namespace Clara.Migrations
                         },
                         new
                         {
-                            ServiceId = new Guid("4e35420e-12fa-41b6-86c1-08212dfb630e"),
+                            ServiceId = new Guid("961952bf-a891-45f4-b5bf-1647c90fd31f"),
                             AddressLine = "11, Sangotedo strt",
                             BusinessEmail = "dadesola@gmail.com",
                             BusinessName = "Dade Designs",
@@ -193,7 +195,7 @@ namespace Clara.Migrations
                         },
                         new
                         {
-                            ServiceId = new Guid("ab5cc934-956e-4fc8-badf-bd9086721967"),
+                            ServiceId = new Guid("478f3ce6-bacb-49a4-8d43-6c3de92fd505"),
                             AddressLine = "115, barr. xpress omoigui strt",
                             BusinessEmail = "SholpeDes@gmail.com",
                             BusinessName = "Shola Catering",
@@ -218,9 +220,6 @@ namespace Clara.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
