@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20200912223412_AddedIdentityToDB.Designer.cs" />
     <Compile Remove="Migrations\20200916160554_RemovedPriceColumn.cs" />
     <Compile Remove="Migrations\20200916160554_RemovedPriceColumn.Designer.cs" />
+    <Compile Remove="Migrations\20200920073142_AddedUserProfile.cs" />
+    <Compile Remove="Migrations\20200920073142_AddedUserProfile.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

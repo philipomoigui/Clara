@@ -8,8 +8,6 @@ namespace Clara.Models
 {
     public class ApplicationUser: IdentityUser
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
         public List<Service> Services { get; set; }
         public List<Comment> Comments { get; set; }
     }

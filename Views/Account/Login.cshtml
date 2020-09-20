@@ -5,25 +5,28 @@
     var returnUrl = Context.Request.Query["returnUrl"];
 }
 
-<!-- Sing in  Form -->
+<!-- Sign in  Form -->
+<h2 class="text-center">Clara</h2>
 
-<section class="container-fluid bg mt-5">
+<section class="container-fluid bg">
     <section class="row justify-content-center">
         <section class="col-12 col-sm-6 col-md-3 mt-5">
-            <form class="form-container mt-5">
+            <form class="form-container mt-5" asp-action="Login" asp-controller="Account" asp-route-returnUrl="@returnUrl" method="post">
                 <h3 class="text-center">Welcome Back!</h3>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <label asp-for="Email">Email address</label>
+                    <input asp-for="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    <span asp-validation-for="Email"></span>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
+                    <label asp-for="Password">Password</label>
+                    <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1">
+                    <span asp-validation-for="Password"></span>
                 </div>
                 <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    <input asp-for="RememberMe" type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label asp-for="RememberMe" class="form-check-label" for="exampleCheck1">Check me out</label>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
             </form>
