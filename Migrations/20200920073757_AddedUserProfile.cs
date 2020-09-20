@@ -58,22 +58,24 @@ namespace Clara.Migrations
             migrationBuilder.InsertData(
                 table: "Services",
                 columns: new[] { "ServiceId", "AddressLine", "BusinessEmail", "BusinessName", "CategoryId", "City", "PhoneNumber", "State", "UserId", "ZipCode" },
-                values: new object[] { new Guid("bbf86dd9-0935-4738-914b-daf7ca1fcac9"), "21, barr. xpress omoigui strt", "philo@gmail.com", "Philo Inc", 235, "sagamu", "09021987212", "Lagos", null, "07162392" });
+                values: new object[] { new Guid("2eaa1e72-155e-4839-b779-8db53eee7e3d"), "21, barr. xpress omoigui strt", "philo@gmail.com", "Philo Inc", 235, "sagamu", "09021987212", "Lagos", null, "07162392" });
 
             migrationBuilder.InsertData(
                 table: "Services",
                 columns: new[] { "ServiceId", "AddressLine", "BusinessEmail", "BusinessName", "CategoryId", "City", "PhoneNumber", "State", "UserId", "ZipCode" },
-                values: new object[] { new Guid("e2abf70a-cd0c-4e4a-a3b0-d35e29a934ad"), "11, Sangotedo strt", "dadesola@gmail.com", "Dade Designs", 235, "Lawanfe", "09021987212", "Lagos", null, "122392" });
+                values: new object[] { new Guid("4bb7eb00-8cc5-4d7c-ba2d-5f792bea2ccb"), "11, Sangotedo strt", "dadesola@gmail.com", "Dade Designs", 235, "Lawanfe", "09021987212", "Lagos", null, "122392" });
 
             migrationBuilder.InsertData(
                 table: "Services",
                 columns: new[] { "ServiceId", "AddressLine", "BusinessEmail", "BusinessName", "CategoryId", "City", "PhoneNumber", "State", "UserId", "ZipCode" },
-                values: new object[] { new Guid("76cbe0fa-761f-4a1e-ae52-beb2e5a1fba1"), "115, barr. xpress omoigui strt", "SholpeDes@gmail.com", "Shola Catering", 236, "Ikorodu", "09021987212", "Kwara", null, "0122392" });
+                values: new object[] { new Guid("0d24d75a-d97e-4f65-b3cb-43515b24cc97"), "115, barr. xpress omoigui strt", "SholpeDes@gmail.com", "Shola Catering", 236, "Ikorodu", "09021987212", "Kwara", null, "0122392" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfiles_UserId",
                 table: "UserProfiles",
-                column: "UserId");
+                column: "UserId",
+                unique: true,
+                filter: "[UserId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -84,17 +86,17 @@ namespace Clara.Migrations
             migrationBuilder.DeleteData(
                 table: "Services",
                 keyColumn: "ServiceId",
-                keyValue: new Guid("76cbe0fa-761f-4a1e-ae52-beb2e5a1fba1"));
+                keyValue: new Guid("0d24d75a-d97e-4f65-b3cb-43515b24cc97"));
 
             migrationBuilder.DeleteData(
                 table: "Services",
                 keyColumn: "ServiceId",
-                keyValue: new Guid("bbf86dd9-0935-4738-914b-daf7ca1fcac9"));
+                keyValue: new Guid("2eaa1e72-155e-4839-b779-8db53eee7e3d"));
 
             migrationBuilder.DeleteData(
                 table: "Services",
                 keyColumn: "ServiceId",
-                keyValue: new Guid("e2abf70a-cd0c-4e4a-a3b0-d35e29a934ad"));
+                keyValue: new Guid("4bb7eb00-8cc5-4d7c-ba2d-5f792bea2ccb"));
 
             migrationBuilder.AddColumn<string>(
                 name: "FirstName",
