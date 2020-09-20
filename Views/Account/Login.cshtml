@@ -2,10 +2,39 @@
 
 @{ 
     Layout = "_PagesLayout";
+    var returnUrl = Context.Request.Query["returnUrl"];
 }
 
 <!-- Sing in  Form -->
-        <section class="sign-in">
+
+<section class="container-fluid bg mt-5">
+    <section class="row justify-content-center">
+        <section class="col-12 col-sm-6 col-md-3 mt-5">
+            <form class="form-container mt-5">
+                <h3 class="text-center">Welcome Back!</h3>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </form>
+        </section>
+    </section>
+</section>
+
+
+
+
+        @*<section class="sign-in">
             <div class="container">
                 <div class="signin-content">
                     <div class="signin-image">
@@ -15,7 +44,7 @@
 
                     <div class="signin-form">
                         <h2 class="form-title">Welcome Back!</h2>
-                        <form method="post" asp-action="Login" asp-controller="Account" class="register-form" id="login-form">
+                        <form method="post" asp-action="Login" asp-controller="Account" asp-route-returnUrl="@returnUrl" class="register-form" id="login-form">
                             <div class="form-group">
                                 <label asp-for="Email"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <input asp-for="Email" type="text" id="your_name" placeholder="Your Email" />
@@ -45,4 +74,4 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>*@

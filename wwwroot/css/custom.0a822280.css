@@ -4,3 +4,28 @@
 .navbar-brand img {
     height: 3rem;
 }
+
+/*
+    Login Css ----- image1, btn1, forms
+*/
+
+.form-container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px #000;
+    top: 30vh;
+}
+
+.bg {
+    background:url('');
+    width: 100px;
+    height: 100vh;
+    background-size: 200%;
+}
+
+@media only screen and (max-width: 678px){
+    .bg {
+        background-size: 300px;
+    }
+}

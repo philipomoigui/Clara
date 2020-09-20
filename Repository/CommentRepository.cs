@@ -29,10 +29,11 @@ namespace Clara.Repository
 
         public IQueryable<Comment> GetComments(Guid serviceId)
         {
-          return   _applicationDbContext.Comments
-                .AsNoTracking()
-                .Where(c => c.ServiceId == serviceId)
-                .Include(c => c.User);
+            return _applicationDbContext.Comments
+                  .AsNoTracking()
+                  .Where(c => c.ServiceId == serviceId)
+                  .Include(c => c.User)
+                  .OrderByDescending(e => e.Timestamp);
         }
     }
 }
