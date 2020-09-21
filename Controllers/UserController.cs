@@ -44,6 +44,21 @@ namespace Clara.Controllers
         [HttpPost]
         public IActionResult Personal(UserProfileViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                var userId = _userManager.GetUserId(User);
+                var profile = _userRepository.GetUserProfile(userId);
+
+                if (profile == null)
+                    return NotFound();
+
+                profile.FirstName = model.FirstName;
+                profile.LastName = model.LastName;
+                profile.PhoneNumber = model.PhoneNumber;
+
+                _userRepository.UpdateUserProfile(profile);
+                _userRepository.complete();
+            }
 
             return View();
         }

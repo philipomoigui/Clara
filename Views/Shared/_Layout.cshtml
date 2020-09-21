@@ -48,15 +48,14 @@
                     <div class="header__nav">
                         <nav class="header__menu mobile-menu">
                             <ul>
-                                <li class="active"><a href="./index.html">Home</a></li>
-                                <li><a asp-action="Index" asp-controller="Account">Services</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Contact Us</a></li>
+                                <li><a asp-action="Services" asp-controller="Service">Services</a></li>
+                                @*<li><a href="#">Blog</a></li>*@
+                                @*<li><a href="#">Contact Us</a></li>*@
                                 @if (signInManager.IsSignedIn(User))
                                 {
                             <li>
                                 <form asp-action="Logout" asp-controller="Account" method="post">
-                                    <button class="btn-muted" href="#" data-toggle="modal" data-target="#logoutModal">logout</button>
+                                    <input type="submit" class="btn-block" value="Logout" />
                                 </form>
                             </li>
                                 }
@@ -74,7 +73,11 @@
                         </nav>
                         <div class="header__menu__right">
                             <a asp-action="Index" asp-controller="Service" class="primary-btn"><i class="fa fa-plus"></i> Add Services</a>
-                            <a href="#" class="login-btn"><i class="fa fa-user"></i></a>
+                            @if (signInManager.IsSignedIn(User))
+                            {
+                                <a href="#" class="login-btn"><i class="fa fa-user"></i></a>
+                            }
+                            
                         </div>
                     </div>
                 </div>

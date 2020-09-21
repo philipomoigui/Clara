@@ -11,7 +11,7 @@ namespace Clara.Repository.Interface
         Task AddUserProfileAsync(UserProfile userProfile);
         IQueryable<Service> GetUSerServices(string userId);
         UserProfile GetUserProfile(string userId);
-        void UpdateUserProfile(string userId);
+        void UpdateUserProfile(UserProfile userProfile);
         Task<bool> complete();
 
     }

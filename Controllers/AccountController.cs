@@ -49,7 +49,7 @@ namespace Clara.Controllers
 
                     await AddIdentityToUserProfile(model, model.Email);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Account", "User");
                 }
 
                 foreach (var error in result.Errors)
@@ -82,7 +82,7 @@ namespace Clara.Controllers
                     {
                         return LocalRedirect(returnUrl);
                     }
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Account", "User");
                 }
 
                 ModelState.AddModelError("", "Invalid Email or Password");

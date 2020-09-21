@@ -40,9 +40,8 @@ namespace Clara.Repository
                  .OrderBy(s => s.BusinessName);
         }
 
-        public void UpdateUserProfile(string userId)
+        public void UpdateUserProfile(UserProfile userProfile)
         {
-            var userProfile = GetUserProfile(userId);
             _applicationDbContext.Update(userProfile);
 
         }
