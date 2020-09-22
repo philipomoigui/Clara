@@ -16,7 +16,7 @@
             <li class="breadcrumb-item active">Personal info   </li>
         </ol>
         <h1 class="hero-heading mb-0">Personal info</h1>
-        <p class="float-md-right">User ID: @userId</p>
+        <p class="float-md-right">User ID: @Model.UserId</p>
         <p class="text-muted mb-5">Manage your Personal info and settings here.</p>
         <div class="row">
             <div class="col-lg-7">
@@ -31,15 +31,15 @@
                     </div>
                     <p class="text-sm text-muted"><i class="fa fa-id-card fa-fw mr-2"></i>@Model.FullName<br><i class="fa fa-birthday-cake fa-fw mr-2"></i>06/22/1980<br><i class="fa fa-envelope-open fa-fw mr-2"></i>@Model.Email<span class="mx-2"> | </span>  <i class="fa fa-phone fa-fw mr-2"></i>@Model.PhoneNumber</p>
                     <div class="collapse" id="personalDetails">
-                        <form method="post">
+                        <form method="post" asp-action="Personal" asp-controller="User">
                             <div class="row pt-4">
                                 <div class="form-group col-md-6">
-                                    <label asp-for="FullName" class="form-label" for="name">Name</label>
-                                    <input asp-for="FullName" class="form-control" type="text" id="name">
+                                    <label asp-for="FirstName" class="form-label" for="name">Name</label>
+                                    <input asp-for="FirstName" class="form-control" type="text" id="name">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label asp-for="FirstName" class="form-label" for="date">Date of birth</label>
-                                    <input class="form-control" type="text" id="date" value="">
+                                    <label asp-for="LastName" class="form-label" for="date">LastName</label>
+                                    <input asp-for="LastName" class="form-control" type="text" id="date">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label" for="email">Email address</label>
@@ -54,7 +54,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="text-block">
+                <div class="text-block"> 
                     <div class="row mb-3">
                         <div class="col-sm-9">
                             <h5>Address</h5>
@@ -65,30 +65,30 @@
                     </div>
                     <div class="media text-sm text-muted">
                         <i class="fa fa-address-book fa-fw mr-2"></i>
-                        <div class="media-body mt-n1">123 Main St., Apt #7<br>San Francisco, CA, 902 10</div>
+                        <div class="media-body mt-n1">@Model.AddressLine<br>@Model.CityStateZip</div>
                     </div>
                     <div class="collapse" id="address">
-                        <form action="#">
+                        <form asp-action="Personal" asp-controller="User">
                             <div class="row pt-4">
                                 <div class="form-group col-md-6">
-                                    <label asp-for="AddressLine" class="form-label" for="street">Street</label>
-                                    <input asp-for="AddressLine" class="form-control" type="text" name="street" id="street" value="">
+                                    <label asp-for="AddressLine" class="form-label">Street</label>
+                                    <input asp-for="AddressLine" class="form-control" type="text" id="street">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label" for="apt">Apt. (optional)</label>
-                                    <input class="form-control" type="text" name="apt" id="apt" value="">
+                                    <input class="form-control" type="text" id="apt">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label asp-for="City" class="form-label" for="city">City</label>
-                                    <input asp-for="City" class="form-control" type="text" name="city" id="city" value="">
+                                    <label asp-for="City" class="form-label">City</label>
+                                    <input asp-for="City" class="form-control" type="text" id="city">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label asp-for="State" class="form-label" for="state">State</label>
-                                    <input asp-for="State" class="form-control" type="text" name="city" id="city" value="San Francisco">
+                                    <label asp-for="State" class="form-label">State</label>
+                                    <input asp-for="State" class="form-control" type="text" id="city">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label asp-for="ZipCode" class="form-label" for="zip">ZIP</label>
-                                    <input asp-for="ZipCode" class="form-control" type="text" name="zip" id="zip" value="902 10">
+                                    <label asp-for="ZipCode" class="form-label">ZIP</label>
+                                    <input asp-for="ZipCode" class="form-control" type="text" id="zip" >
                                 </div>
                             </div>
                             <button class="btn btn-primary">Save address</button>

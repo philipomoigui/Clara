@@ -19,7 +19,7 @@ namespace Clara.Utility
         public bool IsPreviousPageAvailable => PageIndex > 1;
         public bool IsNextPageAvailable => PageIndex < TotalPages;
 
-        public ServicesPagination<T> Create(IList<T> source, int pageSize, int pageIndex)
+        public static ServicesPagination<T> Create(IList<T> source, int pageSize, int pageIndex)
         {
             var count = source.Count();
             var items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();

@@ -28,5 +28,12 @@ namespace Clara.ViewModels
                 return $"{FirstName} {LastName}";
             }
         }
+        public string CityStateZip
+        {
+            get
+            {
+                return $"{City}, {State}, {ZipCode}";
+            }
+        }
     }
 }

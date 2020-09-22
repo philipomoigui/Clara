@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Clara.Models;
 using Clara.Repository.Interface;
+using Clara.Utility;
 using Clara.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -124,16 +125,30 @@ namespace Clara.Controllers
         }
 
         [HttpGet]
-        public IActionResult Services()
+        public IActionResult Services(int? pageNumber)
         {
            var services = _serviceRepository.GetAllService()
+                .Select(service => new ServicesViewModel
+                {
+                    ServiceId = service.ServiceId,
+                    BusinessName = service.BusinessName,
+                    BusinessEmail = service.BusinessEmail,
+                    AddressLine = service.AddressLine,
+                    City = service.City,
+                    State = service.State,
+                    ZipCode = service.ZipCode,
+                    CategoryId = service.CategoryId,
+                    Category = service.Category
+                })
                 .ToList();
-            ServicesViewModel model = new ServicesViewModel
-            {
-                Services = services
-            };
+            //ServicesViewModel model = new ServicesViewModel
+            //{
+            //    Services = services
+            //};
 
-            return View(model);
+            int pageSize = 3;
+
+            return View(ServicesPagination<ServicesViewModel>.Create(services, pageSize, pageNumber ?? 1));
         }
 
         [HttpGet]
