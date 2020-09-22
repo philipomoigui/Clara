@@ -125,31 +125,32 @@ namespace Clara.Controllers
         }
 
         [HttpGet]
-        public IActionResult Services(int? pageNumber)
+        public IActionResult Services(int? pageNumber, string category, string location, string search)
         {
-           var services = _serviceRepository.GetAllService()
-                .Select(service => new ServicesViewModel
-                {
-                    ServiceId = service.ServiceId,
-                    BusinessName = service.BusinessName,
-                    BusinessEmail = service.BusinessEmail,
-                    AddressLine = service.AddressLine,
-                    City = service.City,
-                    State = service.State,
-                    ZipCode = service.ZipCode,
-                    CategoryId = service.CategoryId,
-                    Category = service.Category
-                })
-                .ToList();
-            //ServicesViewModel model = new ServicesViewModel
-            //{
-            //    Services = services
-            //};
-
             int pageSize = 3;
+            List<ServicesViewModel> services;
+
+            if (string.IsNullOrEmpty(category))
+            {
+                services = _serviceRepository.GetAllService()
+                    .Select(service => _mapper.Map<ServicesViewModel>(service))
+                    .ToList();
+            } else
+            {
+                services = _serviceRepository.GetAllService()
+                    .Where(s => s.Category.CategoryName == category)
+                    .Select(service => _mapper.Map<ServicesViewModel>(service))
+                    .ToList();
+            }
+
+
+
+
+            ViewBag.ServiceCount = services.Count();
 
             return View(ServicesPagination<ServicesViewModel>.Create(services, pageSize, pageNumber ?? 1));
         }
+
 
         [HttpGet]
         public IActionResult Details(Guid serviceId, int categoryId)

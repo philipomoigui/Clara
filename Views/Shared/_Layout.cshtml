@@ -28,6 +28,7 @@
     @*<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">*@
     <link rel="stylesheet" href="~/css/hover-min.css" type="text/css">
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/custom.0a822280.css" rel="stylesheet" />
 </head>
 <body>
     <!-- Page Preloder -->
@@ -48,7 +49,10 @@
                     <div class="header__nav">
                         <nav class="header__menu mobile-menu">
                             <ul>
-                                <li><a asp-action="Services" asp-controller="Service">Services</a></li>
+                                @*<li><a asp-action="Services" asp-controller="Service">Services</a></li>*@
+
+                                @(await Component.InvokeAsync("CategoryMenu")); 
+
                                 @*<li><a href="#">Blog</a></li>*@
                                 @*<li><a href="#">Contact Us</a></li>*@
                                 @if (signInManager.IsSignedIn(User))

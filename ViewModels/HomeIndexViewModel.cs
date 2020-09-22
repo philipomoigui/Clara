@@ -14,6 +14,7 @@ namespace Clara.ViewModels
         public List<Service> PopularPlanner { get; set; }
         public List<Service> PopularAccomodation { get; set; }
         public List<Service> PopularLogistics { get; set; }
+        public List<Category> CategoryList { get; set; }
 
     }
 }
