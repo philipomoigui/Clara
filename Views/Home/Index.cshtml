@@ -15,26 +15,25 @@
                         <p>We Have Got You Covered!!!</p>
                     </div>
                     <div class="hero__search__form">
-                        <form method="POST">
+                        <form method="get" asp-action="Services" asp-controller="Service">
                             <input type="text" placeholder="What Do you need?..." name="search">
 
                             <div class="select__option">
                                 <input type="text" placeholder="Location..." style="width:100%;" name="location">
                             </div>
                             <div class="select__option">
-                                <select name="category">
-                                    <option value="">Choose Category</option>
+                                <select name="category" asp-items="@(new SelectList(Model.CategoryList, "CategoryName", "CategoryName"))">
                                 </select>
                             </div>
                             <button type="submit">Explore Now</button>
                         </form>
                     </div>
                     <ul class="hero__categories__tags">
-                        <li class="hvr-wobble-vertical"><a href="#"><img src="img/hero/cat-1.png" alt=""> Catering</a></li>
-                        <li class="hvr-wobble-horizontal hvr-curl-top-right"><a href="#"><img src="img/hero/cat-2.png" alt=""> Event Planner</a></li>
-                        <li class="hvr-skew-forward"><a href="#"><img src="img/hero/cat-3.png" alt=""> Media & Entertainment</a></li>
-                        <li class="hvr-buzz-out"><a href="#"><img src="img/hero/cat-4.png" alt=""> Halls</a></li>
-                        <li class="hvr-pulse-grow"><a href="#"><img src="img/hero/cat-5.png" alt=""> Accomodation</a></li>
+                        <li class="hvr-float"><a asp-action="Services" asp-controller="Service" asp-route-category="Food and Drinks"><img src="img/hero/cat-1.png" alt=""> Catering</a></li>
+                        <li class="hvr-float"><a href="#"><img src="img/hero/cat-2.png" alt=""> Event Planner</a></li>
+                        <li class="hvr-float"><a href="#"><img src="img/hero/cat-3.png" alt=""> Media & Entertainment</a></li>
+                        <li class="hvr-float"><a href="#"><img src="img/hero/cat-4.png" alt=""> Halls</a></li>
+                        <li class="hvr-float"><a href="#"><img src="img/hero/cat-5.png" alt=""> Accomodation</a></li>
                         <li class="hvr-float"><a href="#"><img src="img/hero/cat-6.png" alt=""> All Categories</a></li>
                     </ul>
                 </div>
@@ -448,7 +447,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4 col-md-6 hvr-pulse-grow">
+            <div class="col-lg-4 col-md-6 hvr-float">
                 <div class="work__item">
                     <div class="work__item__number">01.</div>
                     <img src="img/work/work-1.png" alt="">
@@ -456,7 +455,7 @@
                     <p>You can either search based on the services you need or you search by the location you seek the service. We have got you covered either way.</p>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 hvr-buzz-out">
+            <div class="col-lg-4 col-md-6 hvr-float">
                 <div class="work__item">
                     <div class="work__item__number">02.</div>
                     <img src="img/work/work-2.png" alt="">

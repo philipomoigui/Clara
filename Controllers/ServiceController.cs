@@ -129,23 +129,48 @@ namespace Clara.Controllers
         {
             int pageSize = 3;
             List<ServicesViewModel> services;
+            string serviceTop = string.Empty;
+            var locationIncluded = location ?? "All Location";
 
-            if (string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(location) && !string.IsNullOrEmpty(search))
             {
                 services = _serviceRepository.GetAllService()
+                    .Where(s => s.Category.CategoryName == category && (s.City == location || s.State == location) || s.BusinessName.Contains(search))
                     .Select(service => _mapper.Map<ServicesViewModel>(service))
                     .ToList();
-            } else
+
+                serviceTop = $"{category} in {locationIncluded}";
+            } 
+            
+            else if (!string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(location))
+            {
+                services = _serviceRepository.GetAllService()
+                   .Where(s => s.Category.CategoryName == category && (s.City == location || s.State == location))
+                   .Select(service => _mapper.Map<ServicesViewModel>(service))
+                   .ToList();
+
+                serviceTop = $"{category} in {locationIncluded}";
+            }
+
+            else if (!string.IsNullOrEmpty(category))
             {
                 services = _serviceRepository.GetAllService()
                     .Where(s => s.Category.CategoryName == category)
                     .Select(service => _mapper.Map<ServicesViewModel>(service))
                     .ToList();
+
+                serviceTop = $"{category}";
+            }
+            else
+            {
+                services = _serviceRepository.GetAllService()
+                    .Select(service => _mapper.Map<ServicesViewModel>(service))
+                    .ToList();
+
+                serviceTop = "All Categories";
             }
 
-
-
-
+            ViewBag.servicesTop = serviceTop;
             ViewBag.ServiceCount = services.Count();
 
             return View(ServicesPagination<ServicesViewModel>.Create(services, pageSize, pageNumber ?? 1));

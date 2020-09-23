@@ -27,7 +27,9 @@ namespace Clara.Controllers
         [HttpGet]
         public IActionResult Account()
         {
-
+            var userId = _userManager.GetUserId(User);
+            var userProfile = _userRepository.GetUserProfile(userId);
+            ViewBag.FirstName = userProfile.FirstName;
             return View();
         }
 

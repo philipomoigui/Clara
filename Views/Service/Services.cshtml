@@ -6,7 +6,7 @@
 <div class="container-fluid py-5 px-lg-5">
     <div class="row border-bottom mb-4">
         <div class="col-12">
-            <h1 class="display-4 font-weight-bold text-serif mb-4">Eat in Manhattan, NY</h1>
+            <h1 class="display-4 font-weight-bold text-serif mb-4">@ViewBag.servicesTop</h1>
         </div>
     </div>
     <div class="row">
@@ -212,9 +212,12 @@
             </div>
             <!--Pagination-->
 
+            @if (ViewBag.ServiceCount > 3)
+            {
+                <a asp-action="Services" asp-controller="Service" asp-route-PageNumber="@(Model.PageIndex - 1)" class="btn btn-primary @disablePrevious">Previous</a>
+                <a asp-action="Services" asp-controller="Service" asp-route-PageNumber="@(Model.PageIndex + 1)" class="btn btn-primary @disableNext">Next</a>
+            }
 
-            <a asp-action="Services" asp-controller="Service" asp-route-PageNumber="@(Model.PageIndex - 1)" class="btn btn-primary @disablePrevious">Previous</a>
-            <a asp-action="Services" asp-controller="Service" asp-route-PageNumber="@(Model.PageIndex + 1)" class="btn btn-primary @disableNext">Next</a>
 
             @*<nav aria-label="Page navigation example">
             <ul class="pagination pagination-template d-flex justify-content-center">

@@ -51,17 +51,23 @@
                             <ul>
                                 @*<li><a asp-action="Services" asp-controller="Service">Services</a></li>*@
 
-                                @(await Component.InvokeAsync("CategoryMenu")); 
+                                @(await Component.InvokeAsync("CategoryMenu"));
 
                                 @*<li><a href="#">Blog</a></li>*@
                                 @*<li><a href="#">Contact Us</a></li>*@
                                 @if (signInManager.IsSignedIn(User))
                                 {
-                            <li>
-                                <form asp-action="Logout" asp-controller="Account" method="post">
-                                    <input type="submit" class="btn-block" value="Logout" />
-                                </form>
-                            </li>
+                                    <li>
+                                        <a asp-action="Account" asp-controller="User"><i class="fa fa-user"></i>  Dashboard</a>
+
+                                    </li>
+
+                                    <li>
+                                        <form asp-action="Logout" asp-controller="Account" method="post">
+                                            <input type="submit" class="btn-primary rounded bg-white text-black-50 border-0" value="Logout" />
+                                        </form>
+                                    </li>
+
                                 }
                                 else
                                 {
@@ -77,11 +83,13 @@
                         </nav>
                         <div class="header__menu__right">
                             <a asp-action="Index" asp-controller="Service" class="primary-btn"><i class="fa fa-plus"></i> Add Services</a>
+
                             @if (signInManager.IsSignedIn(User))
                             {
+                                
                                 <a href="#" class="login-btn"><i class="fa fa-user"></i></a>
                             }
-                            
+
                         </div>
                     </div>
                 </div>

@@ -19,19 +19,5 @@ namespace Clara.Repository
         }
 
         public IEnumerable<Category> GetAllCategories => _applicationDbContext.Categories;
-
-        public IEnumerable<SelectListItem> GetCategoriesList()
-        {
-            throw new NotImplementedException();
-        }
-
-        //public IEnumerable<SelectListItem> GetCategoriesList()
-        //{
-        //    var categories = _applicationDbContext.Categories.OrderBy(c => c.CategoryName).ToList();
-
-        //    categories.Insert(0, new Category { CategoryId = 0, CategoryName = "--- Select A Category ---" });
-
-        //    return categories;
-        //}
     }
 }

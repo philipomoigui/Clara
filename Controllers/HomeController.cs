@@ -31,8 +31,8 @@ namespace Clara.Controllers
 
         public IActionResult Index()
         {
-            //var categoryList = _categoryRepository.GetAllCategories.OrderBy(c => c.CategoryName).ToList();
-            //categoryList.Insert(0, new Category { CategoryId = 0, CategoryName = "--- Select Category --- " });
+            var categoryList = _categoryRepository.GetAllCategories.OrderBy(c => c.CategoryName).ToList();
+            categoryList.Insert(0, new Category { CategoryId = 0, CategoryName = "Select Category" });
 
             HomeIndexViewModel model = new HomeIndexViewModel
             {
@@ -41,7 +41,7 @@ namespace Clara.Controllers
                 PopularPlanner = _homeRepository.GetPopularCategory(235).ToList(),
                 PopularFood = _homeRepository.GetPopularCategory(236).ToList(),
                 PopularAccomodation = _homeRepository.GetPopularCategory(237).ToList(),
-                //CategoryList = categoryList
+                CategoryList = categoryList
             };
 
             return View(model);

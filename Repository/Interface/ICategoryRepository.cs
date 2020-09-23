@@ -10,6 +10,5 @@ namespace Clara.Repository.Interface
     public interface ICategoryRepository
     {
         IEnumerable<Category> GetAllCategories { get;}
-        IEnumerable<SelectListItem> GetCategoriesList();
     }
 }

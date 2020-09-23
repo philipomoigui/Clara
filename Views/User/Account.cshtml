@@ -9,10 +9,10 @@
     <div class="container">
         <!-- Breadcrumbs -->
         <ol class="breadcrumb #{breadcrumbClass}">
-            <li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
+            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
             <li class="breadcrumb-item active">Your account   </li>
         </ol>
-        <h1 class="hero-heading mb-0">Welcome, </h1>
+        <h1 class="hero-heading mb-0">Welcome, @ViewBag.firstName.</h1>
         <p class="text-muted mb-5">Manage your account and settings here.</p>
         <div class="row">
             <div class="col-6 col-md-4 mb-30px">
