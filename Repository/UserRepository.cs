@@ -35,8 +35,10 @@ namespace Clara.Repository
 
         public IQueryable<Service> GetUSerServices(string userId)
         {
-            return _applicationDbContext.Services.Where(u => u.UserId == userId)
+            return _applicationDbContext.Services
+                .Where(u => u.UserId == userId)
                  .AsNoTracking()
+                 .Include(s => s.Category)
                  .OrderBy(s => s.BusinessName);
         }
 

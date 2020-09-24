@@ -175,8 +175,9 @@
                 {
                     <!-- venue item-->
                     <div class="col-sm-6 col-xl-4 mb-5 hover-animate" data-marker-id="59c0c8e33b1527bfe2abaf92">
-                        <div class="card h-100 border-0 shadow">
-                            <div class="card-img-top overflow-hidden dark-overlay bg-cover" style="background-image: url(../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/photo/restaurant-1430931071372-38127bd472b8.jpg); min-height: 200px;">
+                        <div class="card border-0 shadow">
+                            <div class="card-img-top overflow-hidden dark-overlay bg-cover">
+                                <img src="~/img/listing/list-4.jpg" class="card-img" alt="Alternate Text" />
                                 <a class="tile-link" asp-action="Details" asp-controller="Service" asp-route-serviceId="@service.ServiceId" asp-route-categoryId="@service.CategoryId"></a>
                                 <div class="card-img-overlay-bottom z-index-20">
                                     <h4 class="text-white text-shadow">@service.BusinessName</h4>
@@ -214,8 +215,11 @@
 
             @if (ViewBag.ServiceCount > 3)
             {
-                <a asp-action="Services" asp-controller="Service" asp-route-PageNumber="@(Model.PageIndex - 1)" class="btn btn-primary @disablePrevious">Previous</a>
-                <a asp-action="Services" asp-controller="Service" asp-route-PageNumber="@(Model.PageIndex + 1)" class="btn btn-primary @disableNext">Next</a>
+                <ul class="justify-content-center d-flex pagination p-5">
+                    <li class="page-item"><a asp-action="Services" asp-controller="Service" asp-route-PageNumber="@(Model.PageIndex - 1)" class="btn btn-primary rounded-pill @disablePrevious">Prev</a></li>
+                    <li class="page-item"><h6 class="mt-2 pt-2 pl-2 pr-2">Page @Model.PageIndex of @Model.TotalPages</h6></li>
+                    <li class="page-item"><a asp-action="Services" asp-controller="Service" asp-route-PageNumber="@(Model.PageIndex + 1)" class="btn btn-primary rounded-pill @disableNext">Next</a></li>
+                </ul>
             }
 
 

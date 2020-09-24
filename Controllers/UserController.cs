@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Clara.Extension_Methods;
 using Clara.Models;
 using Clara.Repository.Interface;
 using Clara.ViewModels;
@@ -29,7 +30,7 @@ namespace Clara.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var userProfile = _userRepository.GetUserProfile(userId);
-            ViewBag.FirstName = userProfile.FirstName;
+            ViewBag.FirstName = userProfile.FirstName.Capitalize();
             return View();
         }
 
@@ -71,12 +72,48 @@ namespace Clara.Controllers
                     profile.State = model.State;
 
                 }
+
+                if(model.About != null)
+                {
+                    profile.About = model.About;
+                }
+
                 _userRepository.UpdateUserProfile(profile);
                 await _userRepository.complete();
                 return RedirectToAction("Personal", new { Id = userId});
             }
 
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            var Id = _userManager.GetUserId(User);
+            var userProfile = _userRepository.GetUserProfile(Id);
+            var userServices = _userRepository.GetUSerServices(Id).ToList();
+
+            if (userProfile == null)
+                return NotFound();
+
+            var model = _mapper.Map<UserProfileViewModel>(userProfile);
+            model.Services = userServices;
+            model.UserId = UserIdReform(Id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async void Profile(string about)
+        {
+            if (!string.IsNullOrEmpty(about))
+            {
+                var userId = _userManager.GetUserId(User);
+                var profile = _userRepository.GetUserProfile(userId);
+                profile.About = about;
+                _userRepository.UpdateUserProfile(profile);
+                await _userRepository.complete();
+            }
         }
 
         public string UserIdReform(string userId)

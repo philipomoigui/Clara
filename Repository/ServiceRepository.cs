@@ -54,5 +54,6 @@ namespace Clara.Repository
             var updateService = GetServiceById(service.ServiceId);
             _applicationDbContext.Services.Update(updateService);
         }
+
     }
 }

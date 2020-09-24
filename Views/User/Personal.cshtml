@@ -11,8 +11,8 @@
     <div class="container">
         <!-- Breadcrumbs -->
         <ol class="breadcrumb pl-0  justify-content-start">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Account</a></li>
+            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
+            <li class="breadcrumb-item"><a asp-action="Account" asp-controller="User">Account</a></li>
             <li class="breadcrumb-item active">Personal info   </li>
         </ol>
         <h1 class="hero-heading mb-0">Personal info</h1>
@@ -29,7 +29,7 @@
                             <button class="btn btn-link pl-0 text-primary collapsed" type="button" data-toggle="collapse" data-target="#personalDetails" aria-expanded="false" aria-controls="personalDetails">Update</button>
                         </div>
                     </div>
-                    <p class="text-sm text-muted"><i class="fa fa-id-card fa-fw mr-2"></i>@Model.FullName<br><i class="fa fa-birthday-cake fa-fw mr-2"></i>06/22/1980<br><i class="fa fa-envelope-open fa-fw mr-2"></i>@Model.Email<span class="mx-2"> | </span>  <i class="fa fa-phone fa-fw mr-2"></i>@Model.PhoneNumber</p>
+                    <p class="text-sm text-muted"><i class="fa fa-id-card fa-fw mr-2"></i>@Model.FullName.Capitalize()<br><i class="fa fa-birthday-cake fa-fw mr-2"></i>06/22/1980<br><i class="fa fa-envelope-open fa-fw mr-2"></i>@Model.Email<span class="mx-2"> | </span>  <i class="fa fa-phone fa-fw mr-2"></i>@Model.PhoneNumber</p>
                     <div class="collapse" id="personalDetails">
                         <form method="post" asp-action="Personal" asp-controller="User">
                             <div class="row pt-4">
@@ -43,12 +43,16 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label" for="email">Email address</label>
-                                    <input asp-for="Email" disabled class="form-control" type="email" id="email"/>
+                                    <input asp-for="Email" disabled class="form-control" type="email" id="email" />
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-label" asp-for="PhoneNumber"></label>
                                     <input class="form-control" type="text" asp-for="PhoneNumber" id="phone">
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="review">About You *</label>
+                                <textarea class="form-control" rows="4" name="review" id="review" placeholder="Enter A Short Description About you" required="required"></textarea>
                             </div>
                             <button class="btn btn-outline-primary mb-4" type="submit">Save your personal details</button>
                         </form>
@@ -88,7 +92,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label asp-for="ZipCode" class="form-label">ZIP</label>
-                                    <input asp-for="ZipCode" class="form-control" type="text" id="zip" >
+                                    <input asp-for="ZipCode" class="form-control" type="text" id="zip">
                                 </div>
                             </div>
                             <button class="btn btn-primary">Save address</button>
