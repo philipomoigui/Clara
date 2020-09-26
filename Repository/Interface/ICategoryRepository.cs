@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Clara.Repository.Interface
 {
-    public interface ICategoryRepository
+    public interface ICategoryRepository : IRepositoryBase<Category>
     {
         IEnumerable<Category> GetAllCategories { get;}
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Clara.Repository.Interface
 {
-    public interface ICommentRepository
+    public interface ICommentRepository : IRepositoryBase<Comment>
     {
         Task AddCommentAsync(Comment comment);
         IQueryable<Comment> GetComments(Guid serviceId);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Clara.DataAccess;
+using Clara.Extension_Methods;
 using Clara.Models;
 using Clara.Repository;
 using Clara.Repository.Interface;
@@ -30,6 +31,7 @@ namespace Clara
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureRepositoryManager();
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddIdentity<ApplicationUser, IdentityRole>(options => {
@@ -41,11 +43,11 @@ namespace Clara
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddAutoMapper(typeof(Startup));
-            services.AddScoped<IServicesRepository, ServiceRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<ICommentRepository, CommentRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IHomeRepository, HomeRepository>();
+            //services.AddScoped<IServicesRepository, ServiceRepository>();
+            //services.AddScoped<ICategoryRepository, CategoryRepository>();
+            //services.AddScoped<ICommentRepository, CommentRepository>();
+            //services.AddScoped<IUserRepository, UserRepository>();
+            //services.AddScoped<IHomeRepository, HomeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

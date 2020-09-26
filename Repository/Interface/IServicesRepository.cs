@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace Clara.Repository.Interface
 {
-    public interface IServicesRepository
+    public interface IServicesRepository: IRepositoryBase<Service>
     {
-        IQueryable<Service> GetAllService();
-        Service GetServiceById(Guid serviceId);
-        Task CreateServiceAsync(Service service);
+        IEnumerable<Service> GetAllService();
+        Task<Service> GetServiceById(Guid serviceId);
+        void CreateService(Service service);
         void UpdateService(Service service);
-        void DeleteService(Guid id);
-        Task<bool> SaveAsync();
+        void DeleteService(Service service);
+        public IEnumerable<Service> GetServicesByCategory(string category);
+        public IEnumerable<Service> GetServicesByLocation(string category, string location);
+        public IEnumerable<Service> GetServicesByLocationAndSearch(string category, string location, string search);
     }
 }

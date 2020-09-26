@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Clara.Repository
 {
-    public class CommentRepository : ICommentRepository
+    public class CommentRepository : RepositoryBase<Comment>, ICommentRepository
     {
         private readonly ApplicationDbContext _applicationDbContext;
 
-        public CommentRepository(ApplicationDbContext applicationDbContext)
+        public CommentRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
         }

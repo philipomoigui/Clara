@@ -9,51 +9,58 @@ using System.Threading.Tasks;
 
 namespace Clara.Repository
 {
-    public class ServiceRepository : IServicesRepository
+    public class ServiceRepository : RepositoryBase<Service>, IServicesRepository
     {
         private readonly ApplicationDbContext _applicationDbContext;
 
         
 
-        public ServiceRepository(ApplicationDbContext applicationDbContext)
+        public ServiceRepository(ApplicationDbContext applicationDbContext) :base(applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
         }
 
-        public async Task CreateServiceAsync(Service service)
+        public void CreateService(Service service)
         {
-            await _applicationDbContext.Services.AddAsync(service);
+            Create(service);
         }
 
-        public void DeleteService(Guid id)
+        public void DeleteService(Service service)
         {
-            var service = GetServiceById(id);
-            _applicationDbContext.Services.Remove(service);
+            Delete(service);
         }
 
-        public IQueryable<Service> GetAllService() => _applicationDbContext.Services
-            .AsNoTracking()
-            .Include(s => s.Category);
-        
+        public IEnumerable<Service> GetAllService() =>  FindAll()
+            .Include(s => s.Category)
+            .ToList();
 
-        public Service GetServiceById(Guid serviceId)
+        public IEnumerable<Service> GetServicesByLocationAndSearch(string category, string location, string search)
         {
-           return  _applicationDbContext.Services
-                .AsNoTracking()
+            return FindByCondition(s => s.Category.CategoryName.Equals(category) && (s.City.Equals(location) || s.State.Equals(location)) && s.BusinessName.Contains(search));
+            
+        }
+
+        public async Task<Service> GetServiceById(Guid serviceId)
+        {
+            return await FindByCondition(s => s.ServiceId.Equals(serviceId))
                 .Include(s => s.Category)
-                .FirstOrDefault(s => s.ServiceId == serviceId);
-        }
-
-        public async Task<bool> SaveAsync()
-        {
-            return (await _applicationDbContext.SaveChangesAsync() >= 0);
+                .FirstOrDefaultAsync();
         }
 
         public void UpdateService(Service service)
         {
-            var updateService = GetServiceById(service.ServiceId);
-            _applicationDbContext.Services.Update(updateService);
+            _applicationDbContext.Services.Update(service);
         }
 
+        public IEnumerable<Service> GetServicesByLocation(string category, string location)
+        {
+           return FindByCondition(s => s.Category.CategoryName.Equals(category) && (s.City.Equals(location) || s.State.Equals(location)))
+                .Include(s => s.Category);
+        }
+
+        public IEnumerable<Service> GetServicesByCategory(string category)
+        {
+            return FindByCondition(s => s.Category.CategoryName.Equals(category));
+        }
     }
 }

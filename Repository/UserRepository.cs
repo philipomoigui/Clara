@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Clara.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : RepositoryBase<UserProfile>, IUserRepository
     {
         private readonly ApplicationDbContext _applicationDbContext;
 
-        public UserRepository(ApplicationDbContext applicationDbContext)
+        public UserRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
         }

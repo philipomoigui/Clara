@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Clara.Repository.Interface
 {
-    public interface IUserRepository
+    public interface IUserRepository: IRepositoryBase<UserProfile>
     {
         Task AddUserProfileAsync(UserProfile userProfile);
         IQueryable<Service> GetUSerServices(string userId);

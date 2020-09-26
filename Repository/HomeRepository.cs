@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Clara.Repository
 {
-    public class HomeRepository : IHomeRepository
+    public class HomeRepository : RepositoryBase<Service>, IHomeRepository
     {
         private readonly ApplicationDbContext _applicationDbContext;
 
-        public HomeRepository(ApplicationDbContext applicationDbContext)
+        public HomeRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
         }

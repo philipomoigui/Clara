@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Clara.Repository.Interface
 {
-    public interface IHomeRepository
+    public interface IHomeRepository: IRepositoryBase<Service>
     {
         IQueryable<Service> GetPopularCategory(int categoryId);
     }
