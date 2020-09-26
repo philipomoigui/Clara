@@ -1,4 +1,10 @@
-﻿<section class="py-5">
+﻿@model UserSecurityViewModel
+@{ 
+    Layout = "_PagesLayout";
+}
+
+
+<section class="py-5">
     <div class="container">
         <!-- Breadcrumbs -->
         <ol class="breadcrumb pl-0  justify-content-start">
@@ -22,21 +28,26 @@
                         </div>
                     </div>
                     <div class="collapse" id="updatePassword">
-                        <div class="row mt-4">
-                            <div class="form-group col-12">
-                                <label class="form-label" for="password-current">Current Password</label>
-                                <input class="form-control" type="password" name="password-current" id="password-current">
+                        <form asp-action="Security" asp-controller="User" method="post">
+                            <div class="row mt-4">
+                                <div class="form-group col-12">
+                                    <label class="form-label" asp-for="CurrentPassword">Current Password</label>
+                                    <input class="form-control" type="password" asp-for="CurrentPassword" id="password-current">
+                                    <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" asp-for="NewPassword">New Password</label>
+                                    <input class="form-control" type="password" asp-for="NewPassword" id="password-new">
+                                    <span asp-validation-for="NewPassword" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" asp-for="ConfirmPassword">Confirm Password</label>
+                                    <input class="form-control" type="password" asp-for="ConfirmPassword" id="password-confirm">
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label class="form-label" for="password-new">New Password</label>
-                                <input class="form-control" type="password" name="password-new" id="password-new">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="form-label" for="password-confirm">Confirm Password</label>
-                                <input class="form-control" type="password" name="password-confirm" id="password-confirm">
-                            </div>
-                        </div>
-                        <button class="btn btn-outline-primary">Update Password</button>
+                            <button class="btn btn-outline-primary" type="submit">Update Password</button>
+                        </form>
                     </div>
                 </div>
                 <div class="text-block">

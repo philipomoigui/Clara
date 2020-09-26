@@ -17,12 +17,14 @@ namespace Clara.Controllers
         private readonly IMapper _mapper;
         private readonly IRepositoryManager _repositoryManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public UserController(IMapper mapper, IRepositoryManager repositoryManager, UserManager<ApplicationUser> userManager)
+        public UserController(IMapper mapper, IRepositoryManager repositoryManager, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _mapper = mapper;
             _repositoryManager = repositoryManager;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -114,6 +116,42 @@ namespace Clara.Controllers
                 _repositoryManager.UserProfile.UpdateUserProfile(profile);
                 await _repositoryManager.saveAsync();
             }
+        }
+
+        [HttpGet]
+        public IActionResult Security()
+        {
+            
+            return View();
+        }
+
+        [HttpPost]
+        public async  Task<IActionResult> Security(UserSecurityViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    RedirectToAction("Login", "Account");
+                }
+
+               var result = await  _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+                if (result.Succeeded)
+                {
+                    await _signInManager.RefreshSignInAsync(user);
+                    RedirectToAction(nameof(Security));
+                }
+
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+
+            return View(model);
         }
 
         public string UserIdReform(string userId)

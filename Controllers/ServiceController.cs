@@ -65,9 +65,9 @@ namespace Clara.Controllers
         }
 
         [HttpGet]
-        public IActionResult Detail(Guid id)
+        public async Task<IActionResult> Detail(Guid id)
         {
-            var service = _repositoryManager.Service.GetServiceById(id);
+            var service = await _repositoryManager.Service.GetServiceById(id);
             if (service == null)
                 return NotFound();
 
@@ -94,11 +94,6 @@ namespace Clara.Controllers
 
             if (!string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(location) && !string.IsNullOrEmpty(search))
             {
-                //services = _serviceRepository.GetAllService()
-                //    .Where(s => s.Category.CategoryName == category && (s.City == location || s.State == location) || s.BusinessName.Contains(search))
-                //    .Select(service => _mapper.Map<ServicesViewModel>(service))
-                //    .ToList();
-
                 services = _repositoryManager.Service.GetServicesByLocationAndSearch(category, location, search)
                     .Select(service => _mapper.Map<ServicesViewModel>(service))
                     .ToList();
@@ -109,11 +104,6 @@ namespace Clara.Controllers
             
             else if (!string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(location))
             {
-                //services = _serviceRepository.GetAllService()
-                //   .Where(s => s.Category.CategoryName == category && (s.City == location || s.State == location))
-                //   .Select(service => _mapper.Map<ServicesViewModel>(service))
-                //   .ToList();
-
                 services = _repositoryManager.Service.GetServicesByLocation(category, location)
                     .Select(service => _mapper.Map<ServicesViewModel>(service))
                     .ToList();
@@ -123,11 +113,6 @@ namespace Clara.Controllers
 
             else if (!string.IsNullOrEmpty(category))
             {
-                //services = _serviceRepository.GetAllService()
-                //    .Where(s => s.Category.CategoryName == category)
-                //    .Select(service => _mapper.Map<ServicesViewModel>(service))
-                //    .ToList();
-
                 services = _repositoryManager.Service.GetServicesByCategory(category)
                     .Select(service => _mapper.Map<ServicesViewModel>(service))
                     .ToList();
@@ -136,10 +121,6 @@ namespace Clara.Controllers
             }
             else
             {
-                //services = _serviceRepository.GetAllService()
-                //    .Select(service => _mapper.Map<ServicesViewModel>(service))
-                //    .ToList();
-
                 services = _repositoryManager.Service.GetAllService()
                     .Select(service => _mapper.Map<ServicesViewModel>(service))
                     .ToList();
@@ -157,7 +138,6 @@ namespace Clara.Controllers
         [HttpGet]
         public async  Task<IActionResult> Details(Guid serviceId, int categoryId)
         {
-            //var service = _serviceRepository.GetServiceById(serviceId);
             var service = await _repositoryManager.Service.GetServiceById(serviceId);
             if (service == null)
                 return NotFound();
@@ -198,8 +178,6 @@ namespace Clara.Controllers
                 _repositoryManager.Comment.AddComment(comment);
                 await _repositoryManager.saveAsync();
                 return RedirectToAction(nameof(Details), new {serviceId = model.ServiceId, categoryId = model.CategoryId });
-                //RedirectToAction("Services");
-                //return View();
             }
 
             return View(model);

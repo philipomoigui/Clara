@@ -56,8 +56,9 @@ namespace Clara.Repository
 
         public IEnumerable<Service> GetServicesByLocation(string category, string location)
         {
-           return FindByCondition(s => s.Category.CategoryName.Equals(category) && (s.City.Equals(location) || s.State.Equals(location)))
-                .Include(s => s.Category);
+            return FindByCondition(s => s.Category.CategoryName.Equals(category) && (s.City.Equals(location) || s.State.Equals(location)))
+                 .Include(s => s.Category)
+                 .ToList();
         }
 
         public IEnumerable<Service> GetServicesByCategory(string category)
