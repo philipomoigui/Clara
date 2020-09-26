@@ -17,21 +17,14 @@ namespace Clara.Repository
         {
             _applicationDbContext = applicationDbContext;
         }
-        public async Task AddCommentAsync(Comment comment)
+        public void AddComment(Comment comment)
         {
-            await _applicationDbContext.AddAsync(comment);
+            Create(comment);
         }
 
-        public async Task<bool> CompleteAsync()
+        public IEnumerable<Comment> GetComments(Guid serviceId)
         {
-            return (await _applicationDbContext.SaveChangesAsync() >= 0 );
-        }
-
-        public IQueryable<Comment> GetComments(Guid serviceId)
-        {
-            return _applicationDbContext.Comments
-                  .AsNoTracking()
-                  .Where(c => c.ServiceId == serviceId)
+            return FindByCondition(c => c.ServiceId == serviceId)
                   .Include(c => c.User)
                   .OrderByDescending(e => e.Timestamp);
         }

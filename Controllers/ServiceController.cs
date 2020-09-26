@@ -34,7 +34,7 @@ namespace Clara.Controllers
         {
             CreateServiceViewModel model = new CreateServiceViewModel();
 
-            var categoryList = _categoryRepository.GetAllCategories.OrderBy(c => c.CategoryName).ToList();
+            var categoryList = _repositoryManager.Category.GetAllCategories.OrderBy(c => c.CategoryName).ToList();
 
             categoryList.Insert(0, new Category { CategoryId = 0, CategoryName = "--- Select A Category ---" });
 
@@ -169,7 +169,7 @@ namespace Clara.Controllers
                 .ToList();
 
             //Comments
-            var comments = _commentRepository.GetComments(serviceId).ToList();
+            var comments = _repositoryManager.Comment.GetComments(serviceId).ToList();
 
             DetailsViewModel model = new DetailsViewModel
             {
@@ -195,8 +195,8 @@ namespace Clara.Controllers
                     ServiceId = model.ServiceId
                 };
 
-                await _commentRepository.AddCommentAsync(comment);
-                await _commentRepository.CompleteAsync();
+                _repositoryManager.Comment.AddComment(comment);
+                await _repositoryManager.saveAsync();
                 return RedirectToAction(nameof(Details), new {serviceId = model.ServiceId, categoryId = model.CategoryId });
                 //RedirectToAction("Services");
                 //return View();

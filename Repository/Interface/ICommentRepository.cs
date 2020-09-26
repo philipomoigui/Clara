@@ -8,9 +8,8 @@ namespace Clara.Repository.Interface
 {
     public interface ICommentRepository : IRepositoryBase<Comment>
     {
-        Task AddCommentAsync(Comment comment);
-        IQueryable<Comment> GetComments(Guid serviceId);
-        Task<bool> CompleteAsync();
+        void AddComment(Comment comment);
+        IEnumerable<Comment> GetComments(Guid serviceId);
 
     }
 }

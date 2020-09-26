@@ -9,15 +9,15 @@ namespace Clara.Components
 {
     public class CategoryMenu: ViewComponent
     {
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly IRepositoryManager _repositoryManager;
 
-        public CategoryMenu(ICategoryRepository categoryRepository)
+        public CategoryMenu(IRepositoryManager repositoryManager)
         {
-            _categoryRepository = categoryRepository;
+            _repositoryManager = repositoryManager;
         }
         public IViewComponentResult Invoke()
         {
-           var categories =  _categoryRepository.GetAllCategories.OrderBy(category => category.CategoryName);
+           var categories =  _repositoryManager.Category.GetAllCategories.OrderBy(category => category.CategoryName);
             return View(categories);
         }
     }

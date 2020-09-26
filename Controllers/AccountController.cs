@@ -14,13 +14,13 @@ namespace Clara.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IUserRepository _userRepository;
+        private readonly IRepositoryManager _repositoryManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserRepository userRepository)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IRepositoryManager repositoryManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _userRepository = userRepository;
+            _repositoryManager = repositoryManager;
         }
 
         [HttpGet]
@@ -111,8 +111,8 @@ namespace Clara.Controllers
                 UserId = userId
             };
 
-            await _userRepository.AddUserProfileAsync(userProfile);
-            await _userRepository.complete();
+            _repositoryManager.UserProfile.AddUserProfile(userProfile);
+            await _repositoryManager.saveAsync();
         }
 
     }

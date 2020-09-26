@@ -15,13 +15,13 @@ namespace Clara.Controllers
     public class UserController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly IUserRepository _userRepository;
+        private readonly IRepositoryManager _repositoryManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserController(IMapper mapper, IUserRepository userRepository, UserManager<ApplicationUser> userManager)
+        public UserController(IMapper mapper, IRepositoryManager repositoryManager, UserManager<ApplicationUser> userManager)
         {
             _mapper = mapper;
-            _userRepository = userRepository;
+            _repositoryManager = repositoryManager;
             _userManager = userManager;
         }
 
@@ -29,7 +29,7 @@ namespace Clara.Controllers
         public IActionResult Account()
         {
             var userId = _userManager.GetUserId(User);
-            var userProfile = _userRepository.GetUserProfile(userId);
+            var userProfile = _repositoryManager.UserProfile.GetUserProfile(userId);
             ViewBag.FirstName = userProfile.FirstName.Capitalize();
             return View();
         }
@@ -37,7 +37,7 @@ namespace Clara.Controllers
         [HttpGet]
         public IActionResult Personal(string Id)
         {
-           var userProfile = _userRepository.GetUserProfile(Id);
+            var userProfile = _repositoryManager.UserProfile.GetUserProfile(Id);
 
             if (userProfile == null)
                 return NotFound();
@@ -54,7 +54,7 @@ namespace Clara.Controllers
             if (ModelState.IsValid)
             {
                 var userId = _userManager.GetUserId(User);
-                var profile = _userRepository.GetUserProfile(userId);
+                var profile = _repositoryManager.UserProfile.GetUserProfile(userId);
 
                 if (profile == null)
                     return NotFound();
@@ -78,8 +78,8 @@ namespace Clara.Controllers
                     profile.About = model.About;
                 }
 
-                _userRepository.UpdateUserProfile(profile);
-                await _userRepository.complete();
+                _repositoryManager.UserProfile.UpdateUserProfile(profile);
+                await _repositoryManager.saveAsync();
                 return RedirectToAction("Personal", new { Id = userId});
             }
 
@@ -90,8 +90,8 @@ namespace Clara.Controllers
         public IActionResult Profile()
         {
             var Id = _userManager.GetUserId(User);
-            var userProfile = _userRepository.GetUserProfile(Id);
-            var userServices = _userRepository.GetUSerServices(Id).ToList();
+            var userProfile = _repositoryManager.UserProfile.GetUserProfile(Id);
+            var userServices = _repositoryManager.Service.GetUSerServices(Id).ToList();
 
             if (userProfile == null)
                 return NotFound();
@@ -109,10 +109,10 @@ namespace Clara.Controllers
             if (!string.IsNullOrEmpty(about))
             {
                 var userId = _userManager.GetUserId(User);
-                var profile = _userRepository.GetUserProfile(userId);
+                var profile = _repositoryManager.UserProfile.GetUserProfile(userId);
                 profile.About = about;
-                _userRepository.UpdateUserProfile(profile);
-                await _userRepository.complete();
+                _repositoryManager.UserProfile.UpdateUserProfile(profile);
+                await _repositoryManager.saveAsync();
             }
         }
 

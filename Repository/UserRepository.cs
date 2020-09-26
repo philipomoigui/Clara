@@ -18,34 +18,28 @@ namespace Clara.Repository
             _applicationDbContext = applicationDbContext;
         }
 
-        public async Task AddUserProfileAsync(UserProfile userProfile)
+        public void AddUserProfile(UserProfile userProfile)
         {
-            await _applicationDbContext.UserProfiles.AddAsync(userProfile);
-        }
-
-        public async Task<bool> complete()
-        {
-            return (await _applicationDbContext.SaveChangesAsync() >= 0);
+            Create(userProfile);
         }
 
         public UserProfile GetUserProfile(string userId)
         {
-           return  _applicationDbContext.UserProfiles.FirstOrDefault(u => u.UserId == userId);
+            return FindByCondition(u => u.UserId == userId).FirstOrDefault();
         }
 
-        public IQueryable<Service> GetUSerServices(string userId)
-        {
-            return _applicationDbContext.Services
-                .Where(u => u.UserId == userId)
-                 .AsNoTracking()
-                 .Include(s => s.Category)
-                 .OrderBy(s => s.BusinessName);
-        }
+        //public IQueryable<Service> GetUSerServices(string userId)
+        //{
+        //    return _applicationDbContext.Services
+        //        .Where(u => u.UserId == userId)
+        //         .AsNoTracking()
+        //         .Include(s => s.Category)
+        //         .OrderBy(s => s.BusinessName);
+        //}
 
         public void UpdateUserProfile(UserProfile userProfile)
         {
-            _applicationDbContext.Update(userProfile);
-
+            Update(userProfile);
         }
     }
 }
