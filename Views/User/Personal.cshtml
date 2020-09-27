@@ -5,6 +5,8 @@
     Layout = "_PagesLayout";
     var email = appUser.GetUserName(User);
     var userId = appUser.GetUserId(User);
+    TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+    var fullName = textInfo.ToTitleCase(Model.FullName);
 }
 
 <section class="py-5">
@@ -29,7 +31,7 @@
                             <button class="btn btn-link pl-0 text-primary collapsed" type="button" data-toggle="collapse" data-target="#personalDetails" aria-expanded="false" aria-controls="personalDetails">Update</button>
                         </div>
                     </div>
-                    <p class="text-sm text-muted"><i class="fa fa-id-card fa-fw mr-2"></i>@Model.FullName.Capitalize()<br><i class="fa fa-birthday-cake fa-fw mr-2"></i>06/22/1980<br><i class="fa fa-envelope-open fa-fw mr-2"></i>@Model.Email<span class="mx-2"> | </span>  <i class="fa fa-phone fa-fw mr-2"></i>@Model.PhoneNumber</p>
+                    <p class="text-sm text-muted"><i class="fa fa-id-card fa-fw mr-2"></i>@fullName<br><i class="fa fa-birthday-cake fa-fw mr-2"></i>06/22/1980<br><i class="fa fa-envelope-open fa-fw mr-2"></i>@Model.Email<span class="mx-2"> | </span>  <i class="fa fa-phone fa-fw mr-2"></i>@Model.PhoneNumber</p>
                     <div class="collapse" id="personalDetails">
                         <form method="post" asp-action="Personal" asp-controller="User">
                             <div class="row pt-4">

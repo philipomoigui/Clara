@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -53,6 +54,8 @@ namespace Clara.Controllers
         [HttpPost]
         public async Task<IActionResult> Personal(UserProfileViewModel model)
         {
+            TextInfo titleCase = new CultureInfo("en-US", false).TextInfo;
+            
             if (ModelState.IsValid)
             {
                 var userId = _userManager.GetUserId(User);
@@ -63,15 +66,15 @@ namespace Clara.Controllers
 
                 if (model.FirstName != null && model.LastName != null && model.PhoneNumber != null)
                 {
-                    profile.FirstName = model.FirstName;
-                    profile.LastName = model.LastName;
+                    profile.FirstName = model.FirstName.Capitalize();
+                    profile.LastName = model.LastName.Capitalize();
                     profile.PhoneNumber = model.PhoneNumber;
                 }
                 if (model.AddressLine  != null && model.City != null && model.State != null)
                 {
-                    profile.AddressLine = model.AddressLine;
-                    profile.City = model.City;
-                    profile.State = model.State;
+                    profile.AddressLine = titleCase.ToTitleCase(model.AddressLine);
+                    profile.City = model.City.Capitalize();
+                    profile.State = model.State.Capitalize();
 
                 }
 

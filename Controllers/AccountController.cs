@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Clara.Extension_Methods;
 using Clara.Models;
 using Clara.Repository.Interface;
 using Clara.ViewModels;
@@ -105,8 +107,8 @@ namespace Clara.Controllers
 
             UserProfile userProfile = new UserProfile
             {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
+                FirstName = model.FirstName.Capitalize(),
+                LastName = model.LastName.Capitalize(),
                 Email = model.Email,
                 UserId = userId
             };
