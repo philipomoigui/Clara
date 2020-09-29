@@ -144,6 +144,7 @@ namespace Clara.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.RefreshSignInAsync(user);
+                    TempData["SuccessMessage"] = "Password Updated Successfully";
                     RedirectToAction(nameof(Security));
                 }
 

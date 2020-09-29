@@ -84,5 +84,10 @@ namespace Clara.Repository
                  .Take(6)
                  .ToList();
         }
+
+        public IEnumerable<Service> GetSearchResult(string search)
+        {
+            return FindByCondition(s => s.BusinessName.Contains(search)).ToList();
+        }
     }
 }

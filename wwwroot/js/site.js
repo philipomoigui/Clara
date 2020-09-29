@@ -165,6 +165,7 @@
 })(jQuery);
 
 /*------------------
-		Services Effect
+		Search Result
 	--------------------*/
+
 

@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "easy-autocomplete@1.3.5",
+      "destination": "wwwroot/lib/easy-autocomplete/"
+    }
+  ]
+}

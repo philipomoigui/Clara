@@ -16,7 +16,23 @@
                 <div class="badge badge-pill badge-transparent px-3 py-2 mb-4">@Model.Service.Category.CategoryName</div>
                 <h1 class="text-shadow verified">@Model.Service.BusinessName</h1>
                 <p><i class="fa-map-marker-alt fas mr-2"></i>@Model.Service.AddressLine</p>
-                <p class="mb-0 d-flex align-items-center"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-gray-200 mr-4"></i>@reviewCount</p>
+                <p class="mb-0 d-flex align-items-center">
+
+                    @{
+                        for (var i = 1; i <= 3; i++)
+                        {
+                            <i class="fa fa-xs fa-star text-primary"></i>
+                        }
+                        if (3 < 5)
+                        {
+                            for (var i = 1; i <= 5 - 3; i++)
+                            {
+                                <i class="fa fa-xs fa-star text-gray-100"></i>
+                            }
+                        }
+                    }
+                    @reviewCount
+                </p>
             </div>
             <div class="calltoactions"><a class="btn btn-primary" href="#leaveReview" onclick="$('#leaveReview').collapse('show')" data-smooth-scroll>Leave a Review</a></div>
         </div>

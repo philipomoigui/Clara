@@ -182,5 +182,13 @@ namespace Clara.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        public IActionResult AutoCompleteResult(string search)
+        {
+            return Json(_repositoryManager.Service.GetSearchResult(search).ToList());
+        }
+
+
     }
 }

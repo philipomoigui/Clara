@@ -1,6 +1,7 @@
 ﻿@model UserSecurityViewModel
 @{ 
     Layout = "_PagesLayout";
+    var message = TempData["SuccessMessage"] ?? string.Empty;
 }
 
 
@@ -106,3 +107,12 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+<script>
+    var message = "@message";
+    if (message) {
+        alert(message);
+    }
+</script>
+}
