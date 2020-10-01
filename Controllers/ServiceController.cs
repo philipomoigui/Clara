@@ -164,9 +164,11 @@ namespace Clara.Controllers
         [HttpPost]
         public async Task<IActionResult> Details(DetailsViewModel model)
         {
+            var userProfile = _repositoryManager.UserProfile.GetUserProfile(model.UserId);
+            var service = await _repositoryManager.Service.GetServiceById(model.ServiceId);
+
             if (ModelState.IsValid)
             {
-                //var comment = _mapper.Map<Comment>(model);
                 Comment comment = new Comment
                 {
                     Message = model.Message,
@@ -176,6 +178,20 @@ namespace Clara.Controllers
                 };
 
                 _repositoryManager.Comment.AddComment(comment);
+
+                Notification notification = new Notification
+                {
+                    Text = $"{userProfile.FirstName} {userProfile.LastName} left a review on {service.BusinessName} with 3.0 rating",
+                };
+
+                _repositoryManager.Notification.AddNotication(notification);
+
+                NotificationApplicationUser userNotification = new NotificationApplicationUser();
+                userNotification.NotificationId = notification.NotificationId;
+                userNotification.UserId = model.UserId;
+
+                _repositoryManager.UserNotification.AddUserNotification(userNotification);
+
                 await _repositoryManager.saveAsync();
                 return RedirectToAction(nameof(Details), new {serviceId = model.ServiceId, categoryId = model.CategoryId });
             }

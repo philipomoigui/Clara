@@ -29,3 +29,14 @@
         background-size: 300px;
     }
 }
+
+.notification-count{
+    top: 15px;
+    position: relative;
+    cursor: pointer;
+}
+
+.customPopover {
+    width: 500px;
+    cursor: pointer;
+}

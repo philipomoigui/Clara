@@ -14,6 +14,8 @@ namespace Clara.Repository
         private ICommentRepository _commentRepository;
         private IUserRepository _userRepository;
         private ICategoryRepository _categoryRepository;
+        private INotificationRepository _NotificationRepository;
+        private IUserNotificationRepository _UserNotificationRepository;
 
         public RepositoryManager(ApplicationDbContext applicationDbContext)
         {
@@ -65,6 +67,30 @@ namespace Clara.Repository
                     _categoryRepository = new CategoryRepository(_applicationDbContext);
                 }
                 return _categoryRepository;
+            }
+        }
+
+        public INotificationRepository Notification
+        {
+            get
+            {
+                if (_NotificationRepository == null)
+                {
+                    _NotificationRepository = new NotificationRepository(_applicationDbContext);
+                }
+                return _NotificationRepository;
+            }
+        }
+
+        public IUserNotificationRepository UserNotification
+        {
+            get
+            {
+                if (_UserNotificationRepository == null)
+                {
+                    _UserNotificationRepository = new UserNotificationRepository(_applicationDbContext);
+                }
+                return _UserNotificationRepository;
             }
         }
 

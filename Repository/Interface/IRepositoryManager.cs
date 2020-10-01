@@ -11,6 +11,8 @@ namespace Clara.Repository.Interface
         ICommentRepository Comment { get; }
         IUserRepository UserProfile { get; }
         ICategoryRepository Category { get; }
+        INotificationRepository Notification { get;}
+        IUserNotificationRepository UserNotification { get; }
         Task saveAsync();
     }
 }

@@ -22,16 +22,16 @@ namespace Clara.DataAccess
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<NotificationApplicationUser> NotificationApplicationUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.Seed();
 
-            //builder.Entity<ApplicationUser>()
-            //    .HasOne(u => u.Comment)
-            //    .WithOne(c => c.User)
-            //    .HasForeignKey<Comment>(c => c.UserId);
+            builder.Entity<NotificationApplicationUser>()
+                .HasKey(k => new { k.NotificationId, k.UserId });
         }
     }
 }

@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 
 namespace Clara
 {
@@ -32,7 +33,10 @@ namespace Clara
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureRepositoryManager();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                );
             services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddIdentity<ApplicationUser, IdentityRole>(options => {
                 options.Password.RequireLowercase = true;
@@ -43,6 +47,7 @@ namespace Clara
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddAutoMapper(typeof(Startup));
+
             //services.AddScoped<IServicesRepository, ServiceRepository>();
             //services.AddScoped<ICategoryRepository, CategoryRepository>();
             //services.AddScoped<ICommentRepository, CommentRepository>();
@@ -63,6 +68,7 @@ namespace Clara
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

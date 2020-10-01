@@ -74,3 +74,50 @@
         </div>
     </div>
 </section>
+
+@section Scripts{ 
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover({
+                placement: "bottom",
+                content: function () {
+                    return $("#notification-content").html();
+                },
+                html: true
+            });
+
+            $('body').append(`<div id="notification-content" class="hide"></div>`)
+            function getNotification() {
+                var res = "<ul class='list-group'>";
+                $.ajax({
+                    url: "/Notification/GetNotification",
+                    method: "get",
+                    success: function (result) {
+                        console.log(result);
+                        $("#notificationCount").html(result.count);
+                        var notifications = result.userNotification;
+                        notifications.forEach(element => {
+                            res = res + "<li class='list-group-item notification-text' data-id='" + element.notification.id + "'>" + element.notification.text + "</li>";
+                        })
+
+                        res = res + "</ul>";
+
+                        $("#notification-content").html(res);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            }
+
+            $("ul").on('click', 'li.notification-text', function (e) {
+                var target = e.target;
+                var id = $(target).data('id');
+
+                console.log(id);
+            })
+
+            getNotification();
+        });
+    </script>
+}
