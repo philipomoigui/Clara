@@ -158,6 +158,12 @@ namespace Clara.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult Test()
+        {
+            return View();
+        }
+
         public string UserIdReform(string userId)
         {
             var userIdArr = userId.Split("-");

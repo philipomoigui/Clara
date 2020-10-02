@@ -29,6 +29,19 @@ namespace Clara.Controllers
             return Ok(new { UserNotification = notifications, Count = notifications.Count() });
         }
 
+        public IActionResult FileNotification()
+        {
+            var files = Request.Form.Files;
+            var message = string.Empty;
+
+            if (files.Count > 0)
+            {
+                message = "The files got here Successfully";
+            }
+
+            return Json(message);
+        }
+
         public async Task<IActionResult> ReadNotification(Guid notificationId)
         {
             _repositoryManager.Notification.ReadNotification(notificationId);
