@@ -28,5 +28,11 @@ namespace Clara.Repository
                   .Include(c => c.User)
                   .OrderByDescending(e => e.Timestamp);
         }
+
+        public bool HasUserComment(string userId, Guid serviceId)
+        {
+            return FindByCondition(c => c.UserId.Equals(userId) && c.ServiceId.Equals(serviceId))
+                .Any();
+        }
     }
 }

@@ -8,6 +8,7 @@ using Clara.Repository.Interface;
 using Clara.Utility;
 using Clara.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -19,11 +20,13 @@ namespace Clara.Controllers
         
         private readonly IMapper _mapper;
         private readonly IRepositoryManager _repositoryManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ServiceController(IMapper mapper, IRepositoryManager repositoryManager)
+        public ServiceController(IMapper mapper, IRepositoryManager repositoryManager, UserManager<ApplicationUser> userManager)
         {
             _mapper = mapper;
             _repositoryManager = repositoryManager;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -64,18 +67,7 @@ namespace Clara.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Detail(Guid id)
-        {
-            var service = await _repositoryManager.Service.GetServiceById(id);
-            if (service == null)
-                return NotFound();
-
-            var model= _mapper.Map<DetailViewModel>(service);
-            return View(model);
-        }
-
-        
+      
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -139,6 +131,8 @@ namespace Clara.Controllers
         public async  Task<IActionResult> Details(Guid serviceId, int categoryId)
         {
             var service = await _repositoryManager.Service.GetServiceById(serviceId);
+            var userId = _userManager.GetUserId(User);
+
             if (service == null)
                 return NotFound();
 
@@ -158,6 +152,13 @@ namespace Clara.Controllers
                 Comments = comments
             };
 
+            //Bookmark
+            var bookmark = _repositoryManager.Bookmark.GetUserBookmark(userId, serviceId);
+            if (bookmark != null)
+                model.isBookmarked = true;
+            else
+                model.isBookmarked = false;
+
             return View(model);
         }
 
@@ -169,31 +170,39 @@ namespace Clara.Controllers
 
             if (ModelState.IsValid)
             {
-                Comment comment = new Comment
+                var hasUserComment = _repositoryManager.Comment.HasUserComment(model.UserId, model.ServiceId);
+
+                if (!hasUserComment)
                 {
-                    Message = model.Message,
-                    Timestamp = model.Timestamp,
-                    UserId = model.UserId,
-                    ServiceId = model.ServiceId
-                };
+                    Comment comment = new Comment
+                    {
+                        Message = model.Message,
+                        Timestamp = model.Timestamp,
+                        UserId = model.UserId,
+                        ServiceId = model.ServiceId
+                    };
 
-                _repositoryManager.Comment.AddComment(comment);
+                    _repositoryManager.Comment.AddComment(comment);
 
-                Notification notification = new Notification
-                {
-                    Text = $"{userProfile.FirstName} {userProfile.LastName} left a review on {service.BusinessName} with 3.0 rating",
-                };
+                    Notification notification = new Notification
+                    {
+                        Text = $"{userProfile.FirstName} {userProfile.LastName} left a review on {service.BusinessName} with 3.0 rating",
+                    };
 
-                _repositoryManager.Notification.AddNotication(notification);
+                    _repositoryManager.Notification.AddNotication(notification);
 
-                NotificationApplicationUser userNotification = new NotificationApplicationUser();
-                userNotification.NotificationId = notification.NotificationId;
-                userNotification.UserId = model.UserId;
+                    NotificationApplicationUser userNotification = new NotificationApplicationUser();
+                    userNotification.NotificationId = notification.NotificationId;
+                    userNotification.UserId = model.UserId;
 
-                _repositoryManager.UserNotification.AddUserNotification(userNotification);
+                    _repositoryManager.UserNotification.AddUserNotification(userNotification);
 
-                await _repositoryManager.saveAsync();
-                return RedirectToAction(nameof(Details), new {serviceId = model.ServiceId, categoryId = model.CategoryId });
+                    await _repositoryManager.saveAsync();
+                    return RedirectToAction(nameof(Details), new { serviceId = model.ServiceId, categoryId = model.CategoryId });
+                }
+
+                ViewBag.CommentMessage = "Sorry, You have already Reviewed This Service";
+                return View(model);
             }
 
             return View(model);

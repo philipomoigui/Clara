@@ -18,6 +18,7 @@ namespace Clara.Models
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+        public DateTime? PasswordChangeDate { get; set; }
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
     }

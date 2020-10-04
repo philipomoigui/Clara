@@ -19,6 +19,8 @@
     <Compile Remove="Migrations\20200920073358_AddedUserProfile.Designer.cs" />
     <Compile Remove="Migrations\20200930192934_IncludedNotificationModel.cs" />
     <Compile Remove="Migrations\20200930192934_IncludedNotificationModel.Designer.cs" />
+    <Compile Remove="Migrations\20201004112447_AddedPasswordDateChangeToProfile.cs" />
+    <Compile Remove="Migrations\20201004112447_AddedPasswordDateChangeToProfile.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

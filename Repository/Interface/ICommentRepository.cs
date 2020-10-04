@@ -9,6 +9,7 @@ namespace Clara.Repository.Interface
     public interface ICommentRepository : IRepositoryBase<Comment>
     {
         void AddComment(Comment comment);
+        bool HasUserComment(string userId, Guid serviceId);
         IEnumerable<Comment> GetComments(Guid serviceId);
 
     }

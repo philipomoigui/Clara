@@ -20,5 +20,7 @@ namespace Clara.ViewModels
         [DataType(DataType.Password)]
         [Compare("NewPassword", ErrorMessage = "Password and Confirm Password do not match")]
         public string ConfirmPassword { get; set; }
+        public DateTime DateChanged { get; set; } = DateTime.UtcNow;
+        public string RelativeDateChange { get; set; }
     }
 }

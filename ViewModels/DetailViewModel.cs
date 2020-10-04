@@ -20,5 +20,6 @@ namespace Clara.ViewModels
         public decimal Price { get; set; }
         public string ImageURL { get; set; }
         public List<string> AddOns { get; set; }
+        public bool isBookmarked { get; set; }
     }
 }

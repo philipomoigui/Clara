@@ -13,6 +13,7 @@ namespace Clara.Repository.Interface
         ICategoryRepository Category { get; }
         INotificationRepository Notification { get;}
         IUserNotificationRepository UserNotification { get; }
+        IBookmarkRepository Bookmark { get; }
         Task saveAsync();
     }
 }

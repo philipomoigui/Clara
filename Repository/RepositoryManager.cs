@@ -16,6 +16,7 @@ namespace Clara.Repository
         private ICategoryRepository _categoryRepository;
         private INotificationRepository _NotificationRepository;
         private IUserNotificationRepository _UserNotificationRepository;
+        private IBookmarkRepository _bookmarkRepository;
 
         public RepositoryManager(ApplicationDbContext applicationDbContext)
         {
@@ -91,6 +92,18 @@ namespace Clara.Repository
                     _UserNotificationRepository = new UserNotificationRepository(_applicationDbContext);
                 }
                 return _UserNotificationRepository;
+            }
+        }
+
+        public IBookmarkRepository Bookmark
+        {
+            get
+            {
+                if (_bookmarkRepository == null)
+                {
+                    _bookmarkRepository = new BookmarkRepository(_applicationDbContext);
+                }
+                return _bookmarkRepository;
             }
         }
 

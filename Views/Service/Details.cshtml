@@ -2,10 +2,11 @@
 @inject UserManager<ApplicationUser> appUser
 
 
-@{
-    Layout = "_PagesLayout";
+@{ Layout = "_PagesLayout";
     var userId = appUser.GetUserId(User);
     var reviewCount = Model.Comments.Count > 0 ? $"{Model.Comments.Count} Review(s)" : "No reviews yet";
+    var bookmarked = Model.isBookmarked == true ? "Bookmarked" : "Bookmark This Service";
+    var commentMessage = ViewBag.CommentMessage ?? "";
 }
 
 <!-- Hero Section-->
@@ -18,19 +19,15 @@
                 <p><i class="fa-map-marker-alt fas mr-2"></i>@Model.Service.AddressLine</p>
                 <p class="mb-0 d-flex align-items-center">
 
-                    @{
-                        for (var i = 1; i <= 3; i++)
+                    @{ for (var i = 1; i <= 3; i++)
                         {
-                            <i class="fa fa-xs fa-star text-primary"></i>
-                        }
-                        if (3 < 5)
-                        {
-                            for (var i = 1; i <= 5 - 3; i++)
-                            {
-                                <i class="fa fa-xs fa-star text-gray-100"></i>
-                            }
-                        }
-                    }
+            <i class="fa fa-xs fa-star text-primary"></i> }
+        if (3 < 5)
+        {
+            for (var i = 1; i <= 5 - 3; i++)
+            {
+<i class="fa fa-xs fa-star text-gray-100"></i> }
+} }
                     @reviewCount
                 </p>
             </div>
@@ -49,8 +46,8 @@
                     <p class="text-muted">incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </div>
                 <!--<div class="text-block">-->
-                    <!-- Listing Location-->
-                    <!--<h3 class="mb-4">Location</h3>
+                <!-- Listing Location-->
+                <!--<h3 class="mb-4">Location</h3>
                     <div class="map-wrapper-300 mb-3">
                         <div class="h-100" id="detailMap"></div>
                     </div>
@@ -103,95 +100,95 @@
                         </li>
                     </ul>
                 </div>
-              
-            <div class="text-block">
-                <p class="subtitle text-sm text-primary">Reviews</p>
-                <h5 class="mb-4">Listing Reviews </h5>
-                @foreach (var comment in Model.Comments)
-                {
-                    <div class="media d-block d-sm-flex review">
-                        <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-8.jpg" alt="Padmé Amidala"><span class="text-uppercase text-muted text-sm">@comment.Timestamp.ToString("MMM") @comment.Timestamp.Year</span></div>
-                        <div class="media-body">
-                            <h6 class="mt-2 mb-1">@comment.User.Email</h6>
-                            <div class="mb-2">
-                                <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
-                            </div>
-                            <p class="text-muted text-sm">@comment.Message</p>
-                        </div>
-                    </div>
-                }
 
-                @*<div class="media d-block d-sm-flex review">
-            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-2.jpg" alt="Luke Skywalker"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
-            <div class="media-body">
-                <h6 class="mt-2 mb-1">Luke Skywalker</h6>
-                <div class="mb-2">
-                    <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-gray-200"></i>
-                </div>
-                <p class="text-muted text-sm">The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. &quot;What's happened to me?&quot; he thought. It wasn't a dream.     </p>
-            </div>
-        </div>
+                <div class="text-block">
+                    <p class="subtitle text-sm text-primary">Reviews</p>
+                    <h5 class="mb-4">Listing Reviews </h5>
+                    @foreach (var comment in Model.Comments)
+                    {
         <div class="media d-block d-sm-flex review">
-            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-3.jpg" alt="Princess Leia"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
+            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-8.jpg" alt="Padmé Amidala"><span class="text-uppercase text-muted text-sm">@comment.Timestamp.ToString("MMM") @comment.Timestamp.Year</span></div>
             <div class="media-body">
-                <h6 class="mt-2 mb-1">Princess Leia</h6>
-                <div class="mb-2">
-                    <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-gray-200"></i><i class="fa fa-xs fa-star text-gray-200"></i>
-                </div>
-                <p class="text-muted text-sm">His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table.     </p>
-            </div>
-        </div>
-        <div class="media d-block d-sm-flex review">
-            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-4.jpg" alt="Jabba Hut"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
-            <div class="media-body">
-                <h6 class="mt-2 mb-1">Jabba Hut</h6>
+                <h6 class="mt-2 mb-1">@comment.User.Email</h6>
                 <div class="mb-2">
                     <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
                 </div>
-                <p class="text-muted text-sm">Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.     </p>
+                <p class="text-muted text-sm">@comment.Message</p>
             </div>
-        </div>*@
-                <div class="py-5">
-                    <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview">Leave a review</button>
-                    <div class="collapse mt-4" id="leaveReview">
-                        <h5 class="mb-4">Leave a review</h5>
-                        <form class="form" id="contact-form" method="post" asp-action="Details" asp-controller="Service">
-                            <input type="hidden" asp-for="ServiceId" value="@Model.Service.ServiceId" />
-                            <input type="hidden" asp-for="UserId" value="@userId" />
-                            <input type="hidden" asp-for="CategoryId" value="@Model.Service.CategoryId" />
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="form-label" for="name">Your name *</label>
-                                        <input class="form-control" type="text" name="name" id="name" placeholder="Enter your name">
+        </div>}
+
+                    @*<div class="media d-block d-sm-flex review">
+                            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-2.jpg" alt="Luke Skywalker"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
+                            <div class="media-body">
+                                <h6 class="mt-2 mb-1">Luke Skywalker</h6>
+                                <div class="mb-2">
+                                    <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-gray-200"></i>
+                                </div>
+                                <p class="text-muted text-sm">The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. &quot;What's happened to me?&quot; he thought. It wasn't a dream.     </p>
+                            </div>
+                        </div>
+                        <div class="media d-block d-sm-flex review">
+                            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-3.jpg" alt="Princess Leia"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
+                            <div class="media-body">
+                                <h6 class="mt-2 mb-1">Princess Leia</h6>
+                                <div class="mb-2">
+                                    <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-gray-200"></i><i class="fa fa-xs fa-star text-gray-200"></i>
+                                </div>
+                                <p class="text-muted text-sm">His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table.     </p>
+                            </div>
+                        </div>
+                        <div class="media d-block d-sm-flex review">
+                            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-4.jpg" alt="Jabba Hut"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
+                            <div class="media-body">
+                                <h6 class="mt-2 mb-1">Jabba Hut</h6>
+                                <div class="mb-2">
+                                    <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
+                                </div>
+                                <p class="text-muted text-sm">Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.     </p>
+                            </div>
+                        </div>*@
+                    <div class="py-5">
+                        <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview">Leave a review</button>
+                        <div class="collapse mt-4" id="leaveReview">
+                            <h5 class="mb-4">Leave a review</h5>
+                            <form class="form" id="contact-form" method="post" asp-action="Details" asp-controller="Service">
+                                <input type="hidden" asp-for="ServiceId" value="@Model.Service.ServiceId" />
+                                <input type="hidden" asp-for="UserId" value="@userId" />
+                                <input type="hidden" asp-for="CategoryId" value="@Model.Service.CategoryId" />
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="name">Your name *</label>
+                                            <input class="form-control" type="text" name="name" id="name" placeholder="Enter your name">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="rating">Your rating *</label>
+                                            <select class="custom-select focus-shadow-0" name="rating" id="rating">
+                                                <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
+                                                <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>
+                                                <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>
+                                                <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2/5)</option>
+                                                <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1/5)</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="form-label" for="rating">Your rating *</label>
-                                        <select class="custom-select focus-shadow-0" name="rating" id="rating">
-                                            <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
-                                            <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>
-                                            <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>
-                                            <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2/5)</option>
-                                            <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1/5)</option>
-                                        </select>
-                                    </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="email">Your email *</label>
+                                    <input class="form-control" type="email" name="email" id="email" placeholder="Enter your  email">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="email">Your email *</label>
-                                <input class="form-control" type="email" name="email" id="email" placeholder="Enter your  email">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" asp-for="Message">Review *</label>
-                                <textarea class="form-control" rows="4" asp-for="Message" id="review" placeholder="Enter your review" required="required"></textarea>
-                            </div>
-                            <button class="btn btn-primary" type="submit">Post review</button>
-                        </form>
+                                <div class="form-group">
+                                    <label class="form-label" asp-for="Message">Review *</label>
+                                    <textarea class="form-control" rows="4" asp-for="Message" id="review" placeholder="Enter your review" required="required"></textarea>
+                                </div>
+                                <button class="btn btn-primary" type="submit">Post review</button>
+                                <span class="text-danger">@commentMessage</span>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
             <div class="col-lg-4">
                 <div class="pl-xl-4">
@@ -267,9 +264,10 @@
                             <div class="text-center"><a class="btn btn-outline-primary btn-block" href="#"> <i class="far fa-paper-plane mr-2"></i>Send a Message</a></div>
                         </div>
                     </div>
-                    <div class="text-center">
-                        <p><a class="text-secondary" href="#"> <i class="fa fa-heart"></i> Bookmark This Listing</a></p><span>79 people bookmarked this place </span>
-                    </div>
+                        <div class="text-center" id="bookmark-div">
+                            <p><input type="button" class="btn-block btn btn-outline-info text-hover-dark" id="bookmark" value="@bookmarked"/></p>
+                            <span>79 people bookmarked this place </span>
+                        </div>
                 </div>
             </div>
         </div>
@@ -300,34 +298,33 @@
 
                                 @foreach (var service in Model.RandomServices)
                                 {
-                                    <div class="col-md-3 mb-3 w-100 h-100">
-                                        <div class="card h-100 border-0 shadow">
-                                            <div class="card-img-top overflow-hidden dark-overlay bg-cover" style="background-image: url(https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698);min-height: 200px;">
-                                                <a class="tile-link" href="detail.html"></a>
-                                                <div class="card-img-overlay-bottom z-index-20">
-                                                    <h4 class="text-white text-shadow">Take That</h4>
-                                                    <p class="mb-2 text-xs">
-                                                        <i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-gray-300"></i>
-                                                    </p>
-                                                </div>
-                                                <div class="card-img-overlay-top d-flex justify-content-between align-items-center">
-                                                    <div class="badge badge-transparent badge-pill px-3 py-2">Café</div><a class="card-fav-icon position-relative z-index-40" href="javascript: void();">
-                                                        <svg class="svg-icon text-white">
-                                                            <use xlink:href="#heart-1"> </use>
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <p class="text-sm text-muted mb-3"> Cillum sunt reprehenderit ea non irure veniam dolore commodo labore fugiat est consequat velit. Cupidatat nisi qui ad si...</p>
-                                                <p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">Matt Damon</a></p>
-                                                <p class="text-sm mb-0">
-                                                    <a class="mr-1" href="#">Nisi,</a><a class="mr-1" href="#">Ex,</a><a class="mr-1" href="#">Eiusmod</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
+                    <div class="col-md-3 mb-3 w-100 h-100">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="card-img-top overflow-hidden dark-overlay bg-cover" style="background-image: url(https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698);min-height: 200px;">
+                                <a class="tile-link" href="detail.html"></a>
+                                <div class="card-img-overlay-bottom z-index-20">
+                                    <h4 class="text-white text-shadow">Take That</h4>
+                                    <p class="mb-2 text-xs">
+                                        <i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-gray-300"></i>
+                                    </p>
+                                </div>
+                                <div class="card-img-overlay-top d-flex justify-content-between align-items-center">
+                                    <div class="badge badge-transparent badge-pill px-3 py-2">Café</div><a class="card-fav-icon position-relative z-index-40" href="javascript: void();">
+                                        <svg class="svg-icon text-white">
+                                            <use xlink:href="#heart-1"> </use>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-sm text-muted mb-3"> Cillum sunt reprehenderit ea non irure veniam dolore commodo labore fugiat est consequat velit. Cupidatat nisi qui ad si...</p>
+                                <p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">Matt Damon</a></p>
+                                <p class="text-sm mb-0">
+                                    <a class="mr-1" href="#">Nisi,</a><a class="mr-1" href="#">Ex,</a><a class="mr-1" href="#">Eiusmod</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>}
 
                             </div>
                         </div>
@@ -412,3 +409,36 @@
         </div>
     </div>
 </section>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("#bookmark").click(function () {
+                var idUser = "@userId";
+                var idService = "@Model.Service.ServiceId";
+                $.ajax({
+                    type: "post",
+                    url: "/User/Bookmarked",
+                    dataType: "json",
+                    data: { userId: idUser, serviceId: idService },
+                    success: function (message) {
+                        $("#bookmark-div").load(location.href + " #bookmark-div");
+                        alert(message);
+
+                    },
+                    error: function (err) {
+
+                        alert("There was error uploading files!");
+                        console.log(err);
+
+                    }
+
+                });
+
+            });
+
+        });
+    </script>
+}
+

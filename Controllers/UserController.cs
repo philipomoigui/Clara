@@ -124,8 +124,14 @@ namespace Clara.Controllers
         [HttpGet]
         public IActionResult Security()
         {
+            var userId = _userManager.GetUserId(User);
+            UserSecurityViewModel model = new UserSecurityViewModel();
+           var profile =  _repositoryManager.UserProfile.GetUserProfile(userId);
             
-            return View();
+
+            model.RelativeDateChange = RelativeDateTime((DateTime)profile.PasswordChangeDate);
+
+            return View(model);
         }
 
         [HttpPost]
@@ -143,6 +149,10 @@ namespace Clara.Controllers
 
                 if (result.Succeeded)
                 {
+                    UserProfile userProfile = new UserProfile();
+                    userProfile.PasswordChangeDate = model.DateChanged;
+
+                    _repositoryManager.UserProfile.UpdateUserProfile(userProfile);
                     await _signInManager.RefreshSignInAsync(user);
                     TempData["SuccessMessage"] = "Password Updated Successfully";
                     RedirectToAction(nameof(Security));
@@ -164,6 +174,40 @@ namespace Clara.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Bookmarked(string userId, Guid serviceId)
+        {
+            var message = string.Empty;
+
+           if(userId == null || serviceId == null)
+            {
+                message = "You need to be signed in to add this service to your bookmark";
+            }
+
+            var userBookmark = _repositoryManager.Bookmark.GetUserBookmark(userId, serviceId);
+
+            if(userBookmark == null)
+            {
+                Bookmark bookmark = new Bookmark
+                {
+                    ServiceId = serviceId,
+                    UserId = userId,
+                    DateCreated = DateTime.Now
+                };
+
+                _repositoryManager.Bookmark.AddToBookmark(bookmark);
+                await _repositoryManager.saveAsync();
+                message = "This service has been added you your bookmark";
+            }
+            if (userBookmark != null)
+            {
+                _repositoryManager.Bookmark.DeleteFromBookMark(userBookmark);
+               await  _repositoryManager.saveAsync();
+                message = "This service has been removed from your bookmark";
+            }
+
+            return Json(message);
+        }
+
         public string UserIdReform(string userId)
         {
             var userIdArr = userId.Split("-");
@@ -175,6 +219,56 @@ namespace Clara.Controllers
             return result;
         }
 
+        public string RelativeDateTime(DateTime dateChanged)
+        {
+            const int SECOND = 1;
+            const int MINUTE = 1 * SECOND;
+            const int HOUR = 60 * MINUTE;
+            const int DAY = 24 * HOUR;
+            const int MONTH = 30 * DAY;
+
+            var timespan = new TimeSpan(DateTime.UtcNow.Ticks - dateChanged.Ticks);
+            double totalSeconds = Math.Abs(timespan.TotalSeconds);
+
+            if(totalSeconds < 1 * MINUTE)
+            {
+                return timespan.Seconds == 1 ? "Just Now" : timespan.Seconds + " seconds ago";
+            }
+            if (totalSeconds < 2 * MINUTE)
+            {
+                return "a minute ago";
+            }
+            if (totalSeconds < 45 * MINUTE)
+            {
+                return timespan.Seconds > 30 && timespan.Seconds < 40 ? "30 minutes ago" : timespan.Minutes + " minutes ago";
+            }
+            if (totalSeconds < 90 * MINUTE)
+            {
+                return timespan.Seconds > 60 && timespan.Seconds < 90 ? "an hour ago" : timespan.Minutes + " minutes ago";
+            }
+            if (totalSeconds < 24 * HOUR)
+            {
+                return timespan.Hours + " hours ago";
+            }
+            if (totalSeconds < 48 * HOUR)
+            {
+                return "yesterday";
+            }
+            if (totalSeconds < 30 * DAY)
+            {
+                return timespan.Days + " days ago";
+            }
+            if (totalSeconds < 12 * MONTH)
+            {
+                int month = Convert.ToInt32(Math.Floor((double)timespan.Days / 30));
+                return month < 1 ? "a month ago" : month + " months ago";
+            } 
+            else
+            {
+                int year = Convert.ToInt32(Math.Floor((double)timespan.Days / 365));
+                return year < 1 ? "a year ago" : year + " years ago";
+            }
+        }
 
 
     }

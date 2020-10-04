@@ -30,13 +30,13 @@
     }
 }
 
-.notification-count{
+#notification-count {
     top: 15px;
     position: relative;
     cursor: pointer;
 }
 
-.customPopover {
+.popover {
     width: 500px;
     cursor: pointer;
 }
