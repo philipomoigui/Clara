@@ -1,169 +1,67 @@
 ﻿@model UserProfileViewModel
 
-@{ Layout = "_PagesLayout";
-    var reviewsCount = Model.Comments.Count == 0 ? "No reviews yet" : Model.Comments.Count.ToString(); 
+@{ 
+    Layout = "_PagesLayout";
+
  }
 
 <section class="py-5">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 mr-lg-auto">
-                <div class="card border-0 shadow mb-6 mb-lg-0">
-                    <div class="card-header bg-gray-100 py-4 border-0 text-center">
-                        <a class="d-inline-block" href="#"><img class="d-block avatar avatar-xxl p-2 mb-2" src="~/img/listing/list-4.jpg" alt=""></a>
-                        <h5>@Model.FullName</h5>
-                        <p class="text-muted text-sm mb-0">@Model.City, @Model.State</p>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="media align-items-center mb-3">
-                            <div class="icon-rounded icon-rounded-sm bg-primary-light mr-2">
-                                <svg class="svg-icon text-primary svg-icon-md">
-                                    <use xlink:href="#diploma-1"> </use>
-                                </svg>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">@reviewsCount reviews</p>
-                            </div>
-                        </div>
-                        <div class="media align-items-center mb-3">
-                            <div class="icon-rounded icon-rounded-sm bg-primary-light mr-2">
-                                <svg class="svg-icon text-primary svg-icon-md">
-                                    <use xlink:href="#checkmark-1"> </use>
-                                </svg>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">Verified</p>
-                            </div>
-                        </div>
-                        <hr>
-                        <h6>@Model.FirstName provided</h6>
-                        <ul class="card-text text-muted">
-                            <li>Government ID</li>
-                            <li>Email address</li>
-                            <li>Phone number</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-9 pl-lg-5">
-                <h1 class="hero-heading mb-0">Hello, I'm @Model.FirstName!</h1>
-                <div class="text-block">
-                    <p> <span class="badge badge-secondary-light">Joined in 2011</span></p>
-                    <p id="main-text" class="text-muted">@Model.About</p>
-                    <p class="text-muted">He must have tried it a hundred times, shut his eyes so that he wouldn't have to look at the floundering legs, and only stopped when he began to feel a mild, dull pain there that he had never felt before.  </p>
+            <div class="col-lg-12 pl-lg-5">
+                <h1 class="hero-heading mb-0 text-center">HEY @Model.FirstName!</h1>
+                <div class="text-block text-center">
+                    <p id="main-text" class="text-muted">Here Are Your Currently Bookmarked Services</p>
+                    <p class="text-muted">.......</p>
                 </div>
                 <div class="text-block">
-                    <h4 class="mb-5">@Model.FirstName's Listings</h4>
+                    <h4 class="mb-5">@Model.FirstName's BookMarks</h4>
                     <div class="row">
                         @if (Model.Bookmarks.Count == 0)
                         {
                             <p>You have No services Bookmarked at them moment</p> }
                         else
                         {
-                            foreach (var service in Model.Bookmarks)
+                            foreach (var bookmark in Model.Bookmarks)
                             { <!-- place item-->
-                                <div class="col-sm-6 col-lg-4 mb-30px hover-animate" data-marker-id="59c0c8e39aa2eed0626e485d">
-                                    <div class="card h-100 border-0 shadow">
-                                        <div class="card-img-top overflow-hidden gradient-overlay">
-                                            <img class="img-fluid" src="~/img/listing/list-3.jpg" alt="Mid-Century Modern Garden Paradise" /><a class="tile-link" href="detail-rooms.html"></a>
+
+                                <div class="col-sm-6 col-xl-4 mb-5 hover-animate" data-marker-id="59c0c8e33b1527bfe2abaf92">
+                                    <div class="card border-0 shadow">
+                                        <div class="card-img-top overflow-hidden dark-overlay bg-cover">
+                                            <img src="~/img/listing/list-4.jpg" class="card-img" alt="Alternate Text" />
+                                            <a class="tile-link" asp-action="Details" asp-controller="Service" asp-route-serviceId="@bookmark.Service.ServiceId" asp-route-categoryId="@bookmark.Service.CategoryId"></a>
                                             <div class="card-img-overlay-bottom z-index-20">
-                                                <div class="media text-white text-sm align-items-center">
-                                                    <img class="avatar avatar-border-white mr-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-10.jpg" alt="Jack" />
-                                                    <div class="media-body">@Model.FirstName</div>
-                                                </div>
+                                                <h4 class="text-white text-shadow">@bookmark.Service.BusinessName</h4>
+                                                <p class="mb-2 text-xs">
+                                                    <i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-gray-300">                    </i>
+                                                </p>
                                             </div>
-                                            <div class="card-img-overlay-top text-right">
-                                                <a class="card-fav-icon position-relative z-index-40" href="javascript: void();">
+                                            <div class="card-img-overlay-top d-flex justify-content-between align-items-center">
+                                                <div class="badge badge-transparent badge-pill px-3 py-2">@bookmark.Service.Category.CategoryName</div><a class="card-fav-icon position-relative z-index-40" href="javascript: void();">
                                                     <svg class="svg-icon text-white">
                                                         <use xlink:href="#heart-1"> </use>
                                                     </svg>
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="card-body d-flex align-items-center">
-                                            <div class="w-100">
-                                                <h6 class="card-title"><a class="text-decoration-none text-dark" href="detail-rooms.html">@service</a></h6>
-                                                <div class="d-flex card-subtitle mb-3">
-                                                    <p class="flex-grow-1 mb-0 text-muted text-sm">Entire house</p>
-                                                    <p class="flex-shrink-1 mb-0 card-stars text-xs text-right">
-                                                        <i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i>
-                                                    </p>
-                                                </div>
-                                                <p class="card-text text-muted"><span class="h4 text-primary">$115</span> per night</p>
-                                            </div>
+                                        <div class="card-body">
+                                            <p class="text-sm text-muted mb-3">@bookmark.Service.AddressLine</p>
+                                            <p class="text-sm text-muted mb-3">@bookmark.Service.PhoneNumber</p>
+                                            <p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">Matt Damon</a></p>
+                                            <p class="text-sm mb-0">
+                                                <a class="mr-1" href="#">@bookmark.Service.Category.CategoryName,</a><a class="mr-1" href="#">Contemporary</a>
+                                            </p>
                                         </div>
                                     </div>
-                                </div>}
-                                            }
+                                </div>
+                            }
+                        }
 
 
                     </div>
                 </div>
-                <div class="text-block">
-                    <p class="subtitle text-sm text-primary">Reviews</p>
-                    <h5 class="mb-4">Listing Reviews </h5>
-                    <div class="media d-block d-sm-flex review">
-                        <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-8.jpg" alt="Padmé Amidala"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
-                        <div class="media-body">
-                            <h6 class="mt-2 mb-1">Padmé Amidala</h6>
-                            <div class="mb-2">
-                                <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
-                            </div>
-                            <p class="text-muted text-sm">One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections     </p>
-                        </div>
-                    </div>
-                    @foreach (var comment in Model.Comments)
-                    {
-        <div class="media d-block d-sm-flex review">
-            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-4.jpg" alt="Jabba Hut"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
-            <div class="media-body">
-                <h6 class="mt-2 mb-1">Jabba Hut</h6>
-                <div class="mb-2">
-                    <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
-                </div>
-                <p class="text-muted text-sm">Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.     </p>
-            </div>
-        </div>}
-
-                    <div class="py-5">
-                        <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview">Leave a review</button>
-                        <div class="collapse mt-4" id="leaveReview">
-                            <h5 class="mb-4">Leave a review</h5>
-                            <form class="form" id="contact-form" method="get" action="#">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="form-label" for="name">Your name *</label>
-                                            <input class="form-control" type="text" name="name" id="name" placeholder="Enter your name" required="required">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="form-label" for="rating">Your rating *</label>
-                                            <select class="custom-select focus-shadow-0" name="rating" id="rating">
-                                                <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
-                                                <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>
-                                                <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>
-                                                <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2/5)</option>
-                                                <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1/5)</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="email">Your email *</label>
-                                    <input class="form-control" type="email" name="email" id="email" placeholder="Enter your  email" required="required">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="review">Review text *</label>
-                                    <textarea class="form-control" rows="4" name="review" id="review" placeholder="Enter your review" required="required"></textarea>
-                                </div>
-                                <button class="btn btn-primary" type="submit">Post review</button>
-                            </form>
-                        </div>
-                    </div>
+                
                 </div>
             </div>
         </div>
-    </div>
 </section>

@@ -97,17 +97,17 @@ namespace Clara.Controllers
         [HttpGet]
         public IActionResult Profile()
         {
-            var Id = _userManager.GetUserId(User);
-            var userProfile = _repositoryManager.UserProfile.GetUserProfile(Id);
-            var userServices = _repositoryManager.Service.GetUSerServices(Id).ToList();
-            var userComments = _repositoryManager.Comment.GetUserComments(Id).ToList();
+            var userId = _userManager.GetUserId(User);
+            var userProfile = _repositoryManager.UserProfile.GetUserProfile(userId);
+            var userServices = _repositoryManager.Service.GetUSerServices(userId).ToList();
+            var userComments = _repositoryManager.Comment.GetUserComments(userId).ToList();
             
             if (userProfile == null)
                 return NotFound();
 
             var model = _mapper.Map<UserProfileViewModel>(userProfile);
             model.Services = userServices;
-            model.UserId = UserIdReform(Id);
+            model.UserId = UserIdReform(userId);
             model.Comments = userComments;
 
             return View(model);
@@ -183,10 +183,11 @@ namespace Clara.Controllers
         public IActionResult Bookmark()
         {
             var userId = _userManager.GetUserId(User);
+            var userProfile = _repositoryManager.UserProfile.GetUserProfile(userId);
 
-            UserProfileViewModel model = new UserProfileViewModel();
+            var model = _mapper.Map<UserProfileViewModel>(userProfile);
 
-            //model.Bookmarks = _repositoryManager.Bookmark.GetUserBookmarks(userId).ToList();
+            model.Bookmarks = _repositoryManager.Bookmark.GetUserBookmarks(userId).ToList();
 
             return View(model);
         }

@@ -1,6 +1,7 @@
 ﻿using Clara.DataAccess;
 using Clara.Models;
 using Clara.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,17 +29,14 @@ namespace Clara.Repository
         public IEnumerable<Bookmark> GetUserBookmarks(string userId)
         {
            return  FindByCondition(b => b.UserId.Equals(userId))
+                .Include(b => b.Service)
+                .Include(b => b.Service.Category)
                 .ToList();
         }
 
         public Bookmark isServiceBookmarked(string userId, Guid serviceId)
         {
            return  FindByCondition(b => b.UserId == userId && b.ServiceId.Equals(serviceId)).FirstOrDefault();
-        }
-
-        IEnumerable<Service> IBookmarkRepository.GetUserBookmarks(string userId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

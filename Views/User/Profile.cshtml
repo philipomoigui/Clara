@@ -2,7 +2,7 @@
 
 @{ 
     Layout = "_PagesLayout";
-    var reviewsCount = Model.Comments.Count == 0 ? "No reviews yet" : Model.Comments.Count.ToString();
+    var reviewsCount = Model.Comments.Count == 0 ? "No reviews yet" : $"{Model.Comments.Count.ToString()} reviews";
 }
 
 <section class="py-5">

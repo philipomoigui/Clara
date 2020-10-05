@@ -11,6 +11,6 @@ namespace Clara.Repository.Interface
         void AddToBookmark(Bookmark bookmark);
         Bookmark isServiceBookmarked(string userId, Guid serviceId);
         void DeleteFromBookMark(Bookmark bookmark);
-        IEnumerable<Service>GetUserBookmarks(string userId);
+        IEnumerable<Bookmark>GetUserBookmarks(string userId);
     }
 }
