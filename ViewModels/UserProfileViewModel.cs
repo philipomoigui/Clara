@@ -25,6 +25,7 @@ namespace Clara.ViewModels
         public ApplicationUser User { get; set; }
         public List<Service> Services { get; set; }
         public List<Comment> Comments { get; set; }
+        public List<Bookmark> Bookmarks { get; set; }
         public Guid ServiceId { get; set; }
         public string BusinessName { get; set; }
         public string BusinessEmail { get; set; }

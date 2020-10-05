@@ -89,7 +89,7 @@
 </section>
 
 @section Scripts{ 
-    @*<script>
+   <script>
         $(function () {
             $('[data-toggle="popover"]').popover({
                 placement: "bottom",
@@ -110,7 +110,7 @@
                         $("#notification-count").html(result.count);
                         var notifications = result.userNotification;
                         notifications.forEach(element => {
-                            res = res + "<li class='list-group-item notification-text'  data-id='" + element.notification.id + "'>" + element.notification.text + "</li>";
+                            res = res + `<li class='list-group-item notification-text' data-id='2334'> ${element.notification.text}</li>`;
                         })
 
                         res = res + "</ul>";
@@ -140,13 +140,17 @@
             //        .catch(error => console.error('Unable to get items.', error));
             //}
 
-            $("ul").on('click', 'li.notification-text', function (e) {
-                var target = e.target;
-                var id = $(target).data('id');
-                console.log(id);
-            })
+            //$("ul").on('click', 'li.notification-text', function (e) {
+            //    var target = e.target;
+            //    var id = $(target).data('id');
+            //    console.log(id);
+            //})
+
+            //$("#notification-count").click(function () {
+            //    $("#notification-count").text("");
+            //})
 
             getNotification();
         });
-    </script>*@
+    </script>
 }

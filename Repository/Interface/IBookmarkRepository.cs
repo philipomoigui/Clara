@@ -9,7 +9,8 @@ namespace Clara.Repository.Interface
     public interface IBookmarkRepository
     {
         void AddToBookmark(Bookmark bookmark);
-        Bookmark GetUserBookmark(string userId, Guid serviceId);
+        Bookmark isServiceBookmarked(string userId, Guid serviceId);
         void DeleteFromBookMark(Bookmark bookmark);
+        IEnumerable<Service>GetUserBookmarks(string userId);
     }
 }

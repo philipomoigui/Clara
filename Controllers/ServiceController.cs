@@ -153,7 +153,7 @@ namespace Clara.Controllers
             };
 
             //Bookmark
-            var bookmark = _repositoryManager.Bookmark.GetUserBookmark(userId, serviceId);
+            var bookmark = _repositoryManager.Bookmark.isServiceBookmarked(userId, serviceId);
             if (bookmark != null)
                 model.isBookmarked = true;
             else

@@ -23,5 +23,6 @@ namespace Clara.ViewModels
         public string ConfirmPassword { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public DateTime? PasswordChangeDate { get; set; } = DateTime.UtcNow;
     }
 }

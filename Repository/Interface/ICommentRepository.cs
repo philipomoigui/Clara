@@ -11,6 +11,6 @@ namespace Clara.Repository.Interface
         void AddComment(Comment comment);
         bool HasUserComment(string userId, Guid serviceId);
         IEnumerable<Comment> GetComments(Guid serviceId);
-
+        IEnumerable<Comment> GetUserComments(string userId);
     }
 }

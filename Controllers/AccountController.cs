@@ -110,7 +110,8 @@ namespace Clara.Controllers
                 FirstName = model.FirstName.Capitalize(),
                 LastName = model.LastName.Capitalize(),
                 Email = model.Email,
-                UserId = userId
+                UserId = userId,
+                PasswordChangeDate = model.PasswordChangeDate
             };
 
             _repositoryManager.UserProfile.AddUserProfile(userProfile);

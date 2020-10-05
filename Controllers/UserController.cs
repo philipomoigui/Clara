@@ -33,6 +33,9 @@ namespace Clara.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var userProfile = _repositoryManager.UserProfile.GetUserProfile(userId);
+            if (userProfile == null)
+                return NotFound();
+
             ViewBag.FirstName = userProfile.FirstName.Capitalize();
             return View();
         }
@@ -97,13 +100,15 @@ namespace Clara.Controllers
             var Id = _userManager.GetUserId(User);
             var userProfile = _repositoryManager.UserProfile.GetUserProfile(Id);
             var userServices = _repositoryManager.Service.GetUSerServices(Id).ToList();
-
+            var userComments = _repositoryManager.Comment.GetUserComments(Id).ToList();
+            
             if (userProfile == null)
                 return NotFound();
 
             var model = _mapper.Map<UserProfileViewModel>(userProfile);
             model.Services = userServices;
             model.UserId = UserIdReform(Id);
+            model.Comments = userComments;
 
             return View(model);
         }
@@ -127,9 +132,9 @@ namespace Clara.Controllers
             var userId = _userManager.GetUserId(User);
             UserSecurityViewModel model = new UserSecurityViewModel();
            var profile =  _repositoryManager.UserProfile.GetUserProfile(userId);
-            
 
-            model.RelativeDateChange = RelativeDateTime((DateTime)profile.PasswordChangeDate);
+            if (profile.PasswordChangeDate != null)
+                model.RelativeDateChange = RelativeDateTime((DateTime)profile.PasswordChangeDate);
 
             return View(model);
         }
@@ -174,6 +179,17 @@ namespace Clara.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Bookmark()
+        {
+            var userId = _userManager.GetUserId(User);
+
+            UserProfileViewModel model = new UserProfileViewModel();
+
+            //model.Bookmarks = _repositoryManager.Bookmark.GetUserBookmarks(userId).ToList();
+
+            return View(model);
+        }
         public async Task<IActionResult> Bookmarked(string userId, Guid serviceId)
         {
             var message = string.Empty;
@@ -183,7 +199,7 @@ namespace Clara.Controllers
                 message = "You need to be signed in to add this service to your bookmark";
             }
 
-            var userBookmark = _repositoryManager.Bookmark.GetUserBookmark(userId, serviceId);
+            var userBookmark = _repositoryManager.Bookmark.isServiceBookmarked(userId, serviceId);
 
             if(userBookmark == null)
             {
@@ -221,53 +237,26 @@ namespace Clara.Controllers
 
         public string RelativeDateTime(DateTime dateChanged)
         {
-            const int SECOND = 1;
-            const int MINUTE = 1 * SECOND;
-            const int HOUR = 60 * MINUTE;
-            const int DAY = 24 * HOUR;
-            const int MONTH = 30 * DAY;
+            TimeSpan timespan = DateTime.UtcNow - dateChanged;
+            if (timespan.TotalMinutes < 1)
+                return "just now";
 
-            var timespan = new TimeSpan(DateTime.UtcNow.Ticks - dateChanged.Ticks);
-            double totalSeconds = Math.Abs(timespan.TotalSeconds);
+            if (timespan.TotalHours < 1)
+                return (int)timespan.TotalMinutes == 1 ? "1 Minute ago" : (int)timespan.TotalMinutes + " Minutes ago";
 
-            if(totalSeconds < 1 * MINUTE)
-            {
-                return timespan.Seconds == 1 ? "Just Now" : timespan.Seconds + " seconds ago";
-            }
-            if (totalSeconds < 2 * MINUTE)
-            {
-                return "a minute ago";
-            }
-            if (totalSeconds < 45 * MINUTE)
-            {
-                return timespan.Seconds > 30 && timespan.Seconds < 40 ? "30 minutes ago" : timespan.Minutes + " minutes ago";
-            }
-            if (totalSeconds < 90 * MINUTE)
-            {
-                return timespan.Seconds > 60 && timespan.Seconds < 90 ? "an hour ago" : timespan.Minutes + " minutes ago";
-            }
-            if (totalSeconds < 24 * HOUR)
-            {
-                return timespan.Hours + " hours ago";
-            }
-            if (totalSeconds < 48 * HOUR)
-            {
-                return "yesterday";
-            }
-            if (totalSeconds < 30 * DAY)
-            {
-                return timespan.Days + " days ago";
-            }
-            if (totalSeconds < 12 * MONTH)
-            {
-                int month = Convert.ToInt32(Math.Floor((double)timespan.Days / 30));
-                return month < 1 ? "a month ago" : month + " months ago";
-            } 
-            else
-            {
-                int year = Convert.ToInt32(Math.Floor((double)timespan.Days / 365));
-                return year < 1 ? "a year ago" : year + " years ago";
-            }
+            if (timespan.TotalDays < 1)
+                return (int)timespan.TotalHours == 1 ? "an Hour ago" : (int)timespan.TotalHours + " Hours ago";
+
+            if (timespan.TotalDays < 7)
+                return (int)timespan.TotalDays == 1 ? "1 Day ago" : (int)timespan.TotalDays + " Days ago";
+
+            if (timespan.TotalDays < 30.4368)
+                return (int)(timespan.TotalDays / 7) == 1 ? "1 Week ago" : (int)(timespan.TotalDays / 7) + " Weeks ago";
+
+            if (timespan.TotalDays < 365.242)
+                return (int)(timespan.TotalDays / 30.4368) == 1 ? "1 Month ago" : (int)(timespan.TotalDays / 30.4368) + " Months ago";
+
+            return (int)(timespan.TotalDays / 365.242) == 1 ? "1 Year ago" : (int)(timespan.TotalDays / 365.242) + " Years ago";
         }
 
 

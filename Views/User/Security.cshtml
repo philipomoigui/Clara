@@ -2,6 +2,7 @@
 @{ 
     Layout = "_PagesLayout";
     var message = TempData["SuccessMessage"] ?? string.Empty;
+    var DatePasswordChanged = Model.RelativeDateChange ?? "- not yet updated";
 }
 
 
@@ -22,7 +23,7 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <h6>Password</h6>
-                            <p class="text-sm text-muted">Last updated 3 years ago</p>
+                            <p class="text-sm text-muted">Last updated @DatePasswordChanged</p>
                         </div>
                         <div class="col text-right">
                             <button class="btn btn-link pl-0 text-primary collapsed" type="button" data-toggle="collapse" data-target="#updatePassword" aria-expanded="false" aria-controls="updatePassword">Update</button>
