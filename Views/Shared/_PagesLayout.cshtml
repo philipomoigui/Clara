@@ -49,7 +49,7 @@
     <!--Header Start-->
     <header class="header mb-3">
         <!-- Navbar-->
-        <nav class="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white">
+        <nav class="navbar navbar-expand-lg fixed-top shadow navbar-light" style="background-color:#606060">
             <div class="container-fluid">
                 <div class="d-flex align-items-center">
                     <a class="navbar-brand py-1" asp-action="Index" asp-controller="Home"><img src="~/img/clara_logonew.png" alt="Clara logo"></a>
@@ -65,20 +65,16 @@
                         </div>
                     </form>
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle " id="homeDropdownMenuLink" href="index-2.html" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Home
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="homeDropdownMenuLink"><a class="dropdown-item" href="index-2.html">Rooms</a><a class="dropdown-item" href="index-3.html">Restaurants</a><a class="dropdown-item" href="index-4.html">Travel</a><a class="dropdown-item" href="index-5.html">Real Estate <span class="badge badge-info-light ml-1 mt-n1">New</span></a></div>
+                        <li class="nav-item text-white mt-2 font-weight-bolder">
+                            <a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <!-- Megamenu-->
-                        <!-- /Megamenu end-->
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact Us</a>
+
+                        <li class="nav-item text-white mt-2 font-weight-bolder">
+                            <a class="nav-link text-white" href="contact.html">Contact Us</a>
                         </li>
                         @if (signInManager.IsSignedIn(User))
                         {
-                            <li>
+                            <li class="nav-item text-white mt-2 font-weight-bolder">
                                 <span class="badge text-black-50" id="notification-count" data-toggle="popover" title="notifications"></span>
                             </li>
                             <li class="nav-item dropdown ml-lg-3">
@@ -91,14 +87,14 @@
                         }
                         else
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle " id="homeDropdownMenuLink" asp-action="Login" asp-controller="Account" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-user"></i> Login
+                            <li class="nav-item dropdown text-white mt-2 font-weight-bolder">
+                                <a class="nav-link dropdown-toggle text-white" id="homeDropdownMenuLink" asp-action="Login" asp-controller="Account" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                     Login
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="homeDropdownMenuLink"><a asp-action="Register" asp-controller="Account" class="dropdown-item">Sign Up <span class="badge badge-info-light ml-1 mt-n1">New</span></a></div>
+                                <div class="dropdown-menu text-white" aria-labelledby="homeDropdownMenuLink"><a asp-action="Register" asp-controller="Account" class="dropdown-item">Sign Up</a></div>
                             </li>
 
-                            <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block"><a class="btn btn-primary" href="user-add-0.html">Add A Service</a></li>
+                            <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block border-0"><a class="btn btn-primary" href="user-add-0.html" style="background-color:#7a421b !important; border-color:#7a421b !important">Add A Service</a></li>
                         }
                     </ul>
                 </div>
