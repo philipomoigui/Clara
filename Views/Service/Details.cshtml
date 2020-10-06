@@ -17,18 +17,23 @@
                 <div class="badge badge-pill badge-transparent px-3 py-2 mb-4">@Model.Service.Category.CategoryName</div>
                 <h1 class="text-shadow verified">@Model.Service.BusinessName</h1>
                 <p><i class="fa-map-marker-alt fas mr-2"></i>@Model.Service.AddressLine</p>
-                <p class="text-uppercase">Posted By @Model.Service.User.UserProfile.FirstName</p>
+                @*<p class="text-uppercase">Posted By @Model.Service.User.UserProfile.FirstName</p>*@
                 <p class="mb-0 d-flex align-items-center">
 
-                    @{ for (var i = 1; i <= 3; i++)
-                        {
-            <i class="fa fa-xs fa-star text-primary"></i> }
-        if (3 < 5)
-        {
-            for (var i = 1; i <= 5 - 3; i++)
+        @{ 
+            for (var i = 1; i <= 3; i++)
             {
-<i class="fa fa-xs fa-star text-gray-100"></i> }
-} }
+            <i class="fa fa-xs fa-star text-primary"></i> 
+            }
+
+            if (3 < 5)
+            {
+                for (var i = 1; i <= 5 - 3; i++)
+                {
+                <i class="fa fa-xs fa-star text-gray-100"></i> 
+                }
+            } 
+        }
                     @reviewCount
                 </p>
             </div>
@@ -46,13 +51,6 @@
                     <p class="text-muted">a weird description of the servics I offer</p>
                     <p class="text-muted">incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </div>
-                <!--<div class="text-block">-->
-                <!-- Listing Location-->
-                <!--<h3 class="mb-4">Location</h3>
-                    <div class="map-wrapper-300 mb-3">
-                        <div class="h-100" id="detailMap"></div>
-                    </div>
-                </div>-->
                 <div class="text-block">
                     <!-- Gallery-->
                     <h3 class="mb-4">Gallery</h3>
@@ -107,47 +105,29 @@
                     <h5 class="mb-4">Listing Reviews </h5>
                     @foreach (var comment in Model.Comments)
                     {
-        <div class="media d-block d-sm-flex review">
-            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-8.jpg" alt="Padmé Amidala"><span class="text-uppercase text-muted text-sm">@comment.Timestamp.ToString("MMM") @comment.Timestamp.Year</span></div>
-            <div class="media-body">
-                <h6 class="mt-2 mb-1">@comment.User.Email</h6>
-                <div class="mb-2">
-                    <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
-                </div>
-                <p class="text-muted text-sm">@comment.Message</p>
-            </div>
-        </div>}
-
-                    @*<div class="media d-block d-sm-flex review">
-                            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-2.jpg" alt="Luke Skywalker"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
-                            <div class="media-body">
-                                <h6 class="mt-2 mb-1">Luke Skywalker</h6>
-                                <div class="mb-2">
-                                    <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-gray-200"></i>
-                                </div>
-                                <p class="text-muted text-sm">The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. &quot;What's happened to me?&quot; he thought. It wasn't a dream.     </p>
-                            </div>
-                        </div>
                         <div class="media d-block d-sm-flex review">
-                            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-3.jpg" alt="Princess Leia"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
+                            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-8.jpg" alt="Padmé Amidala"><span class="text-uppercase text-muted text-sm">@comment.Timestamp.ToString("MMM") @comment.Timestamp.Year</span></div>
                             <div class="media-body">
-                                <h6 class="mt-2 mb-1">Princess Leia</h6>
-                                <div class="mb-2">
-                                    <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-gray-200"></i><i class="fa fa-xs fa-star text-gray-200"></i>
-                                </div>
-                                <p class="text-muted text-sm">His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table.     </p>
-                            </div>
-                        </div>
-                        <div class="media d-block d-sm-flex review">
-                            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-4.jpg" alt="Jabba Hut"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
-                            <div class="media-body">
-                                <h6 class="mt-2 mb-1">Jabba Hut</h6>
+                                <h6 class="mt-2 mb-1">@comment.User.Email</h6>
                                 <div class="mb-2">
                                     <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
                                 </div>
-                                <p class="text-muted text-sm">Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.     </p>
+                                <p class="text-muted text-sm">@comment.Message</p>
                             </div>
-                        </div>*@
+                        </div>
+                     }
+
+            
+                    <div class="media d-block d-sm-flex review">
+                        <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-4.jpg" alt="Jabba Hut"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
+                        <div class="media-body">
+                            <h6 class="mt-2 mb-1">Jabba Hut</h6>
+                            <div class="mb-2">
+                                <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
+                            </div>
+                            <p class="text-muted text-sm">Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.     </p>
+                        </div>
+                    </div>
                     <div class="py-5">
                         <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview">Leave a review</button>
                         <div class="collapse mt-4" id="leaveReview">

@@ -26,9 +26,8 @@
                     <input class="form-control pr-4" type="text" name="location" placeholder="Location" id="form_search">
                 </div>
                 <div class="mb-4">
-                    <label class="form-label" for="form_category">Category</label>
-                    <select class="selectpicker form-control" name="category" id="form_category" multiple data-style="btn-selectpicker" data-selected-text-format="count &gt; 1" title="">
-                        <option value="category_0">Hipster    </option>
+                    <label class="form-label ml-1" for="form_category">Category</label>
+                    <select class="selectpicker form-control" name="category" asp-items="@(new SelectList(ViewBag.CategoryList, "CategoryName", "CategoryName"))" id="form_category" data-style="btn-selectpicker" data-selected-text-format="count &gt; 1" title="">
                     </select>
                 </div>
                 

@@ -118,14 +118,32 @@
                         $("#notification-content").html(res);
 
                         $("body").click(function (evt) {
-                            if (evt.target.classList.contains("notification-text"))
-                                alert(evt.target.id)
+                            if (evt.target.classList.contains("notification-text")) {
+                                var id = evt.target.id
+                                ChangeReadStatus(id);
+                            }
+                                //alert(evt.target.id)
+                               
                         })
                     },
                     error: function (err) {
                         console.log(err);
                     }
                 });
+            }
+
+            function ChangeReadStatus(Id) {
+                $.ajax({
+                    url: "/Notification/ReadNotification",
+                    type: "post",
+                    data: { notificationId: Id },
+                    success: function () {
+                        console.log("I got here");
+                    },
+                    error: function (err) {
+                        alert("Something went wrong");
+                    }
+                })
             }
 
             getNotification();
