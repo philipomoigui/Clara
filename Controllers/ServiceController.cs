@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Clara.Controllers
 {
-    [Authorize]
     public class ServiceController : Controller
     {
         
@@ -54,6 +53,7 @@ namespace Clara.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create(CreateServiceViewModel model)
         {
             if (ModelState.IsValid)

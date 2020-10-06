@@ -32,13 +32,15 @@ namespace Clara.Repository
 
         public IEnumerable<Service> GetAllService() =>  FindAll()
             .Include(s => s.Category)
-            .Include(s => s.UserProfile)
+            .Include(s => s.User)
+            .ThenInclude(s => s.UserProfile)
             .ToList();
 
         public IEnumerable<Service> GetServicesByLocationAndSearch(string category, string location, string search)
         {
             return FindByCondition(s => s.Category.CategoryName.Equals(category) && (s.City.Equals(location) || s.State.Equals(location)) && s.BusinessName.Contains(search))
                 .Include(s => s.Category)
+                .Include(s => s.User)
                 .ToList();
             
         }
@@ -47,7 +49,8 @@ namespace Clara.Repository
         {
             return await FindByCondition(s => s.ServiceId.Equals(serviceId))
                 .Include(s => s.Category)
-                .Include(s => s.UserProfile)
+                .Include(s => s.User)
+                .ThenInclude(s => s.UserProfile)
                 .FirstOrDefaultAsync();
         }
 
@@ -59,33 +62,38 @@ namespace Clara.Repository
         public IEnumerable<Service> GetServicesByLocation(string category, string location)
         {
             return FindByCondition(s => s.Category.CategoryName.Equals(category) && (s.City.Equals(location) || s.State.Equals(location)))
-                 .Include(s => s.Category)
-                 .Include(s => s.UserProfile)
-                 .ToList();
+                .Include(s => s.Category)
+                .Include(s => s.User)
+                .ThenInclude(s => s.UserProfile)
+                .ToList();
         }
 
         public IEnumerable<Service> GetServicesByCategory(string category)
         {
             return FindByCondition(s => s.Category.CategoryName.Equals(category))
-                .Include(s => s.Category)
-                .Include(s => s.UserProfile)
-                .ToList();
+             .Include(s => s.Category)
+            .Include(s => s.User)
+            .ThenInclude(s => s.UserProfile)
+            .ToList();
         }
 
         public IEnumerable<Service> GetUSerServices(string userId)
         {
             return FindByCondition(u => u.UserId == userId)
-                .Include(s => s.Category)
-                .Include(s => s.UserProfile)
-                .OrderBy(s => s.BusinessName)
-                .ToList();
+             .Include(s => s.Category)
+            .Include(s => s.User)
+            .ThenInclude(s => s.UserProfile)
+            .OrderBy(s => s.BusinessName)
+            .ToList();
         }
 
         public IEnumerable<Service> GetPopularCategory(int categoryId)
         {
             return FindByCondition(s => s.CategoryId.Equals(categoryId))
                  .Include(s => s.Category)
-                 .Include(s => s.UserProfile)
+            .Include(s => s.User)
+            .ThenInclude(s => s.UserProfile)
+  
                  .OrderBy(s => Guid.NewGuid())
                  .Take(6)
                  .ToList();

@@ -17,5 +17,6 @@ namespace Clara.ViewModels
         public int CategoryId { get; set; }
         public List<Comment> Comments { get; set; }
         public bool isBookmarked { get; set; }
+        public UserProfile UserProfile { get; set; }
     }
 }

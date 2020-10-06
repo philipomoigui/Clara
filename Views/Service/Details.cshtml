@@ -17,6 +17,7 @@
                 <div class="badge badge-pill badge-transparent px-3 py-2 mb-4">@Model.Service.Category.CategoryName</div>
                 <h1 class="text-shadow verified">@Model.Service.BusinessName</h1>
                 <p><i class="fa-map-marker-alt fas mr-2"></i>@Model.Service.AddressLine</p>
+                <p class="text-uppercase">Posted By @Model.Service.User.UserProfile.FirstName</p>
                 <p class="mb-0 d-flex align-items-center">
 
                     @{ for (var i = 1; i <= 3; i++)

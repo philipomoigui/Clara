@@ -128,31 +128,6 @@
                 });
             }
 
-            //function getNotification() {
-            //    var res = "<ul class='list-group'>";
-            //    fetch("/Notification/GetNotification")
-            //        .then(response => response.json())
-            //        .then(function (result) {
-            //            document.getElementById("notification-count").innerHTML = result.count;
-            //            let notifications = result.userNotification;
-            //            notifications.forEach(element => {
-            //                res = res + "<li data-id='22' class='list-group-item notification-text' data-id='22'>" + element.notification.text + "</li>";
-            //            })
-
-            //            res = res + "</ul>";
-            //            document.getElementById("notification-content").innerHTML = res;
-            //        })
-            //        .catch(error => console.error('Unable to get items.', error));
-            //}
-
-            //$("ul").on('click', 'li.notification-text', function (e) {
-            //    var target = e.target;
-            //    var id = $(target).data('id');
-            //    console.log(id);
-            //})
-
-            
-
             getNotification();
         });
     </script>
