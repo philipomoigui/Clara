@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,7 +9,8 @@ namespace Clara.Models
 {
     public class UserProfile
     {
-        public Guid UserProfileId { get; set; }
+        [Key, ForeignKey("User")]
+        public string UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -19,7 +22,7 @@ namespace Clara.Models
         public string State { get; set; }
         public string ZipCode { get; set; }
         public DateTime? PasswordChangeDate { get; set; }
-        public string UserId { get; set; }
         public ApplicationUser User { get; set; }
+        public List<Service> Services { get; set; }
     }
 }

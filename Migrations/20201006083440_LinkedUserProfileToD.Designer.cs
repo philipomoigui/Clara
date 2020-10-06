@@ -4,14 +4,16 @@ using Clara.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Clara.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201006083440_LinkedUserProfileToD")]
+    partial class LinkedUserProfileToD
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,8 +213,8 @@ namespace Clara.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserProfileUserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("UserProfileId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ZipCode")
                         .HasColumnType("nvarchar(max)");
@@ -223,14 +225,14 @@ namespace Clara.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("UserProfileUserId");
+                    b.HasIndex("UserProfileId");
 
                     b.ToTable("Services");
 
                     b.HasData(
                         new
                         {
-                            ServiceId = new Guid("047ef76d-e9ad-4876-8001-97932e546dd0"),
+                            ServiceId = new Guid("8d976b7d-c10d-410c-963b-8f11553651a6"),
                             AddressLine = "21, barr. xpress omoigui strt",
                             BusinessEmail = "philo@gmail.com",
                             BusinessName = "Philo Inc",
@@ -242,7 +244,7 @@ namespace Clara.Migrations
                         },
                         new
                         {
-                            ServiceId = new Guid("ec320357-911c-4a5b-a1ed-a383dd4faaf3"),
+                            ServiceId = new Guid("e7388417-e5ea-4fa2-b4c2-2c25d2b808fc"),
                             AddressLine = "11, Sangotedo strt",
                             BusinessEmail = "dadesola@gmail.com",
                             BusinessName = "Dade Designs",
@@ -254,7 +256,7 @@ namespace Clara.Migrations
                         },
                         new
                         {
-                            ServiceId = new Guid("40659207-7ef6-4a72-85b4-38de5c58825d"),
+                            ServiceId = new Guid("52e9ddbd-bf9b-4aa7-978b-d471cd93b992"),
                             AddressLine = "115, barr. xpress omoigui strt",
                             BusinessEmail = "SholpeDes@gmail.com",
                             BusinessName = "Shola Catering",
@@ -268,8 +270,9 @@ namespace Clara.Migrations
 
             modelBuilder.Entity("Clara.Models.UserProfile", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserProfileId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("About")
                         .HasColumnType("nvarchar(max)");
@@ -301,10 +304,17 @@ namespace Clara.Migrations
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ZipCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserProfileId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("UserProfiles");
                 });
@@ -573,16 +583,14 @@ namespace Clara.Migrations
 
                     b.HasOne("Clara.Models.UserProfile", "UserProfile")
                         .WithMany("Services")
-                        .HasForeignKey("UserProfileUserId");
+                        .HasForeignKey("UserProfileId");
                 });
 
             modelBuilder.Entity("Clara.Models.UserProfile", b =>
                 {
                     b.HasOne("Clara.Models.ApplicationUser", "User")
                         .WithOne("UserProfile")
-                        .HasForeignKey("Clara.Models.UserProfile", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Clara.Models.UserProfile", "UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

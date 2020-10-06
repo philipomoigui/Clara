@@ -79,17 +79,21 @@ namespace Clara.Controllers
         [HttpGet]
         public IActionResult Services(int? pageNumber, string category, string location, string search)
         {
-            int pageSize = 3;
+            int pageSize = 6;
             List<ServicesViewModel> services;
             string serviceTop = string.Empty;
             var locationIncluded = location ?? "All Location";
+
+            //category List
+            var categoryList = _repositoryManager.Category.GetAllCategories.OrderBy(c => c.CategoryName).ToList();
+            categoryList.Insert(0, new Category { CategoryId = 0, CategoryName = "Select Category" });
+
 
             if (!string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(location) && !string.IsNullOrEmpty(search))
             {
                 services = _repositoryManager.Service.GetServicesByLocationAndSearch(category, location, search)
                     .Select(service => _mapper.Map<ServicesViewModel>(service))
                     .ToList();
-
                 
                     serviceTop = $"{category} in {locationIncluded}";
             } 

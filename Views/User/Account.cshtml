@@ -101,7 +101,7 @@
 
             $('body').append(`<div id="notification-content" class="hide"></div>`)
             function getNotification() {
-                var res = "<ul class='list-group'>";
+                var res = "<ul class='list-group noti-text'>";
                 $.ajax({
                     url: "/Notification/GetNotification",
                     method: "get",
@@ -110,12 +110,17 @@
                         $("#notification-count").html(result.count);
                         var notifications = result.userNotification;
                         notifications.forEach(element => {
-                            res = res + `<li class='list-group-item notification-text' data-id='2334'> ${element.notification.text}</li>`;
+                            res = res + `<li class='list-group-item notification-text' id='${element.notification.notificationId}' data-id='2334'> ${element.notification.text}</li>`;
                         })
 
                         res = res + "</ul>";
 
                         $("#notification-content").html(res);
+
+                        $("body").click(function (evt) {
+                            if (evt.target.classList.contains("notification-text"))
+                                alert(evt.target.id)
+                        })
                     },
                     error: function (err) {
                         console.log(err);
@@ -146,9 +151,7 @@
             //    console.log(id);
             //})
 
-            //$("#notification-count").click(function () {
-            //    $("#notification-count").text("");
-            //})
+            
 
             getNotification();
         });

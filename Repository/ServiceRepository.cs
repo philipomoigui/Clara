@@ -32,6 +32,7 @@ namespace Clara.Repository
 
         public IEnumerable<Service> GetAllService() =>  FindAll()
             .Include(s => s.Category)
+            .Include(s => s.UserProfile)
             .ToList();
 
         public IEnumerable<Service> GetServicesByLocationAndSearch(string category, string location, string search)
@@ -46,6 +47,7 @@ namespace Clara.Repository
         {
             return await FindByCondition(s => s.ServiceId.Equals(serviceId))
                 .Include(s => s.Category)
+                .Include(s => s.UserProfile)
                 .FirstOrDefaultAsync();
         }
 
@@ -58,6 +60,7 @@ namespace Clara.Repository
         {
             return FindByCondition(s => s.Category.CategoryName.Equals(category) && (s.City.Equals(location) || s.State.Equals(location)))
                  .Include(s => s.Category)
+                 .Include(s => s.UserProfile)
                  .ToList();
         }
 
@@ -65,6 +68,7 @@ namespace Clara.Repository
         {
             return FindByCondition(s => s.Category.CategoryName.Equals(category))
                 .Include(s => s.Category)
+                .Include(s => s.UserProfile)
                 .ToList();
         }
 
@@ -72,6 +76,7 @@ namespace Clara.Repository
         {
             return FindByCondition(u => u.UserId == userId)
                 .Include(s => s.Category)
+                .Include(s => s.UserProfile)
                 .OrderBy(s => s.BusinessName)
                 .ToList();
         }
@@ -80,6 +85,7 @@ namespace Clara.Repository
         {
             return FindByCondition(s => s.CategoryId.Equals(categoryId))
                  .Include(s => s.Category)
+                 .Include(s => s.UserProfile)
                  .OrderBy(s => Guid.NewGuid())
                  .Take(6)
                  .ToList();
