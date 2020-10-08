@@ -17,11 +17,9 @@ namespace Clara.Repository
         {
             _applicationDbContext = applicationDbContext;
         }
-        public IQueryable<Service> GetPopularCategory(int categoryId)
+        public IEnumerable<Service> GetPopularCategory(int categoryId)
         {
-           return _applicationDbContext.Services
-                .AsNoTracking()
-                .Where(c => c.CategoryId == categoryId)
+            return FindByCondition(s => s.CategoryId.Equals(categoryId))
                 .OrderBy(s => Guid.NewGuid())
                 .Take(6);
         }

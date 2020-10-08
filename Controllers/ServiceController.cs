@@ -87,6 +87,8 @@ namespace Clara.Controllers
             //category List
             var categoryList = _repositoryManager.Category.GetAllCategories.OrderBy(c => c.CategoryName).ToList();
             categoryList.Insert(0, new Category { CategoryId = 0, CategoryName = "Select Category" });
+            if (category == "Select Category")
+                category = null;
 
 
             if (!string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(location) && !string.IsNullOrEmpty(search))
@@ -113,7 +115,15 @@ namespace Clara.Controllers
                     .Select(service => _mapper.Map<ServicesViewModel>(service))
                     .ToList();
 
-                serviceTop = $"{category}";
+                serviceTop = $"{category} Services";
+            } 
+            else if (!string.IsNullOrEmpty(location))
+            {
+                services = _repositoryManager.Service.GetServicesByLocation(location)
+                    .Select(service => _mapper.Map<ServicesViewModel>(service))
+                    .ToList();
+
+                serviceTop = $"Services In {location}";
             }
             else
             {
@@ -121,11 +131,12 @@ namespace Clara.Controllers
                     .Select(service => _mapper.Map<ServicesViewModel>(service))
                     .ToList();
 
-                serviceTop = "All Categories";
+                serviceTop = "All Services";
             }
 
             ViewBag.servicesTop = serviceTop;
             ViewBag.ServiceCount = services.Count();
+            ViewBag.CategoryList = categoryList;
 
             return View(ServicesPagination<ServicesViewModel>.Create(services, pageSize, pageNumber ?? 1));
         }

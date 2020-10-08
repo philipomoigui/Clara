@@ -86,6 +86,63 @@
 
         </div>
     </div>
+    <div id="HideNotiText">
+
+    </div>
+
+    <!-- Modal 4 :: Notifications -->
+    <div class="modal modal-lg-fullscreen fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-dialog-zoom">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-0 hide-scrollbar">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <!-- List Group Start -->
+                            <ul class="list-group list-group-flush  py-2">
+
+                                <!-- List Group Item Start -->
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <div class="btn btn-primary btn-icon rounded-circle text-light mr-2">
+                                            <!-- Default :: Inline SVG -->
+                                            <svg class="hw-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+
+                                            <!-- Alternate :: External File link -->
+                                            <!-- <img class="injectable hw-24" src="./../assets/media/heroicons/outline/check-circle.svg" alt=""> -->
+                                        </div>
+
+                                        <div class="media-body">
+                                            <h6>
+                                                <a href="#">Katelyn Valdez</a> accepted your friend request
+                                            </h6>
+
+                                            <p class="text-muted mb-0">25 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- List Group Item End -->
+
+                            </ul>
+                            <!-- List Group End -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-link text-muted">Clear all</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>
 
 @section Scripts{ 
@@ -99,9 +156,10 @@
                 html: true
             });
 
-            $('body').append(`<div id="notification-content" class="hide"></div>`)
+            //$('body').append(`<div id="notification-content" class="hide"></div>`)
+            $('#HideNotiText').append(`<div id="notification-content" class="hide"></div>`)
             function getNotification() {
-                var res = "<ul class='list-group noti-text'>";
+                var res = "<ul  class='list-group list-group-flush py-2'>";
                 $.ajax({
                     url: "/Notification/GetNotification",
                     method: "get",
@@ -115,11 +173,13 @@
 
                         res = res + "</ul>";
 
-                        $("#notification-content").html(res);
+                        //$("#notification-content").html(res);
+                        $(".modal-body").html(res);
 
-                        $("body").click(function (evt) {
+                        $("ul .notification-text").click(function (evt) {
                             if (evt.target.classList.contains("notification-text")) {
                                 var id = evt.target.id
+                                alert(id);
                                 ChangeReadStatus(id);
                             }
                                 //alert(evt.target.id)

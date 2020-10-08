@@ -31,13 +31,16 @@
 }
 
 #notification-count {
-    top: 15px;
+    top: 5px;
     position: relative;
     cursor: pointer;
 }
 
-.popover {
+.notification-text {
     width: 500px;
     cursor: pointer;
 }
 
+    .notification-text:hover {
+        color: #7a421b;
+    }

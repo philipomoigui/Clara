@@ -106,6 +106,11 @@ namespace Clara.Repository
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Service> GetServicesByLocation(string location)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Service> GetServicesByLocationAndSearch(string category, string location, string search)
         {
             throw new NotImplementedException();

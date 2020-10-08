@@ -77,6 +77,15 @@ namespace Clara.Repository
             .ToList();
         }
 
+        public IEnumerable<Service> GetServicesByLocation(string location)
+        {
+            return FindByCondition(s => s.City.Contains(location) || s.State.Contains(location))
+                .Include(s => s.Category)
+                .Include(s => s.User)
+                .Include(s => s.UserProfile)
+                .ToList();
+        }
+
         public IEnumerable<Service> GetUSerServices(string userId)
         {
             return FindByCondition(u => u.UserId == userId)

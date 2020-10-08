@@ -8,6 +8,6 @@ namespace Clara.Repository.Interface
 {
     public interface IHomeRepository: IRepositoryBase<Service>
     {
-        IQueryable<Service> GetPopularCategory(int categoryId);
+        IEnumerable<Service> GetPopularCategory(int categoryId);
     }
 }
