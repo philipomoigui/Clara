@@ -1,6 +1,8 @@
 ﻿using Clara.DataAccess;
+using Clara.Infrastructure;
 using Clara.Models;
 using Clara.Repository.Interface;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,14 +13,18 @@ namespace Clara.Repository
 {
     public class UserNotificationRepository : RepositoryBase<NotificationApplicationUser>, IUserNotificationRepository
     {
-        public UserNotificationRepository(ApplicationDbContext applicationDbContext): base(applicationDbContext)
-        {
+        private readonly IHubContext<SignalServer> _hubContext;
 
+        public UserNotificationRepository(ApplicationDbContext applicationDbContext, IHubContext<SignalServer> hubContext): base(applicationDbContext)
+        {
+            _hubContext = hubContext;
         }
 
         public void AddUserNotification(NotificationApplicationUser userNotification)
         {
             Create(userNotification);
+
+            _hubContext.Clients.All.SendAsync("displayNotification", "");
         }
 
         public List<NotificationApplicationUser> GetUserNotofications(string userId)

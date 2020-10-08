@@ -147,6 +147,7 @@
 
 @section Scripts{ 
    <script>
+
         $(function () {
             $('[data-toggle="popover"]').popover({
                 placement: "bottom",
@@ -206,9 +207,12 @@
                     url: "/Notification/ReadNotification",
                     type: "post",
                     data: { notificationId: Id },
-                    success: function () {
+                    dataType: "int",
+                    success: function (result) {
                         console.log("I got here");
                         $(target).hide('slow');
+                        console.log(result);
+                        //$("#notification-count").html(result);
                     },
                     error: function (err) {
                         alert("Something went wrong");
@@ -217,6 +221,14 @@
             }
 
             getNotification();
+
+            let connection = new signalR.HubConnectionBuilder().withUrl("/signalServer").build();
+
+            connection.on('displayNotification', () => {
+                getNotification();
+            });
+
+            connection.start();
         });
     </script>
 }

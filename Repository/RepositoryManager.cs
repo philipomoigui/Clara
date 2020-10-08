@@ -1,5 +1,7 @@
 ﻿using Clara.DataAccess;
+using Clara.Infrastructure;
 using Clara.Repository.Interface;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,7 @@ namespace Clara.Repository
     public class RepositoryManager : IRepositoryManager
     {
         private ApplicationDbContext _applicationDbContext;
+        private readonly IHubContext<SignalServer> hubContext;
         private IServicesRepository _servicesRepository;
         private ICommentRepository _commentRepository;
         private IUserRepository _userRepository;
@@ -18,9 +21,10 @@ namespace Clara.Repository
         private IUserNotificationRepository _UserNotificationRepository;
         private IBookmarkRepository _bookmarkRepository;
 
-        public RepositoryManager(ApplicationDbContext applicationDbContext)
+        public RepositoryManager(ApplicationDbContext applicationDbContext, IHubContext<SignalServer> hubContext)
         {
             _applicationDbContext = applicationDbContext;
+            this.hubContext = hubContext;
         }
 
         public IServicesRepository Service
@@ -77,7 +81,7 @@ namespace Clara.Repository
             {
                 if (_NotificationRepository == null)
                 {
-                    _NotificationRepository = new NotificationRepository(_applicationDbContext);
+                    _NotificationRepository = new NotificationRepository(_applicationDbContext, hubContext);
                 }
                 return _NotificationRepository;
             }
@@ -89,7 +93,7 @@ namespace Clara.Repository
             {
                 if (_UserNotificationRepository == null)
                 {
-                    _UserNotificationRepository = new UserNotificationRepository(_applicationDbContext);
+                    _UserNotificationRepository = new UserNotificationRepository(_applicationDbContext, hubContext);
                 }
                 return _UserNotificationRepository;
             }

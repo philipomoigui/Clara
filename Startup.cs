@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Clara.DataAccess;
 using Clara.Extension_Methods;
+using Clara.Infrastructure;
 using Clara.Models;
 using Clara.Repository;
 using Clara.Repository.Interface;
@@ -33,6 +34,7 @@ namespace Clara
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureRepositoryManager();
+            services.AddSignalR();
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -83,6 +85,8 @@ namespace Clara
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<SignalServer>("/signalServer");
             });
         }
     }

@@ -8,7 +8,7 @@ namespace Clara.Repository.Interface
 {
     public interface INotificationRepository
     {
-        void AddNotication(Notification notification);
+        void AddNotification(Notification notification);
         void ReadNotification(Guid NotificationId);
     }
 }

@@ -46,7 +46,11 @@ namespace Clara.Controllers
         {
             _repositoryManager.Notification.ReadNotification(notificationId);
             await _repositoryManager.saveAsync();
-            return Ok();
+
+            var userId = _userManager.GetUserId(User);
+            var notifications = _repositoryManager.UserNotification.GetUserNotofications(userId);
+
+            return Ok(new { count = notifications.Count()});
         }
     }
 }

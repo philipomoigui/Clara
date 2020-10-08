@@ -181,6 +181,7 @@ namespace Clara.Controllers
         public async Task<IActionResult> Details(DetailsViewModel model)
         {
             var userProfile = _repositoryManager.UserProfile.GetUserProfile(model.UserId);
+
             var service = await _repositoryManager.Service.GetServiceById(model.ServiceId);
 
             if (ModelState.IsValid)
@@ -204,11 +205,11 @@ namespace Clara.Controllers
                         Text = $"{userProfile.FirstName} {userProfile.LastName} left a review on {service.BusinessName} with 3.0 rating",
                     };
 
-                    _repositoryManager.Notification.AddNotication(notification);
+                    _repositoryManager.Notification.AddNotification(notification);
 
                     NotificationApplicationUser userNotification = new NotificationApplicationUser();
                     userNotification.NotificationId = notification.NotificationId;
-                    userNotification.UserId = model.UserId;
+                    userNotification.UserId = service.User.Id;
 
                     _repositoryManager.UserNotification.AddUserNotification(userNotification);
 

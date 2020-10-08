@@ -1,6 +1,8 @@
 ﻿using Clara.DataAccess;
+using Clara.Infrastructure;
 using Clara.Models;
 using Clara.Repository.Interface;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +12,17 @@ namespace Clara.Repository
 {
     public class NotificationRepository : RepositoryBase<Notification>, INotificationRepository
     {
-       
-        public NotificationRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
+        private readonly IHubContext<SignalServer> _hubContext;
+
+        public NotificationRepository(ApplicationDbContext applicationDbContext, IHubContext<SignalServer> hubContext) : base(applicationDbContext)
         {
-            
+            _hubContext = hubContext;
         }
-        public void AddNotication(Notification notification)
+        public void AddNotification(Notification notification)
         {
             Create(notification);
+
+            _hubContext.Clients.All.SendAsync("displayNotification", "");
         }
 
         public void ReadNotification(Guid NotificationId)
