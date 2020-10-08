@@ -23,7 +23,7 @@ namespace Clara.Repository
 
         public List<NotificationApplicationUser> GetUserNotofications(string userId)
         {
-           return  FindByCondition(n => n.UserId == userId)
+           return  FindByCondition(n => n.UserId == userId && !n.Notification.Read)
                 .Include(n => n.Notification)
                 .ToList();
         }

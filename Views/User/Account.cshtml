@@ -10,7 +10,7 @@
         <!-- Breadcrumbs -->
         <ol class="breadcrumb #{breadcrumbClass}">
             <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
-            <li class="breadcrumb-item active">Your account   </li>
+            <li class="breadcrumb-item active">Your account</li>
         </ol>
         <h1 class="hero-heading mb-0">Welcome, @ViewBag.firstName.</h1>
         <p class="text-muted mb-5">Manage your account and settings here.</p>
@@ -37,7 +37,7 @@
                             </svg>
                         </div>
                         <div class="badge badge-transparent badge-pill px-3 py-2 float-right font-weight-bolder text-dark">
-                            <a href="#">Add Service</a>
+                            <a asp-action="Create" asp-controller="">Add Service</a>
                         </div>
                         <h5 class="card-title mb-3"><a class="text-decoration-none text-dark stretched-link" asp-action="Profile" asp-controller="User">Service</a></h5>
                         <p class="text-muted card-text text-sm">Review Services, Add Services, handle all activities related to your services</p>
@@ -165,10 +165,17 @@
                     method: "get",
                     success: function (result) {
                         console.log(result);
-                        $("#notification-count").html(result.count);
+                        if (result.count != 0) {
+                            $("#notification-count").html(result.count);
+                        } else {
+                            $("#notification-count").html();
+                            $("#notification-count").hide();
+                            $("#notification-count").modal('hide');
+                        }
+                        
                         var notifications = result.userNotification;
                         notifications.forEach(element => {
-                            res = res + `<li class='list-group-item notification-text' id='${element.notification.notificationId}' data-id='2334'> ${element.notification.text}</li>`;
+                            res = res + `<li class='list-group-item notification-text' data-id='${element.notification.notificationId}'> ${element.notification.text}</li>`;
                         })
 
                         res = res + "</ul>";
@@ -178,9 +185,11 @@
 
                         $("ul .notification-text").click(function (evt) {
                             if (evt.target.classList.contains("notification-text")) {
-                                var id = evt.target.id
+                                //var id = evt.target.id
+                                var target = evt.target;
+                                var id = $(target).data('id');
                                 alert(id);
-                                ChangeReadStatus(id);
+                                ChangeReadStatus(id, target);
                             }
                                 //alert(evt.target.id)
                                
@@ -192,13 +201,14 @@
                 });
             }
 
-            function ChangeReadStatus(Id) {
+            function ChangeReadStatus(Id, target) {
                 $.ajax({
                     url: "/Notification/ReadNotification",
                     type: "post",
                     data: { notificationId: Id },
                     success: function () {
                         console.log("I got here");
+                        $(target).hide('slow');
                     },
                     error: function (err) {
                         alert("Something went wrong");

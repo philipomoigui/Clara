@@ -42,5 +42,6 @@
 }
 
     .notification-text:hover {
-        color: #7a421b;
+        color: white;
+        background-color: #7a421b;
     }

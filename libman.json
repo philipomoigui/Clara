@@ -5,6 +5,10 @@
     {
       "library": "easy-autocomplete@1.3.5",
       "destination": "wwwroot/lib/easy-autocomplete/"
+    },
+    {
+      "library": "aspnet-signalr@1.1.4",
+      "destination": "wwwroot/lib/aspnet-signalr/"
     }
   ]
 }
