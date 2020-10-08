@@ -168,6 +168,7 @@
                         console.log(result);
                         if (result.count != 0) {
                             $("#notification-count").html(result.count);
+                            $("#notification-count").show();
                         } else {
                             $("#notification-count").html();
                             $("#notification-count").hide();
@@ -189,7 +190,7 @@
                                 //var id = evt.target.id
                                 var target = evt.target;
                                 var id = $(target).data('id');
-                                alert(id);
+                                //alert(id);
                                 ChangeReadStatus(id, target);
                             }
                                 //alert(evt.target.id)
@@ -207,12 +208,11 @@
                     url: "/Notification/ReadNotification",
                     type: "post",
                     data: { notificationId: Id },
-                    dataType: "int",
-                    success: function (result) {
+                    success: function (count) {
                         console.log("I got here");
                         $(target).hide('slow');
-                        console.log(result);
-                        //$("#notification-count").html(result);
+                        console.log(count);
+                        getNotification();
                     },
                     error: function (err) {
                         alert("Something went wrong");

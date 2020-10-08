@@ -86,7 +86,7 @@ namespace Clara
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-                endpoints.MapHub<SignalServer>("/signalServer");
+                endpoints.MapHub<SignalServer>("signalServer");
             });
         }
     }

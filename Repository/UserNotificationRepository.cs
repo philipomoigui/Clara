@@ -24,7 +24,7 @@ namespace Clara.Repository
         {
             Create(userNotification);
 
-            _hubContext.Clients.All.SendAsync("displayNotification", "");
+            //await _hubContext.Clients.All.SendAsync("displayNotification", "");
         }
 
         public List<NotificationApplicationUser> GetUserNotofications(string userId)

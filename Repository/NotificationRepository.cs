@@ -22,7 +22,7 @@ namespace Clara.Repository
         {
             Create(notification);
 
-            _hubContext.Clients.All.SendAsync("displayNotification", "");
+            //_hubContext.Clients.All.SendAsync("displayNotification", "");
         }
 
         public void ReadNotification(Guid NotificationId)

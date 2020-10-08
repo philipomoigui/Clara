@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Clara.Infrastructure;
 using Clara.Models;
 using Clara.Repository.Interface;
 using Clara.Utility;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Clara.Controllers
 {
@@ -20,12 +22,14 @@ namespace Clara.Controllers
         private readonly IMapper _mapper;
         private readonly IRepositoryManager _repositoryManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHubContext<SignalServer> _hubContext;
 
-        public ServiceController(IMapper mapper, IRepositoryManager repositoryManager, UserManager<ApplicationUser> userManager)
+        public ServiceController(IMapper mapper, IRepositoryManager repositoryManager, UserManager<ApplicationUser> userManager, IHubContext<SignalServer> hubContext)
         {
             _mapper = mapper;
             _repositoryManager = repositoryManager;
             _userManager = userManager;
+            _hubContext = hubContext;
         }
         public IActionResult Index()
         {
@@ -188,8 +192,6 @@ namespace Clara.Controllers
             {
                 var hasUserComment = _repositoryManager.Comment.HasUserComment(model.UserId, model.ServiceId);
 
-                if (!hasUserComment)
-                {
                     Comment comment = new Comment
                     {
                         Message = model.Message,
@@ -206,7 +208,7 @@ namespace Clara.Controllers
                     };
 
                     _repositoryManager.Notification.AddNotification(notification);
-
+    
                     NotificationApplicationUser userNotification = new NotificationApplicationUser();
                     userNotification.NotificationId = notification.NotificationId;
                     userNotification.UserId = service.User.Id;
@@ -214,11 +216,9 @@ namespace Clara.Controllers
                     _repositoryManager.UserNotification.AddUserNotification(userNotification);
 
                     await _repositoryManager.saveAsync();
-                    return RedirectToAction(nameof(Details), new { serviceId = model.ServiceId, categoryId = model.CategoryId });
-                }
+                    await _hubContext.Clients.All.SendAsync("displayNotification", "");
 
-                ViewBag.CommentMessage = "Sorry, You have already Reviewed This Service";
-                return View(model);
+                    return RedirectToAction(nameof(Details), new { serviceId = model.ServiceId, categoryId = model.CategoryId });
             }
 
             return View(model);
