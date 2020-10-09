@@ -20,24 +20,21 @@
                 @*<p class="text-uppercase">Posted By @Model.Service.User.UserProfile.FirstName</p>*@
                 <p class="mb-0 d-flex align-items-center">
 
-        @{ 
-            for (var i = 1; i <= 3; i++)
-            {
-            <i class="fa fa-xs fa-star text-primary"></i> 
-            }
+                    @{ for (var i = 1; i <= 3; i++)
+                                    {
+                        <i class="fa fa-xs fa-star text-primary"></i> }
 
-            if (3 < 5)
-            {
-                for (var i = 1; i <= 5 - 3; i++)
-                {
-                <i class="fa fa-xs fa-star text-gray-100"></i> 
-                }
-            } 
-        }
+                                    if (3 < 5)
+                                    {
+                                        for (var i = 1; i <= 5 - 3; i++)
+                                        {
+                        <i class="fa fa-xs fa-star text-gray-100"></i> }
+                                    } }
                     @reviewCount
                 </p>
             </div>
-            <div class="calltoactions"><a class="btn btn-primary" href="#leaveReview" onclick="$('#leaveReview').collapse('show')" data-smooth-scroll>Leave a Review</a></div>
+            @*<div class="calltoactions"><a class="btn btn-primary" href="#leaveReview" onclick="$('#leaveReview').collapse('show')" data-smooth-scroll>Leave a Review</a></div>*@
+            <div class="calltoactions"><a class="btn btn-primary" asp-action="Booking" asp-controller="Booking" asp-route-serviceId="@Model.ServiceId">Book Now</a></div>
         </div>
     </div>
 </section>

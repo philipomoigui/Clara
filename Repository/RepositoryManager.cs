@@ -20,6 +20,7 @@ namespace Clara.Repository
         private INotificationRepository _NotificationRepository;
         private IUserNotificationRepository _UserNotificationRepository;
         private IBookmarkRepository _bookmarkRepository;
+        private IBookingRepository _bookingRepository;
 
         public RepositoryManager(ApplicationDbContext applicationDbContext, IHubContext<SignalServer> hubContext)
         {
@@ -108,6 +109,18 @@ namespace Clara.Repository
                     _bookmarkRepository = new BookmarkRepository(_applicationDbContext);
                 }
                 return _bookmarkRepository;
+            }
+        }
+
+        public IBookingRepository Booking
+        {
+            get
+            {
+                if (_bookingRepository == null)
+                {
+                    _bookingRepository = new BookingRepository(_applicationDbContext);
+                }
+                return _bookingRepository;
             }
         }
 

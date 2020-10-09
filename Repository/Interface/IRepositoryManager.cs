@@ -14,6 +14,7 @@ namespace Clara.Repository.Interface
         INotificationRepository Notification { get;}
         IUserNotificationRepository UserNotification { get; }
         IBookmarkRepository Bookmark { get; }
+        IBookingRepository Booking { get; }
         Task saveAsync();
     }
 }
