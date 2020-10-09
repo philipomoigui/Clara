@@ -19,6 +19,7 @@ namespace Clara.Profiles
             CreateMap<UserProfileViewModel, UserProfile>();
             CreateMap<Service, ServicesViewModel>();
             CreateMap<BookingViewModel, Booking>();
+            CreateMap<UserProfile, BookingViewModel>();
         }
     }
 }

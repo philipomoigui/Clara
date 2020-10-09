@@ -23,6 +23,7 @@ namespace Clara.DataAccess
         public DbSet<Comment> Comments { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
         public DbSet<NotificationApplicationUser> NotificationApplicationUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

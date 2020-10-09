@@ -34,7 +34,7 @@
                 </p>
             </div>
             @*<div class="calltoactions"><a class="btn btn-primary" href="#leaveReview" onclick="$('#leaveReview').collapse('show')" data-smooth-scroll>Leave a Review</a></div>*@
-            <div class="calltoactions"><a class="btn btn-primary" asp-action="Booking" asp-controller="Booking" asp-route-serviceId="@Model.ServiceId">Book Now</a></div>
+            <div class="calltoactions"><a class="btn btn-primary" asp-action="Booking" asp-controller="Booking" asp-route-serviceId="@Model.Service.ServiceId">Book Now</a></div>
         </div>
     </div>
 </section>
