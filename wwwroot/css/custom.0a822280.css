@@ -41,7 +41,10 @@
     cursor: pointer;
 }
 
-    .notification-text:hover {
-        color: white;
-        background-color: #7a421b;
-    }
+.notification-text:hover {
+    color: white;
+    background-color: #7a421b;
+}
+
+
+

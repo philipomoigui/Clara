@@ -392,6 +392,25 @@
     <script>
         $(document).ready(function () {
 
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
+
             $("#bookmark").click(function () {
                 var idUser = "@userId";
                 var idService = "@Model.Service.ServiceId";
@@ -402,13 +421,12 @@
                     data: { userId: idUser, serviceId: idService },
                     success: function (message) {
                         $("#bookmark-div").load(location.href + " #bookmark-div");
-                        alert(message);
+                        toastr.success(message);
 
                     },
                     error: function (err) {
-
-                        alert("There was error uploading files!");
                         console.log(err);
+                        toastr.error(err)
 
                     }
 

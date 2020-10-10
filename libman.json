@@ -9,6 +9,10 @@
     {
       "library": "microsoft-signalr@3.1.8",
       "destination": "wwwroot/lib/microsoft-signalr/"
+    },
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "wwwroot/lib/toastr.js/"
     }
   ]
 }
