@@ -5,11 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Clara.Extension_Methods;
+using Clara.Infrastructure;
 using Clara.Models;
 using Clara.Repository.Interface;
 using Clara.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Clara.Controllers
 {
@@ -19,13 +21,15 @@ namespace Clara.Controllers
         private readonly IRepositoryManager _repositoryManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IHubContext<SignalServer> _hubContext;
 
-        public UserController(IMapper mapper, IRepositoryManager repositoryManager, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public UserController(IMapper mapper, IRepositoryManager repositoryManager, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IHubContext<SignalServer> hubContext)
         {
             _mapper = mapper;
             _repositoryManager = repositoryManager;
             _userManager = userManager;
             _signInManager = signInManager;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -194,34 +198,53 @@ namespace Clara.Controllers
         public async Task<IActionResult> Bookmarked(string userId, Guid serviceId)
         {
             var message = string.Empty;
+            var service = await _repositoryManager.Service.GetServiceById(serviceId);
 
            if(userId == null || serviceId == null)
             {
                 message = "You need to be signed in to add this service to your bookmark";
-            }
-
-            var userBookmark = _repositoryManager.Bookmark.isServiceBookmarked(userId, serviceId);
-
-            if(userBookmark == null)
+            } else
             {
-                Bookmark bookmark = new Bookmark
+                var userBookmark = _repositoryManager.Bookmark.isServiceBookmarked(userId, serviceId);
+
+                if (userBookmark == null)
                 {
-                    ServiceId = serviceId,
-                    UserId = userId,
-                    DateCreated = DateTime.Now
-                };
+                    Bookmark bookmark = new Bookmark
+                    {
+                        ServiceId = serviceId,
+                        UserId = userId,
+                        DateCreated = DateTime.Now
+                    };
 
-                _repositoryManager.Bookmark.AddToBookmark(bookmark);
-                await _repositoryManager.saveAsync();
-                message = "This service has been added you your bookmark";
-            }
-            if (userBookmark != null)
-            {
-                _repositoryManager.Bookmark.DeleteFromBookMark(userBookmark);
-               await  _repositoryManager.saveAsync();
-                message = "This service has been removed from your bookmark";
-            }
+                    _repositoryManager.Bookmark.AddToBookmark(bookmark);
+                    await _repositoryManager.saveAsync();
+                    message = "This service has been added you your bookmark";
 
+                    Notification notification = new Notification
+                    {
+                        Text = $"Someone bookmarked your service {service.BusinessName}"
+                    };
+
+                    _repositoryManager.Notification.AddNotification(notification);
+
+                    NotificationApplicationUser userNotification = new NotificationApplicationUser();
+                    userNotification.NotificationId = notification.NotificationId;
+                    userNotification.UserId = service.User.Id;
+
+                    _repositoryManager.UserNotification.AddUserNotification(userNotification);
+
+                    await _repositoryManager.saveAsync();
+
+                    await _hubContext.Clients.All.SendAsync("displayNotification", "");
+
+                }
+                else
+                {
+                    _repositoryManager.Bookmark.DeleteFromBookMark(userBookmark);
+                    await _repositoryManager.saveAsync();
+                    message = "This service has been removed from your bookmark";
+                }
+            }
             return Json(message);
         }
 

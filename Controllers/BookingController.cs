@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Clara.Infrastructure;
 using Clara.Models;
 using Clara.Repository;
 using Clara.Repository.Interface;
 using Clara.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Clara.Controllers
 {
@@ -18,13 +20,15 @@ namespace Clara.Controllers
         private readonly IMapper _mapper;
         private readonly SignInManager<ApplicationUser> _signinManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHubContext<SignalServer> _hubContext;
 
-        public BookingController(IRepositoryManager repositoryManager, IMapper mapper, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public BookingController(IRepositoryManager repositoryManager, IMapper mapper, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IHubContext<SignalServer> hubContext)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
             _signinManager = signInManager;
             _userManager = userManager;
+            _hubContext = hubContext;
         }
         public IActionResult Booking()
         {
@@ -56,7 +60,6 @@ namespace Clara.Controllers
 
                 var booking = _mapper.Map<Booking>(model);
                 _repositoryManager.Booking.AddBooking(booking);
-                await _repositoryManager.saveAsync();
 
                 Notification notification = new Notification();
                 notification.Text = $"{user.FirstName} {user.LastName} made a request to book your service, {service.BusinessName}";
@@ -69,6 +72,9 @@ namespace Clara.Controllers
 
                 _repositoryManager.UserNotification.AddUserNotification(userNotification);
                 await _repositoryManager.saveAsync();
+
+                await _hubContext.Clients.All.SendAsync("displayNotification", "");
+
                 return RedirectToAction(nameof(Success));
             }
 
