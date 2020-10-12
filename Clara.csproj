@@ -25,6 +25,8 @@
     <Compile Remove="Migrations\20201005153022_ImprovedBookmarkRelationship.Designer.cs" />
     <Compile Remove="Migrations\20201006081722_LinkedUserProfileWithServiceDB.cs" />
     <Compile Remove="Migrations\20201006081722_LinkedUserProfileWithServiceDB.Designer.cs" />
+    <Compile Remove="Migrations\20201010161325_AddedAmenitiesToServiceDb.cs" />
+    <Compile Remove="Migrations\20201010161325_AddedAmenitiesToServiceDb.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

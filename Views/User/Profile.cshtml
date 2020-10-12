@@ -7,6 +7,12 @@
 
 <section class="py-5">
     <div class="container">
+        <!-- Breadcrumbs -->
+        <ol class="breadcrumb pl-0  justify-content-start">
+            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
+            <li class="breadcrumb-item"><a asp-action="Account" asp-controller="User">Account</a></li>
+            <li class="breadcrumb-item active">Personal info   </li>
+        </ol>
         <div class="row">
             <div class="col-lg-3 mr-lg-auto">
                 <div class="card border-0 shadow mb-6 mb-lg-0">
@@ -49,7 +55,7 @@
             <div class="col-lg-9 pl-lg-5">
                 <h1 class="hero-heading mb-0">Hello, I'm @Model.FirstName!</h1>
                 <div class="text-block">
-                    <p > <span class="badge badge-secondary-light">Joined in 2011</span></p>
+                    <p> <span class="badge badge-secondary-light">Joined in 2011</span></p>
                     <p id="main-text" class="text-muted">@Model.About</p>
                     <p class="text-muted">He must have tried it a hundred times, shut his eyes so that he wouldn't have to look at the floundering legs, and only stopped when he began to feel a mild, dull pain there that he had never felt before.  </p>
                 </div>
@@ -58,13 +64,11 @@
                     <div class="row">
                         @if (Model.Services.Count == 0)
                         {
-                            <p>You have No services Listed At The Moment</p>
-                        }
+            <p>You have No services Listed At The Moment</p> }
                         else
                         {
                             foreach (var service in Model.Services)
-                            {
-                                <!-- place item-->
+                            { <!-- place item-->
                                 <div class="col-sm-6 col-lg-4 mb-30px hover-animate" data-marker-id="59c0c8e39aa2eed0626e485d">
                                     <div class="card h-100 border-0 shadow">
                                         <div class="card-img-top overflow-hidden gradient-overlay">
@@ -96,9 +100,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
-                        }
+                                </div>}
+                                            }
 
 
                     </div>
@@ -118,17 +121,16 @@
                     </div>
                     @foreach (var comment in Model.Comments)
                     {
-                        <div class="media d-block d-sm-flex review">
-                            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-4.jpg" alt="Jabba Hut"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
-                            <div class="media-body">
-                                <h6 class="mt-2 mb-1">Jabba Hut</h6>
-                                <div class="mb-2">
-                                    <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
-                                </div>
-                                <p class="text-muted text-sm">Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.     </p>
-                            </div>
-                        </div>
-                    }
+        <div class="media d-block d-sm-flex review">
+            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-4.jpg" alt="Jabba Hut"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
+            <div class="media-body">
+                <h6 class="mt-2 mb-1">Jabba Hut</h6>
+                <div class="mb-2">
+                    <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
+                </div>
+                <p class="text-muted text-sm">Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.     </p>
+            </div>
+        </div>}
 
                     <div class="py-5">
                         <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview">Leave a review</button>

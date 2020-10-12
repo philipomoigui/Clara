@@ -30,8 +30,8 @@ namespace Clara.ViewModels
 
         [DataType(DataType.Currency)]
         //public decimal Price { get; set; }
-        //public IFormFile Photo { get; set; }
-
+        public List<IFormFile> Photos { get; set; }
+        public string Amenities { get; set; }
         public string Description { get; set; }
         //public List<string> AddOns { get; set; }
         public int CategoryId { get; set; }

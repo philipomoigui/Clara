@@ -20,7 +20,7 @@ namespace Clara.Models
         public string ZipCode { get; set; }
         //public string Country { get; set; }
         //public string Description { get; set; }
-        //public List<AddOns> AddOns { get; set; }
+        public string Amenities { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public string UserId { get; set; }
