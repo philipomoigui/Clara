@@ -62,7 +62,7 @@ namespace Clara.Controllers
                 _repositoryManager.Booking.AddBooking(booking);
 
                 Notification notification = new Notification();
-                notification.Text = $"{user.FirstName} {user.LastName} made a request to book your service, {service.BusinessName}";
+                notification.Text = $"{model.FirstName} {model.LastName} made a request to book your service, {service.BusinessName}";
 
                 _repositoryManager.Notification.AddNotification(notification);
 
@@ -85,5 +85,7 @@ namespace Clara.Controllers
         {
             return View();
         }
+
+      
     }
 }

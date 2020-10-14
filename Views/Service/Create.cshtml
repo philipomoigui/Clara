@@ -10,7 +10,7 @@
 <div class="progress rounded-0 sticky-top mt-2" style="height: 8px; top: 71px;">
     <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
-<form method="post" asp-action="Create" asp-controller="Service">
+<form method="post" asp-action="Create" asp-controller="Service" enctype="multipart/form-data">
     <section class="py-5 d-block" id="form1">
         @if (signinmanager.IsSignedIn(User))
         {
@@ -242,8 +242,9 @@
         }
 
         $(document).ready(function () {
-            $('file-upload-input input').change(function () {
-                $('file-upload-input p').text(this.files.length + " file(s) selected");
+            $('.file-upload-input input').change(function () {
+                alert("I changed");
+                $('.file-upload-input p').text(this.files.length + " file(s) selected");
             });
         });
 

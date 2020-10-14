@@ -13,7 +13,7 @@ namespace Clara.Models
         public string BusinessEmail { get; set; }
         public string PhoneNumber { get; set; }
         //public decimal EstimatedPrice { get; set; }
-        //public string ImageURL { get; set; }
+        public string ImageURL { get; set; }
         public string AddressLine { get; set; }
         public string City { get; set; }
         public string State { get; set; }

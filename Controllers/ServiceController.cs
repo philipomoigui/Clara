@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -9,6 +10,7 @@ using Clara.Repository.Interface;
 using Clara.Utility;
 using Clara.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -23,13 +25,15 @@ namespace Clara.Controllers
         private readonly IRepositoryManager _repositoryManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHubContext<SignalServer> _hubContext;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ServiceController(IMapper mapper, IRepositoryManager repositoryManager, UserManager<ApplicationUser> userManager, IHubContext<SignalServer> hubContext)
+        public ServiceController(IMapper mapper, IRepositoryManager repositoryManager, UserManager<ApplicationUser> userManager, IHubContext<SignalServer> hubContext, IWebHostEnvironment webHostEnvironment)
         {
             _mapper = mapper;
             _repositoryManager = repositoryManager;
             _userManager = userManager;
             _hubContext = hubContext;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -62,8 +66,8 @@ namespace Clara.Controllers
         {
             if (ModelState.IsValid)
             {
-                
                 var service = _mapper.Map<Service>(model);
+                service.ImageURL = ImagesUpload(model);
                  _repositoryManager.Service.CreateService(service);
                 await _repositoryManager.saveAsync();
                 return RedirectToAction(nameof(Success));
@@ -224,12 +228,27 @@ namespace Clara.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public IActionResult AutoCompleteResult(string search)
+       private string ImagesUpload(CreateServiceViewModel model)
         {
-            return Json(_repositoryManager.Service.GetSearchResult(search).ToList());
-        }
+            string allFileName = string.Empty;
 
+            if(model.Photos != null  && model.Photos.Count > 0)
+            {
+                foreach(var photo in model.Photos)
+                {
+                    string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
+                    string filePath = Path.Combine(uploadFolder, uniqueFileName);
+                    photo.CopyToAsync(new FileStream(filePath, FileMode.Create));
+                    if(string.IsNullOrEmpty(allFileName))
+                    {
+                        allFileName += uniqueFileName;
+                    }
+                    allFileName = allFileName + "," + uniqueFileName;
+                }
+            }
+            return allFileName;
+        }
 
     }
 }
