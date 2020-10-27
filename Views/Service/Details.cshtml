@@ -64,36 +64,20 @@
                 <div class="text-block">
                     <h3 class="mb-4">Amenities</h3>
                     <ul class="amenities-list list-inline">
-                        <li class="list-inline-item mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>Elevator</span>
-                            </div>
-                        </li>
-                        <li class="list-inline-item mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>Vegan friendly</span>
-                            </div>
-                        </li>
-                        <li class="list-inline-item mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>Alcohol served</span>
-                            </div>
-                        </li>
-                        <li class="list-inline-item mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>No smoking</span>
-                            </div>
-                        </li>
-                        <li class="list-inline-item mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>Parking spaces (paid)</span>
-                            </div>
-                        </li>
-                        <li class="list-inline-item mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>WiFi</span>
-                            </div>
-                        </li>
+                        @if (Model.Amenities != null)
+                        {
+                            @foreach (var amenity in Model.Amenities)
+                            {
+                                <li class="list-inline-item mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>@amenity</span>
+                                    </div>
+                                </li>
+                             }
+                        }else
+                        {
+                           <li><p>There is no Amenity listed by the user At the Moment.</p></li>
+                        }
                     </ul>
                 </div>
 

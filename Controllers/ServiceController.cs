@@ -154,6 +154,7 @@ namespace Clara.Controllers
         public async  Task<IActionResult> Details(Guid serviceId, int categoryId)
         {
             var service = await _repositoryManager.Service.GetServiceById(serviceId);
+
             var userId = _userManager.GetUserId(User);
 
             if (service == null)
@@ -172,7 +173,8 @@ namespace Clara.Controllers
             {
                 Service = service,
                 RandomServices = services,
-                Comments = comments
+                Comments = comments,
+                Amenities = formatAmenties(service)
             };
 
             //Bookmark
@@ -248,6 +250,12 @@ namespace Clara.Controllers
                 }
             }
             return allFileName;
+        }
+
+        private List<string> formatAmenties(Service service)
+        {
+            var amenities = service.Amenities.Trim().Split(",");
+            return amenities.ToList();
         }
 
     }

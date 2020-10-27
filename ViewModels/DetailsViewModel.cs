@@ -15,6 +15,7 @@ namespace Clara.ViewModels
         public string UserId { get; set; }
         public Guid ServiceId { get; set; }
         public int CategoryId { get; set; }
+        public List<string> Amenities { get; set; }
         public List<Comment> Comments { get; set; }
         public bool isBookmarked { get; set; }
         public UserProfile UserProfile { get; set; }

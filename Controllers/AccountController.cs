@@ -47,6 +47,9 @@ namespace Clara.Controllers
 
                 if (result.Succeeded)
                 {
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var conformationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
+
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
                     await AddIdentityToUserProfile(model, model.Email);
@@ -91,6 +94,11 @@ namespace Clara.Controllers
             }
 
             return View(model);
+        }
+
+        public IActionResult Success()
+        {
+            return View();
         }
 
         [HttpPost]

@@ -9,6 +9,7 @@ using Clara.Infrastructure;
 using Clara.Models;
 using Clara.Repository;
 using Clara.Repository.Interface;
+using Clara.Utility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +35,7 @@ namespace Clara
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureRepositoryManager();
+            services.Configure<EmailOptions>(Configuration);
             services.AddSignalR();
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
@@ -49,12 +51,6 @@ namespace Clara
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddAutoMapper(typeof(Startup));
-
-            //services.AddScoped<IServicesRepository, ServiceRepository>();
-            //services.AddScoped<ICategoryRepository, CategoryRepository>();
-            //services.AddScoped<ICommentRepository, CommentRepository>();
-            //services.AddScoped<IUserRepository, UserRepository>();
-            //services.AddScoped<IHomeRepository, HomeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
