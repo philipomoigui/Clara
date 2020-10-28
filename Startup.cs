@@ -37,6 +37,7 @@ namespace Clara
             services.ConfigureRepositoryManager();
             services.Configure<EmailOptions>(Configuration);
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(2));
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddSignalR();
             services.AddControllersWithViews()

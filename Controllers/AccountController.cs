@@ -13,6 +13,7 @@ using Clara.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Clara.Controllers
 {
@@ -88,14 +89,15 @@ namespace Clara.Controllers
                 ViewBag.ErrorMessage = "The user cannot be found";
                 return View("Notfound");
             }
+            var tokenDecodeBytes = WebEncoders.Base64UrlDecode(token);
+            var tokenDecode = Encoding.UTF8.GetString(tokenDecodeBytes);
 
-            var result = await _userManager.ConfirmEmailAsync(user, token);
+            var result = await _userManager.ConfirmEmailAsync(user, tokenDecode);
 
             if (result.Succeeded)
             {
                 ViewBag.RegSuccess = "Email Succesfully Confirmed";
-                await _signInManager.SignInAsync(user, false);
-                return RedirectToAction("Account", "User");
+                return RedirectToAction("Login", "Account");
             }
 
             ViewBag.ErrorMessage = "The email could not be confirmed";
@@ -147,10 +149,85 @@ namespace Clara.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                if (user != null && await _userManager.IsEmailConfirmedAsync(user))
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+
+                    var confirmationLink = Url.Action("ResetPassword", "Account", new {email = model.Email, token = encodedToken }, Request.Scheme);
+                    await _emailSender.sendEmailAsync(model.Email, "Password Reset", $"Click <a href='{HtmlEncoder.Default.Encode(confirmationLink)}'> Here</a> to reset your password");
+
+                    return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                }
+                return View("ForgotPasswordConfirmation");
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string email, string token)
+        {
+            ResetPasswordViewModel model = new ResetPasswordViewModel
+            {
+                Email = email,
+                Token = token
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                if(user != null && await _userManager.IsEmailConfirmedAsync(user))
+                {
+                    var tokenDecodeByte = WebEncoders.Base64UrlDecode(model.Token);
+                    var tokenDecode = Encoding.UTF8.GetString(tokenDecodeByte);
+
+                    var result = await _userManager.ResetPasswordAsync(user, tokenDecode, model.ConfirmPassword);
+
+                    if (result.Succeeded)
+                    {
+                        RedirectToAction("ResetPasswordConfirmation");
+                    }
+
+                    foreach(var error in result.Errors)
+                    {
+                        ModelState.TryAddModelError(error.Code, error.Description);
+                    }
+
+                    return View();
+                }
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPasswordConfirmation()
+        {
+            return View();
         }
 
         public async Task AddIdentityToUserProfile(RegisterViewModel model, string email)
@@ -170,6 +247,12 @@ namespace Clara.Controllers
             _repositoryManager.UserProfile.AddUserProfile(userProfile);
             await _repositoryManager.saveAsync();
         }
+
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
 
     }
 
