@@ -36,20 +36,26 @@ namespace Clara
         {
             services.ConfigureRepositoryManager();
             services.Configure<EmailOptions>(Configuration);
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.AddSingleton<IEmailSender, EmailSender>();
             services.AddSignalR();
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 );
             services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("Default")));
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredUniqueChars = 0;
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequireUppercase = false;
+                options.SignIn.RequireConfirmedEmail = true;
             })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddAutoMapper(typeof(Startup));
         }
 

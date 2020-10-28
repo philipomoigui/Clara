@@ -8,5 +8,6 @@ namespace Clara.Utility
     public interface IEmailSender
     {
         Task sendEmailAsync(string email, string subject, string htmlMessage);
+        Task SendEmailWithMailGun(string email, string subject, string message);
     }
 }
