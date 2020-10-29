@@ -8,40 +8,37 @@
     <div class="row justify-content-center">
         <div class="col-lg-5 mr-lg-3">
             <form method="post" asp-action="Register" asp-controller="Account">
-                <h3 class="text-center">Welcome!</h3>
+                <h3 class="text-center">Welcome</h3>
+                <div asp-validation-summary="ModelOnly"></div>
                 <div class="row">
                     <div class="form-group col-lg-6 col-sm-12">
                         <label asp-for="FirstName">FirstName</label>
                         <input asp-for="FirstName" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                        <span asp-validation-for="FirstName"></span>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                     <div class="form-group col-lg-6 col-sm-12">
                         <label asp-for="LastName">Last Name</label>
                         <input asp-for="LastName" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                        <span asp-validation-for="LastName"></span>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label asp-for="Email">Email address</label>
                     <input asp-for="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                    <span asp-validation-for="Email"></span>
+                    <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Password">Password</label>
                     <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1">
-                    <span asp-validation-for="Password"></span>
+                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="ConfirmPassword">Password</label>
                     <input asp-for="ConfirmPassword" type="password" class="form-control" id="exampleInputPassword1">
-                    <span asp-validation-for="ConfirmPassword"></span>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
-                @*<div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div>*@
                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
             </form>
         </div>
@@ -53,50 +50,6 @@
 </div>
 
 
-    <!--<section>
-        <!-- Sign up form -->
-    <!--<section class="signup">
-        <div class="container">
-            <div class="signup-content">
-                <div class="signup-form">
-                    <h2 class="form-title">Sign up</h2>
-                    <form method="post" asp-action="Register" asp-controller="Account" class="register-form" id="register-form">-->
-    @*<div class="form-group">
-            <label asp-for=""><i class="zmdi zmdi-account material-icons-name"></i></label>
-            <input type="text" name="name" id="name" placeholder="Your Name" />
-        </div>*@
-    <!--<div class="form-group">
-        <label asp-for="Email"><i class="zmdi zmdi-email"></i></label>
-        <input asp-for="Email" type="email" name="email" id="email" placeholder="Your Email" />
-        <span asp-validation-for="Email"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Password"><i class="zmdi zmdi-lock"></i></label>
-        <input asp-for="Password" type="password"  id="pass" placeholder="Password" />
-        <span asp-validation-for="Password"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ConfirmPassword"><i class="zmdi zmdi-lock-outline"></i></label>
-        <input asp-for="ConfirmPassword" type="password" id="re_pass" placeholder="Confirm password" />
-        <span asp-validation-for="ConfirmPassword"></span>
-    </div>-->
-    @*<div class="form-group">
-            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
-        </div>*@
-    <!--<div class="form-group form-button">
-                            <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
-                        </div>
-                    </form>
-                </div>
-                <div class="signup-image">
-                    <figure><img src="~/img/undraw_sign_in_e6hj.svg" alt="sing up image"></figure>
-                    <a asp-action="Login" asp-controller="Account" class="signup-image-link">I am already member</a>
-                </div>
-            </div>
-        </div>
-    </section>-->
-    <!--</section>-->
 
 @section Scripts{
     <script>

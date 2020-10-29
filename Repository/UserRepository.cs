@@ -28,15 +28,6 @@ namespace Clara.Repository
             return FindByCondition(u => u.UserId == userId).FirstOrDefault();
         }
 
-        //public IQueryable<Service> GetUSerServices(string userId)
-        //{
-        //    return _applicationDbContext.Services
-        //        .Where(u => u.UserId == userId)
-        //         .AsNoTracking()
-        //         .Include(s => s.Category)
-        //         .OrderBy(s => s.BusinessName);
-        //}
-
         public void UpdateUserProfile(UserProfile userProfile)
         {
             Update(userProfile);

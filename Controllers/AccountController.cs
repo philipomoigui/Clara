@@ -6,12 +6,14 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Clara.Extension_Methods;
+using Clara.Infrastructure;
 using Clara.Models;
 using Clara.Repository.Interface;
 using Clara.Utility;
 using Clara.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
@@ -23,13 +25,15 @@ namespace Clara.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IRepositoryManager _repositoryManager;
         private readonly IEmailSender _emailSender;
+        private readonly IHubContext<SignalServer> _hubRepository;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IRepositoryManager repositoryManager, IEmailSender emailSender)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IRepositoryManager repositoryManager, IEmailSender emailSender, IHubContext<SignalServer> hubRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _repositoryManager = repositoryManager;
             _emailSender = emailSender;
+            _hubRepository = hubRepository;
         }
 
         [HttpGet]
@@ -157,6 +161,12 @@ namespace Clara.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
@@ -171,7 +181,7 @@ namespace Clara.Controllers
                     var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
                     var confirmationLink = Url.Action("ResetPassword", "Account", new {email = model.Email, token = encodedToken }, Request.Scheme);
-                    await _emailSender.sendEmailAsync(model.Email, "Password Reset", $"Click <a href='{HtmlEncoder.Default.Encode(confirmationLink)}'> Here</a> to reset your password");
+                    await _emailSender.sendEmailAsync(model.Email, "Password Reset", $"Click <a href='{HtmlEncoder.Default.Encode(confirmationLink)}'> Here</a> to reset your password <br/> <br/> if you did not initiate this request, kindly ignore.");
 
                     return RedirectToAction("ForgotPasswordConfirmation", "Account");
                 }
@@ -193,12 +203,14 @@ namespace Clara.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
+                var userprofile = _repositoryManager.UserProfile.GetUserProfile(user.Id);
 
                 if(user != null && await _userManager.IsEmailConfirmedAsync(user))
                 {
@@ -209,10 +221,19 @@ namespace Clara.Controllers
 
                     if (result.Succeeded)
                     {
-                        RedirectToAction("ResetPasswordConfirmation");
+                        var message = $"Hello {userprofile.FirstName}, <br/> <br/> This is to inform you that your password was just changed. <br/> <br/> if you did not initiate this change, please contact us at support@clara.com";
+                        await _emailSender.sendEmailAsync(model.Email, "Password Changed", message);
+
+                        SendNotificationToUser(user);
+
+                        await _repositoryManager.saveAsync();
+
+                        await _hubRepository.Clients.All.SendAsync("displayNotification", "");
+
+                        return RedirectToAction("ResetPasswordConfirmation");
                     }
 
-                    foreach(var error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
                         ModelState.TryAddModelError(error.Code, error.Description);
                     }
@@ -228,6 +249,24 @@ namespace Clara.Controllers
         public IActionResult ForgotPasswordConfirmation()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
+
+        private void SendNotificationToUser(ApplicationUser user)
+        {
+            var notification = new Notification();
+            notification.Text = "You just Reset your password";
+
+            NotificationApplicationUser userNotification = new NotificationApplicationUser();
+            userNotification.NotificationId = notification.NotificationId;
+            userNotification.UserId = user.Id;
+
+            _repositoryManager.UserNotification.AddUserNotification(userNotification);
         }
 
         public async Task AddIdentityToUserProfile(RegisterViewModel model, string email)
@@ -247,12 +286,6 @@ namespace Clara.Controllers
             _repositoryManager.UserProfile.AddUserProfile(userProfile);
             await _repositoryManager.saveAsync();
         }
-
-        public IActionResult ForgotPassword()
-        {
-            return View();
-        }
-
 
     }
 

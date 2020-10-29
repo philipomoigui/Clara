@@ -107,7 +107,7 @@ namespace Clara.Controllers
             var userComments = _repositoryManager.Comment.GetUserComments(userId).ToList();
             
             if (userProfile == null)
-                return NotFound();
+                return View("NotFound");
 
             var model = _mapper.Map<UserProfileViewModel>(userProfile);
             model.Services = userServices;
@@ -144,14 +144,14 @@ namespace Clara.Controllers
         }
 
         [HttpPost]
-        public async  Task<IActionResult> Security(UserSecurityViewModel model)
+        public async Task<IActionResult> Security(UserSecurityViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
                 if (user == null)
                 {
-                    RedirectToAction("Login", "Account");
+                    return RedirectToAction("Login", "Account");
                 }
 
                var result = await  _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
@@ -162,7 +162,14 @@ namespace Clara.Controllers
                     userProfile.PasswordChangeDate = model.DateChanged;
 
                     _repositoryManager.UserProfile.UpdateUserProfile(userProfile);
+                    await _repositoryManager.saveAsync();
+
                     await _signInManager.RefreshSignInAsync(user);
+
+                    var text = "Your Password was successfully updated";
+
+                    SendNotificationToUser(text, user.Id);
+
                     TempData["SuccessMessage"] = "Password Updated Successfully";
                     RedirectToAction(nameof(Security));
                 }
@@ -203,7 +210,8 @@ namespace Clara.Controllers
            if(userId == null || serviceId == null)
             {
                 message = "You need to be signed in to add this service to your bookmark";
-            } else
+            } 
+            else
             {
                 var userBookmark = _repositoryManager.Bookmark.isServiceBookmarked(userId, serviceId);
 
@@ -220,18 +228,10 @@ namespace Clara.Controllers
                     await _repositoryManager.saveAsync();
                     message = "This service has been added you your bookmark";
 
-                    Notification notification = new Notification
-                    {
-                        Text = $"Someone bookmarked your service {service.BusinessName}"
-                    };
+                    var text = $"Someone bookmarked your {service.BusinessName} Listing!";
+                    var userIdNot = service.User.Id;
 
-                    _repositoryManager.Notification.AddNotification(notification);
-
-                    NotificationApplicationUser userNotification = new NotificationApplicationUser();
-                    userNotification.NotificationId = notification.NotificationId;
-                    userNotification.UserId = service.User.Id;
-
-                    _repositoryManager.UserNotification.AddUserNotification(userNotification);
+                    SendNotificationToUser(text, userIdNot);
 
                     await _repositoryManager.saveAsync();
 
@@ -283,6 +283,16 @@ namespace Clara.Controllers
             return (int)(timespan.TotalDays / 365.242) == 1 ? "1 Year ago" : (int)(timespan.TotalDays / 365.242) + " Years ago";
         }
 
+        private void SendNotificationToUser(string text, string userId)
+        {
+            var notification = new Notification();
+            notification.Text = text;
 
+            NotificationApplicationUser userNotification = new NotificationApplicationUser();
+            userNotification.NotificationId = notification.NotificationId;
+            userNotification.UserId = userId;
+
+            _repositoryManager.UserNotification.AddUserNotification(userNotification);
+        }
     }
 }
