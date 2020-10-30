@@ -17,13 +17,15 @@ namespace Clara.ViewModels
         public string Message { get; set; }
 
         [Required]
-        public double Rating { get; set; }
+        public int Rating { get; set; }
         public DateTime Timestamp { get; set; } = DateTime.UtcNow;
         public string UserId { get; set; }
+        public string Description { get; set; }
         public Guid ServiceId { get; set; }
         public int CategoryId { get; set; }
         public List<string> Amenities { get; set; }
-        public List<string> PhotoUrl { get; set; }
+        public List<string> ImagesUrl { get; set; }
+        public string ImageUrl { get; set; }
         public List<Comment> Comments { get; set; }
         public bool isBookmarked { get; set; }
         public UserProfile UserProfile { get; set; }

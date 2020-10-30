@@ -75,7 +75,7 @@
                                             <img class="img-fluid" src="~/img/listing/list-3.jpg" alt="Mid-Century Modern Garden Paradise" /><a class="tile-link" href="detail-rooms.html"></a>
                                             <div class="card-img-overlay-bottom z-index-20">
                                                 <div class="media text-white text-sm align-items-center">
-                                                    <img class="avatar avatar-border-white mr-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-10.jpg" alt="Jack" />
+                                                    <img class="avatar avatar-border-white mr-2" src="~/img/Avatar/default-avatar.jpg" alt="Jack" />
                                                     <div class="media-body">@Model.FirstName</div>
                                                 </div>
                                             </div>
@@ -91,12 +91,12 @@
                                             <div class="w-100">
                                                 <h6 class="card-title"><a class="text-decoration-none text-dark" href="detail-rooms.html">@service.BusinessName</a></h6>
                                                 <div class="d-flex card-subtitle mb-3">
-                                                    <p class="flex-grow-1 mb-0 text-muted text-sm">Entire house</p>
+                                                   @* <p class="flex-grow-1 mb-0 text-muted text-sm">Entire house</p>*@
                                                     <p class="flex-shrink-1 mb-0 card-stars text-xs text-right">
                                                         <i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i>
                                                     </p>
                                                 </div>
-                                                <p class="card-text text-muted"><span class="h4 text-primary">$115</span> per night</p>
+                                                @*<p class="card-text text-muted"><span class="h4 text-primary">$115</span> per night</p>*@
                                             </div>
                                         </div>
                                     </div>
@@ -109,28 +109,20 @@
                 <div class="text-block">
                     <p class="subtitle text-sm text-primary">Reviews</p>
                     <h5 class="mb-4">Listing Reviews </h5>
-                    <div class="media d-block d-sm-flex review">
-                        <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-8.jpg" alt="Padmé Amidala"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
-                        <div class="media-body">
-                            <h6 class="mt-2 mb-1">Padmé Amidala</h6>
-                            <div class="mb-2">
-                                <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
-                            </div>
-                            <p class="text-muted text-sm">One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections     </p>
-                        </div>
-                    </div>
+                  
                     @foreach (var comment in Model.Comments)
                     {
-        <div class="media d-block d-sm-flex review">
-            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-4.jpg" alt="Jabba Hut"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
-            <div class="media-body">
-                <h6 class="mt-2 mb-1">Jabba Hut</h6>
-                <div class="mb-2">
-                    <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
-                </div>
-                <p class="text-muted text-sm">Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.     </p>
-            </div>
-        </div>}
+                        <div class="media d-block d-sm-flex review">
+                            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="~/img/Avatar/default-avatar.jpg" alt="Jabba Hut"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
+                            <div class="media-body">
+                                <h6 class="mt-2 mb-1">Jabba Hut</h6>
+                                <div class="mb-2">
+                                    <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
+                                </div>
+                                <p class="text-muted text-sm">Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.     </p>
+                            </div>
+                        </div>
+                     }
 
                     <div class="py-5">
                         <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview">Leave a review</button>

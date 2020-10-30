@@ -13,6 +13,7 @@ namespace Clara.Repository.Interface
         void CreateService(Service service);
         void UpdateService(Service service);
         void DeleteService(Service service);
+        IEnumerable<Service> GetRandomService(Guid serviceId);
         IEnumerable<Service> GetPopularCategory(int categoryId);
         public IEnumerable<Service> GetUSerServices(string userId);
         public IEnumerable<Service> GetSearchResult(string search);

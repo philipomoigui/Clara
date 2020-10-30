@@ -112,5 +112,17 @@ namespace Clara.Repository
         {
             return FindByCondition(s => s.BusinessName.Contains(search)).ToList();
         }
+
+        public IEnumerable<Service> GetRandomService(Guid serviceId)
+        {
+            return FindAll()
+              .Include(s => s.Category)
+              .Include(s => s.Comments)
+              .Include(s => s.User)
+              .ThenInclude(s => s.UserProfile)
+              .OrderBy(s => Guid.NewGuid())
+              .Take(3)
+              .ToList();
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace Clara.ViewModels
         public Category Category { get; set; }
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
+        public string ImageUrl { get; set; }
         public UserProfile UserProfile { get; set; }
         public List<Bookmark> Bookmarks { get; set; }
         public List<Comment> Comments { get; set; }

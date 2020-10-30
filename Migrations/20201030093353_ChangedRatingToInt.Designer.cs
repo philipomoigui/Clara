@@ -4,14 +4,16 @@ using Clara.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Clara.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201030093353_ChangedRatingToInt")]
+    partial class ChangedRatingToInt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,11 +30,11 @@ namespace Clara.Migrations
                     b.Property<string>("AdditionalDetails")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ExpectedGuests")
                         .HasColumnType("nvarchar(max)");
@@ -48,6 +50,9 @@ namespace Clara.Migrations
 
                     b.Property<Guid>("ServiceId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -280,7 +285,7 @@ namespace Clara.Migrations
                     b.HasData(
                         new
                         {
-                            ServiceId = new Guid("e973ea44-505c-49c2-b234-87af99de3d96"),
+                            ServiceId = new Guid("7d56789b-e4fc-4aa2-aa4c-6c4ec9ec10ca"),
                             AddressLine = "21, barr. xpress omoigui strt",
                             BusinessEmail = "philo@gmail.com",
                             BusinessName = "Philo Inc",
@@ -292,7 +297,7 @@ namespace Clara.Migrations
                         },
                         new
                         {
-                            ServiceId = new Guid("6f823d98-1ba3-4adc-9c33-6b803d0fece3"),
+                            ServiceId = new Guid("5b52ad9f-c027-4b16-a0fb-6b1173e84805"),
                             AddressLine = "11, Sangotedo strt",
                             BusinessEmail = "dadesola@gmail.com",
                             BusinessName = "Dade Designs",
@@ -304,7 +309,7 @@ namespace Clara.Migrations
                         },
                         new
                         {
-                            ServiceId = new Guid("b77c6231-4eb6-42fe-9962-5798928b5a3a"),
+                            ServiceId = new Guid("0f9af9b9-0498-4ccf-919e-8a252123a0cb"),
                             AddressLine = "115, barr. xpress omoigui strt",
                             BusinessEmail = "SholpeDes@gmail.com",
                             BusinessName = "Shola Catering",

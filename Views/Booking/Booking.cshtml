@@ -15,57 +15,51 @@
     <div class="row justify-content-center">
         <div class="col-lg-6 mr-lg-3">
             <form method="post" asp-action="Booking" asp-controller="Booking">
+                <div asp-validation-summary="ModelOnly"></div>
                 @*<h3 class="text-center">Welcome!</h3>*@
                 <input type="hidden" asp-for="ServiceId"  value="@serviceId" />
                 <div class="row">
                     <div class="form-group col-lg-6 col-sm-12">
-                        <label asp-for="FirstName"></label>
+                        <label class="font-weight-bold">First Name</label>
                         <input type="text" asp-for="FirstName" class="form-control">
-                        <span asp-validation-for="FirstName"></span>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                     <div class="form-group col-lg-6 col-sm-12">
-                        <label asp-for="LastName"></label>
+                        <label class="font-weight-bold">Last Name</label>
                         <input type="text" asp-for="LastName" class="form-control">
-                        <span asp-validation-for="LastName"></span>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-lg-6 col-sm-12">
-                        <label asp-for="Email"></label>
+                        <label asp-for="Email" class="font-weight-bold"></label>
                         <input type="email" asp-for="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                        <span asp-validation-for="Email"></span>
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-group col-lg-6 col-sm-12">
-                        <label asp-for="PhoneNumber"></label>
+                        <label class="font-weight-bold">Phone Number</label>
                         <input type="text" asp-for="PhoneNumber" class="form-control">
-                        <span asp-validation-for="PhoneNumber"></span>
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-lg-6 col-sm-12">
-                        <label asp-for="ExpectedGuests">Expected Guests</label>
+                        <label class="font-weight-bold">Expected Guests</label>
                         <input type="text" asp-for="ExpectedGuests" class="form-control">
-                        <span asp-validation-for="ExpectedGuests"></span>
+                        <span asp-validation-for="ExpectedGuests" class="text-danger"></span>
                     </div>
                     <div class="form-group col-lg-6 col-sm-12">
-                        <label asp-for="StartDate"></label>
-                        <input asp-for="StartDate" type="datetime-local" class="form-control">
-                        <span asp-validation-for="StartDate"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-6 col-sm-12">
-                        <label asp-for="EndDate"></label>
-                        <input type="datetime-local" asp-for="EndDate" class="form-control">
-                        <span asp-validation-for="EndDate"></span>
+                        <label class="font-weight-bold" asp-for="Date"></label>
+                        <input asp-for="Date" type="datetime-local" class="form-control">
+                        <span asp-validation-for="Date" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label asp-for="AdditionalDetails" class="form-label" for="review"></label>
-                    <textarea asp-for="AdditionalDetails" class="form-control" rows="3" name="review" id="review" placeholder="Tell us a little about your event" required="required"></textarea>
-                    <span asp-validation-for="AdditionalDetails"></span>
+                    <label asp-for="AdditionalDetails" class="form-label font-weight-bold"></label>
+                    <textarea asp-for="AdditionalDetails" class="form-control" rows="3" id="review" placeholder="Tell us a little about your event"></textarea>
+                    <span asp-validation-for="AdditionalDetails" class="text-danger"></span>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block" style="background-color:#7a421b !important; border:none">Book Now</button>
             </form>

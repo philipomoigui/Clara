@@ -72,41 +72,94 @@
 
                         @if (signInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item text-white mt-2 font-weight-bolder">
-                                <a class="nav-link text-white" asp-action="Account" asp-controller="User">DashBaord</a>
-                            </li>
+            <li class="nav-item text-white mt-2 font-weight-bolder">
+                <a class="nav-link text-white" asp-action="Account" asp-controller="User">DashBaord</a>
+            </li>
                             <li class="nav-item text-white mt-2 font-weight-bolder">
                                 <span class="badge text-black-50" data-toggle="popover" title="notifications"></span>
                             </li>
-                                <li class="nav-item list-inline-item mr-1 text-white">
-                                    <a class="nav-link text-muted px-1" href="#" title="Notifications" role="button" data-toggle="modal" data-target="#notificationModal">
-                                        <span class="badge text-danger bg-danger-light" id="notification-count" title="notifications"></span>
-                                    </a>
-                                </li>
-                                <li class="nav-item dropdown ml-lg-3 mt-1">
-                                    <a id="userDropdownMenuLink" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="avatar avatar-sm avatar-border-white mr-2" src="~/img/Avatar/default-avatar.jpg" alt="Jack London"></a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdownMenuLink">
-                                        <a class="dropdown-item" asp-action="Personal" asp-controller="User">User Profile</a>
-                                        <a class="dropdown-item">Booked Services</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item" asp-action="Logout" asp-controller="Account"><i class="fa fa-sign-out-alt mr-2 text-muted"></i> Sign out</a>
-                                    </div>
-                                </li> 
-                                }
-                                else
-                                {
-                                    <li class="nav-item dropdown text-white mt-2 font-weight-bolder">
-                                        <a class="nav-link dropdown-toggle text-white" id="homeDropdownMenuLink" asp-action="Login" asp-controller="Account" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Login
-                                        </a>
-                                        <div class="dropdown-menu text-white" aria-labelledby="homeDropdownMenuLink"><a asp-action="Register" asp-controller="Account" class="dropdown-item">Sign Up</a></div>
-                                    </li>
+                                            <li class="nav-item list-inline-item mr-1 text-white">
+                                                <a class="nav-link text-muted px-1" href="#" title="Notifications" role="button" data-toggle="modal" data-target="#notificationModal">
+                                                    <span class="badge text-danger bg-danger-light" id="notification-count" title="notifications"></span>
+                                                </a>
+                                            </li>
+                                                            <li class="nav-item dropdown ml-lg-3 mt-1">
+                                                                <a id="userDropdownMenuLink" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="avatar avatar-sm avatar-border-white mr-2" src="~/img/Avatar/default-avatar.jpg" alt="Jack London"></a>
+                                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdownMenuLink">
+                                                                    <a class="dropdown-item" asp-action="Personal" asp-controller="User">User Profile</a>
+                                                                    <a class="dropdown-item">Booked Services</a>
+                                                                    <div class="dropdown-divider"></div><a class="dropdown-item" asp-action="Logout" asp-controller="Account"><i class="fa fa-sign-out-alt mr-2 text-muted"></i> Sign out</a>
+                                                                </div>
+                                                            </li>
+ }
+                                                                        else
+                                                                        {
+                                                            <li class="nav-item dropdown text-white mt-2 font-weight-bolder">
+                                                                <a class="nav-link dropdown-toggle text-white" id="homeDropdownMenuLink" asp-action="Login" asp-controller="Account" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Login
+                                                                </a>
+                                                                <div class="dropdown-menu text-white" aria-labelledby="homeDropdownMenuLink"><a asp-action="Register" asp-controller="Account" class="dropdown-item">Sign Up</a></div>
+                                                            </li>
 
-                                    <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block border-0"><a class="btn btn-primary" href="user-add-0.html" style="background-color:#7a421b !important; border-color:#7a421b !important">Add A Service</a></li>
-                                 }
+                                                                            <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block border-0"><a class="btn btn-primary" href="user-add-0.html" style="background-color:#7a421b !important; border-color:#7a421b !important">Add A Service</a></li>}
                     </ul>
                 </div>
+
             </div>
         </nav>
+
+        <!-- Modal 4 :: Notifications -->
+        <div class="modal modal-lg-fullscreen fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-dialog-zoom">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body p-0 hide-scrollbar">
+                        <div class="row">
+
+                            <div class="col-12">
+                                <!-- List Group Start -->
+                                <ul class="list-group list-group-flush  py-2">
+
+                                    <!-- List Group Item Start -->
+                                    <li class="list-group-item">
+                                        <div class="media">
+                                            <div class="btn btn-primary btn-icon rounded-circle text-light mr-2">
+                                                <!-- Default :: Inline SVG -->
+                                                <svg class="hw-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+
+                                                <!-- Alternate :: External File link -->
+                                                <!-- <img class="injectable hw-24" src="./../assets/media/heroicons/outline/check-circle.svg" alt=""> -->
+                                            </div>
+
+                                            <div class="media-body">
+                                                <h6>
+                                                    <a href="#">Katelyn Valdez</a> accepted your friend request
+                                                </h6>
+
+                                                <p class="text-muted mb-0">25 mins ago</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!-- List Group Item End -->
+
+                                </ul>
+                                <!-- List Group End -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-link text-muted">Clear all</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- /Navbar -->
     </header>
 

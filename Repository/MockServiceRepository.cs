@@ -81,6 +81,11 @@ namespace Clara.Repository
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Service> GetRandomService(Guid serviceId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Service> GetSearchResult(string search)
         {
             throw new NotImplementedException();

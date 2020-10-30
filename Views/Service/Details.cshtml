@@ -7,7 +7,7 @@
     var reviewCount = Model.Comments.Count > 0 ? $"{Model.Comments.Count} Review(s)" : "No reviews yet";
     var bookmarked = Model.isBookmarked == true ? "Bookmarked" : "Bookmark This Service";
     var commentMessage = ViewBag.CommentMessage ?? "";
-    var rating = Convert.ToInt32(Model.Rating);
+    var rating = Model.Rating;
 }
 
 <!-- Hero Section-->
@@ -48,19 +48,23 @@
                 <!-- About Listing-->
                 <div class="text-block">
                     <h3 class="mb-3">About</h3>
-                    <p class="text-muted">a weird description of the servics I offer</p>
-                    <p class="text-muted">incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p class="text-muted">Description of the service I offer</p>
+                    <p class="text-muted">@Model.Description</p>
                 </div>
                 <div class="text-block">
                     <!-- Gallery-->
                     <h3 class="mb-4">Gallery</h3>
                     <div class="row gallery ml-n1 mr-n1">
-                        <div class="col-lg-4 col-6 px-1 mb-2"><a href="img/photo/restaurant-1515164783716-8e6920f3e77c.jpg"><img class="img-fluid" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/photo/restaurant-1515164783716-8e6920f3e77c.jpg" alt="..."></a></div>
-                        <div class="col-lg-4 col-6 px-1 mb-2"><a href="img/photo/restaurant-1466978913421-dad2ebd01d17.jpg"><img class="img-fluid" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/photo/restaurant-1466978913421-dad2ebd01d17.jpg" alt="..."></a></div>
+                        @{ foreach (var image in Model.ImagesUrl)
+                                        {
+                                            <div class="col-lg-4 col-6 px-1 mb-2"><a href="~/uploads/@image"><img class="img-fluid" src="~/uploads/@image" alt="..."></a></div>
+                                        } }
+
+                        @*<div class="col-lg-4 col-6 px-1 mb-2"><a href="img/photo/restaurant-1466978913421-dad2ebd01d17.jpg"><img class="img-fluid" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/photo/restaurant-1466978913421-dad2ebd01d17.jpg" alt="..."></a></div>
                         <div class="col-lg-4 col-6 px-1 mb-2"><a href="img/photo/restaurant-1477763858572-cda7deaa9bc5.jpg"><img class="img-fluid" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/photo/restaurant-1477763858572-cda7deaa9bc5.jpg" alt="..."></a></div>
                         <div class="col-lg-4 col-6 px-1 mb-2"><a href="img/photo/restaurant-1505275350441-83dcda8eeef5.jpg"><img class="img-fluid" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/photo/restaurant-1505275350441-83dcda8eeef5.jpg" alt="..."></a></div>
                         <div class="col-lg-4 col-6 px-1 mb-2"><a href="img/photo/restaurant-1508766917616-d22f3f1eea14.jpg"><img class="img-fluid" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/photo/restaurant-1508766917616-d22f3f1eea14.jpg" alt="..."></a></div>
-                        <div class="col-lg-4 col-6 px-1 mb-2"><a href="img/photo/restaurant-1430931071372-38127bd472b8.jpg"><img class="img-fluid" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/photo/restaurant-1430931071372-38127bd472b8.jpg" alt="..."></a></div>
+                        <div class="col-lg-4 col-6 px-1 mb-2"><a href="img/photo/restaurant-1430931071372-38127bd472b8.jpg"><img class="img-fluid" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/photo/restaurant-1430931071372-38127bd472b8.jpg" alt="..."></a></div>*@
                     </div>
                 </div>
                 <!-- Amenities-->
@@ -284,7 +288,7 @@
                                                 </div>
                                             </div>
                                             <div class="card-body">
-                                                <p class="text-sm text-muted mb-3">@service.AddressLine</p>
+                                                <p class="mb-3"><i class="fa-map-marker-alt fas mr-2"></i> @service.AddressLine</p>
                                                 <p class="text-sm text-muted mb-3">@service.PhoneNumber</p>
                                                 @*<p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">@service.User.UserProfile.FirstName @service.User.UserProfile.LastName</a></p>*@
                                                 <p class="text-sm mb-0">

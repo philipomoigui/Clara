@@ -161,16 +161,13 @@ namespace Clara.Controllers
                 return View("Notfound");
 
             //Random Services
-            var services = _repositoryManager.Service.GetAllService()
-                .OrderBy(s => Guid.NewGuid())
-                .Take(3)
-                .ToList();
-
+            var services = _repositoryManager.Service.GetRandomService(serviceId);
+               
             //Comments
             var comments = _repositoryManager.Comment.GetComments(serviceId).ToList();
 
             //Rating
-            var totalRating = TotalRating(serviceId);
+            var totalRating = Convert.ToInt32(TotalRating(serviceId));
 
             DetailsViewModel model = new DetailsViewModel
             {
@@ -178,7 +175,10 @@ namespace Clara.Controllers
                 RandomServices = services,
                 Comments = comments,
                 Amenities = formatAmenties(service),
-                Rating = totalRating
+                Rating = totalRating,
+                ImagesUrl = formatImage(service),
+                ImageUrl = formatImage(service)[0]
+                
             };
 
             //Bookmark
@@ -191,15 +191,19 @@ namespace Clara.Controllers
             return View(model);
         }
 
-        private double TotalRating(Guid serviceId)
+        private int TotalRating(Guid serviceId)
         {
             var ratings = _repositoryManager.Comment.GetTotalServiceRating(serviceId);
-            double total = 0;
+            int total = 0;
             foreach (var rating in ratings)
             {
                 total += rating;
             }
-            return total = total / ratings.Count();
+            if(ratings.Count() != 0)
+                return total / ratings.Count();
+
+            return 0;
+
         }
 
         [HttpPost]
@@ -218,7 +222,7 @@ namespace Clara.Controllers
 
                 _repositoryManager.Comment.AddComment(comment);
 
-                SendNotificationToUser(userProfile, service);
+                SendNotificationToUser(userProfile, service, comment);
 
                 await _repositoryManager.saveAsync();
                 await _hubContext.Clients.All.SendAsync("displayNotification", "");
@@ -229,11 +233,11 @@ namespace Clara.Controllers
             return View(model);
         }
 
-        private void SendNotificationToUser(UserProfile userProfile, Service service)
+        private void SendNotificationToUser(UserProfile userProfile, Service service, Comment comment)
         {
             Notification notification = new Notification
             {
-                Text = $"{userProfile.FirstName} {userProfile.LastName} left a review on {service.BusinessName} with 3.0 rating",
+                Text = $"{userProfile.FirstName} {userProfile.LastName} left a review on {service.BusinessName} with a {comment.rating}.0 rating",
             };
 
             _repositoryManager.Notification.AddNotification(notification);
@@ -281,6 +285,11 @@ namespace Clara.Controllers
                 return value;
             }
    
+        }
+
+        private List<string> formatImage(Service service)
+        {
+            return service.ImageURL.Trim().Split(',').ToList();
         }
 
     }

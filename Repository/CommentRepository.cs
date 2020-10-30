@@ -27,6 +27,7 @@ namespace Clara.Repository
             return FindByCondition(c => c.ServiceId == serviceId)
                   .Include(c => c.User)
                   .OrderByDescending(e => e.Timestamp)
+                  .Take(5)
                   .ToList();
         }
 
@@ -40,10 +41,11 @@ namespace Clara.Repository
         {
             return FindByCondition(c => c.Service.UserId.Equals(userId))
                 .Include(c => c.User)
+                .Take(5)
                 .ToList();
         }
 
-        public IEnumerable<double> GetTotalServiceRating(Guid serviceId)
+        public IEnumerable<int> GetTotalServiceRating(Guid serviceId)
         {
             return FindByCondition(c => c.ServiceId.Equals(serviceId))
                 .Select(c => c.rating)
