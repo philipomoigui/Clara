@@ -42,5 +42,12 @@ namespace Clara.Repository
                 .Include(c => c.User)
                 .ToList();
         }
+
+        public IEnumerable<double> GetTotalServiceRating(Guid serviceId)
+        {
+            return FindByCondition(c => c.ServiceId.Equals(serviceId))
+                .Select(c => c.rating)
+                .ToList();
+        }
     }
 }

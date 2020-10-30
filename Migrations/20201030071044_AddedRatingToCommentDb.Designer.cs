@@ -4,14 +4,16 @@ using Clara.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Clara.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201030071044_AddedRatingToCommentDb")]
+    partial class AddedRatingToCommentDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,8 +146,8 @@ namespace Clara.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<double>("rating")
-                        .HasColumnType("float");
+                    b.Property<int>("rating")
+                        .HasColumnType("int");
 
                     b.HasKey("CommentId");
 
@@ -280,7 +282,7 @@ namespace Clara.Migrations
                     b.HasData(
                         new
                         {
-                            ServiceId = new Guid("d2355991-e5dc-4111-844f-94bcabb6b8be"),
+                            ServiceId = new Guid("6fae46c3-b0cf-41dd-827e-1ba6e8f04e5a"),
                             AddressLine = "21, barr. xpress omoigui strt",
                             BusinessEmail = "philo@gmail.com",
                             BusinessName = "Philo Inc",
@@ -292,7 +294,7 @@ namespace Clara.Migrations
                         },
                         new
                         {
-                            ServiceId = new Guid("c60756e2-9f40-4521-b5f6-88e9983faaaa"),
+                            ServiceId = new Guid("ec481a32-0964-441e-8686-3f9f1460279f"),
                             AddressLine = "11, Sangotedo strt",
                             BusinessEmail = "dadesola@gmail.com",
                             BusinessName = "Dade Designs",
@@ -304,7 +306,7 @@ namespace Clara.Migrations
                         },
                         new
                         {
-                            ServiceId = new Guid("6f2f796f-9bcd-45e5-bd7c-ea983c4e2ef6"),
+                            ServiceId = new Guid("f005527c-c337-4a98-a8cf-6ef249f607e0"),
                             AddressLine = "115, barr. xpress omoigui strt",
                             BusinessEmail = "SholpeDes@gmail.com",
                             BusinessName = "Shola Catering",

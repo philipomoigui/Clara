@@ -158,7 +158,7 @@ namespace Clara.Controllers
             var userId = _userManager.GetUserId(User);
 
             if (service == null)
-                return NotFound();
+                return View("Notfound");
 
             //Random Services
             var services = _repositoryManager.Service.GetAllService()
@@ -169,12 +169,16 @@ namespace Clara.Controllers
             //Comments
             var comments = _repositoryManager.Comment.GetComments(serviceId).ToList();
 
+            //Rating
+            var totalRating = TotalRating(serviceId);
+
             DetailsViewModel model = new DetailsViewModel
             {
                 Service = service,
                 RandomServices = services,
                 Comments = comments,
-                Amenities = formatAmenties(service)
+                Amenities = formatAmenties(service),
+                Rating = totalRating
             };
 
             //Bookmark
@@ -187,7 +191,19 @@ namespace Clara.Controllers
             return View(model);
         }
 
+        private double TotalRating(Guid serviceId)
+        {
+            var ratings = _repositoryManager.Comment.GetTotalServiceRating(serviceId);
+            double total = 0;
+            foreach (var rating in ratings)
+            {
+                total += rating;
+            }
+            return total = total / ratings.Count();
+        }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Details(DetailsViewModel model)
         {
             var userProfile = _repositoryManager.UserProfile.GetUserProfile(model.UserId);

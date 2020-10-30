@@ -7,10 +7,11 @@
     var reviewCount = Model.Comments.Count > 0 ? $"{Model.Comments.Count} Review(s)" : "No reviews yet";
     var bookmarked = Model.isBookmarked == true ? "Bookmarked" : "Bookmark This Service";
     var commentMessage = ViewBag.CommentMessage ?? "";
+    var rating = Convert.ToInt32(Model.Rating);
 }
 
 <!-- Hero Section-->
-<section class="pt-7 pb-5 d-flex align-items-end dark-overlay bg-cover" style="background-image: url('../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/photo/restaurant-1515164783716-8e6920f3e77c.jpg');">
+<section class="pt-7 pb-5 d-flex align-items-end dark-overlay bg-cover" style="background-image: url('http://d19m59y37dris4.cloudfront.net/directory/1-5/img/photo/restaurant-1515164783716-8e6920f3e77c.jpg');">
     <div class="container overlay-content">
         <div class="d-flex justify-content-between align-items-start flex-column flex-lg-row align-items-lg-end">
             <div class="text-white mb-4 mb-lg-0">
@@ -20,16 +21,18 @@
                 @*<p class="text-uppercase">Posted By @Model.Service.User.UserProfile.FirstName</p>*@
                 <p class="mb-0 d-flex align-items-center">
 
-                    @{ for (var i = 1; i <= 3; i++)
-                                    {
-                        <i class="fa fa-xs fa-star text-primary"></i> }
-
-                                    if (3 < 5)
-                                    {
-                                        for (var i = 1; i <= 5 - 3; i++)
-                                        {
-                        <i class="fa fa-xs fa-star text-gray-100"></i> }
-                                    } }
+                    @{ for (var i = 1; i <= rating; i++)
+                        {
+                        <i class="fa fa-xs fa-star text-primary"></i> 
+                        
+                        }
+                            if (rating < 5)
+                            {
+                                for (var i = 1; i <= 5 - rating; i++)
+                                {
+                                    <i class="fa fa-xs fa-star text-gray-100"></i>
+                                 }
+                            } }
                     @reviewCount
                 </p>
             </div>
@@ -91,7 +94,16 @@
                             <div class="media-body">
                                 <h6 class="mt-2 mb-1">@comment.User.Email</h6>
                                 <div class="mb-2">
-                                    <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
+                                    @{ for (var i = 1; i <= comment.rating; i++)
+                                        {
+                                <i class="fa fa-xs fa-star text-primary"></i> }
+                                                if (comment.rating < 5)
+                                                {
+                                                    for (var i = 1; i <= 5 - comment.rating; i++)
+                                                    {
+                                <i class="fa fa-xs fa-star text-gray-500"></i> }
+                                                } }
+                                    @*<i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>*@
                                 </div>
                                 <p class="text-muted text-sm">@comment.Message</p>
                             </div>
@@ -251,11 +263,12 @@
                             <div class="row">
 
                                 @foreach (var service in Model.RandomServices)
-                                {
-                                    <div class="col-md-3 mb-3 w-100 h-100">
-                                        <div class="card h-100 border-0 shadow">
-                                            <div class="card-img-top overflow-hidden dark-overlay bg-cover" style="background-image: url(../../wwwroot/img/pexels-dennis-perreault-4030087.jpg);min-height: 200px;">
-                                                <a class="tile-link" href="detail.html"></a>
+                                {<!-- venue item-->
+                                    <div class="col-sm-6 col-xl-4 mb-5 hover-animate" data-marker-id="59c0c8e33b1527bfe2abaf92">
+                                        <div class="card border-0 shadow">
+                                            <div class="card-img-top overflow-hidden dark-overlay bg-cover">
+                                                <img src="~/img/listing/list-4.jpg" class="card-img" alt="Alternate Text" />
+                                                <a class="tile-link" asp-action="Details" asp-controller="Service" asp-route-serviceId="@service.ServiceId" asp-route-categoryId="@service.CategoryId"></a>
                                                 <div class="card-img-overlay-bottom z-index-20">
                                                     <h4 class="text-white text-shadow">@service.BusinessName</h4>
                                                     <p class="mb-2 text-xs">
@@ -263,7 +276,7 @@
                                                     </p>
                                                 </div>
                                                 <div class="card-img-overlay-top d-flex justify-content-between align-items-center">
-                                                    <div class="badge badge-transparent badge-pill px-3 py-2">Café</div><a class="card-fav-icon position-relative z-index-40" href="javascript: void();">
+                                                    <div class="badge badge-transparent badge-pill px-3 py-2">@service.Category.CategoryName</div><a class="card-fav-icon position-relative z-index-40" href="javascript: void();">
                                                         <svg class="svg-icon text-white">
                                                             <use xlink:href="#heart-1"> </use>
                                                         </svg>
@@ -271,10 +284,11 @@
                                                 </div>
                                             </div>
                                             <div class="card-body">
-                                                <p class="text-sm text-muted mb-3">@service</p>
-                                                <p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">Matt Damon</a></p>
+                                                <p class="text-sm text-muted mb-3">@service.AddressLine</p>
+                                                <p class="text-sm text-muted mb-3">@service.PhoneNumber</p>
+                                                @*<p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">@service.User.UserProfile.FirstName @service.User.UserProfile.LastName</a></p>*@
                                                 <p class="text-sm mb-0">
-                                                    <a class="mr-1" href="#">@service.Category.CategoryName,</a><a class="mr-1" href="#">Ex,</a><a class="mr-1" href="#">Eiusmod</a>
+                                                    <a class="mr-1" href="#">@service.Category.CategoryName,</a><a class="mr-1" href="#">Contemporary</a>
                                                 </p>
                                             </div>
                                         </div>
@@ -283,81 +297,7 @@
 
                             </div>
                         </div>
-                        <div class="carousel-item">
-                            <div class="row">
-
-                                <div class="col-md-4 mb-3">
-                                    <div class="card">
-                                        <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1532771098148-525cefe10c23?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3f317c1f7a16116dec454fbc267dd8e4">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Special title treatment</h4>
-                                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card">
-                                        <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1532715088550-62f09305f765?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=ebadb044b374504ef8e81bdec4d0e840">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Special title treatment</h4>
-                                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card">
-                                        <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=0754ab085804ae8a3b562548e6b4aa2e">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Special title treatment</h4>
-                                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row">
-
-                                <div class="col-md-4 mb-3">
-                                    <div class="card">
-                                        <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=ee8417f0ea2a50d53a12665820b54e23">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Special title treatment</h4>
-                                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card">
-                                        <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1532777946373-b6783242f211?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=8ac55cf3a68785643998730839663129">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Special title treatment</h4>
-                                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card">
-                                        <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1532763303805-529d595877c5?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=5ee4fd5d19b40f93eadb21871757eda6">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Special title treatment</h4>
-                                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>

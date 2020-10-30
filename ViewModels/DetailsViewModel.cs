@@ -17,7 +17,7 @@ namespace Clara.ViewModels
         public string Message { get; set; }
 
         [Required]
-        public string Rating { get; set; }
+        public double Rating { get; set; }
         public DateTime Timestamp { get; set; } = DateTime.UtcNow;
         public string UserId { get; set; }
         public Guid ServiceId { get; set; }
