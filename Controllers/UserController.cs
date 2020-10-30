@@ -158,7 +158,7 @@ namespace Clara.Controllers
 
                 if (result.Succeeded)
                 {
-                    UserProfile userProfile = new UserProfile();
+                    UserProfile userProfile = _repositoryManager.UserProfile.GetUserProfile(user.Id);
                     userProfile.PasswordChangeDate = model.DateChanged;
 
                     _repositoryManager.UserProfile.UpdateUserProfile(userProfile);
@@ -169,9 +169,10 @@ namespace Clara.Controllers
                     var text = "Your Password was successfully updated";
 
                     SendNotificationToUser(text, user.Id);
+                    await _repositoryManager.saveAsync();
 
                     TempData["SuccessMessage"] = "Password Updated Successfully";
-                    RedirectToAction(nameof(Security));
+                    return RedirectToAction(nameof(Security));
                 }
 
                 foreach(var error in result.Errors)
@@ -226,13 +227,12 @@ namespace Clara.Controllers
 
                     _repositoryManager.Bookmark.AddToBookmark(bookmark);
                     await _repositoryManager.saveAsync();
-                    message = "This service has been added you your bookmark";
+                    message = "This service has been added to your bookmark";
 
                     var text = $"Someone bookmarked your {service.BusinessName} Listing!";
                     var userIdNot = service.User.Id;
 
                     SendNotificationToUser(text, userIdNot);
-
                     await _repositoryManager.saveAsync();
 
                     await _hubContext.Clients.All.SendAsync("displayNotification", "");
@@ -287,6 +287,8 @@ namespace Clara.Controllers
         {
             var notification = new Notification();
             notification.Text = text;
+
+            _repositoryManager.Notification.AddNotification(notification);
 
             NotificationApplicationUser userNotification = new NotificationApplicationUser();
             userNotification.NotificationId = notification.NotificationId;

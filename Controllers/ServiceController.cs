@@ -198,39 +198,38 @@ namespace Clara.Controllers
             {
                 var hasUserComment = _repositoryManager.Comment.HasUserComment(model.UserId, model.ServiceId);
 
-                    Comment comment = new Comment
-                    {
-                        Message = model.Message,
-                        Timestamp = model.Timestamp,
-                        UserId = model.UserId,
-                        ServiceId = model.ServiceId
-                    };
+               var comment =  _mapper.Map<Comment>(model);
 
-                    _repositoryManager.Comment.AddComment(comment);
+                _repositoryManager.Comment.AddComment(comment);
 
-                    Notification notification = new Notification
-                    {
-                        Text = $"{userProfile.FirstName} {userProfile.LastName} left a review on {service.BusinessName} with 3.0 rating",
-                    };
+                SendNotificationToUser(userProfile, service);
 
-                    _repositoryManager.Notification.AddNotification(notification);
-    
-                    NotificationApplicationUser userNotification = new NotificationApplicationUser();
-                    userNotification.NotificationId = notification.NotificationId;
-                    userNotification.UserId = service.User.Id;
+                await _repositoryManager.saveAsync();
+                await _hubContext.Clients.All.SendAsync("displayNotification", "");
 
-                    _repositoryManager.UserNotification.AddUserNotification(userNotification);
-
-                    await _repositoryManager.saveAsync();
-                    await _hubContext.Clients.All.SendAsync("displayNotification", "");
-
-                    return RedirectToAction(nameof(Details), new { serviceId = model.ServiceId, categoryId = model.CategoryId });
+                return RedirectToAction(nameof(Details), new { serviceId = model.ServiceId, categoryId = model.CategoryId });
             }
 
             return View(model);
         }
 
-       private string ImagesUpload(CreateServiceViewModel model)
+        private void SendNotificationToUser(UserProfile userProfile, Service service)
+        {
+            Notification notification = new Notification
+            {
+                Text = $"{userProfile.FirstName} {userProfile.LastName} left a review on {service.BusinessName} with 3.0 rating",
+            };
+
+            _repositoryManager.Notification.AddNotification(notification);
+
+            NotificationApplicationUser userNotification = new NotificationApplicationUser();
+            userNotification.NotificationId = notification.NotificationId;
+            userNotification.UserId = service.User.Id;
+
+            _repositoryManager.UserNotification.AddUserNotification(userNotification);
+        }
+
+        private string ImagesUpload(CreateServiceViewModel model)
         {
             string allFileName = string.Empty;
 
@@ -254,8 +253,18 @@ namespace Clara.Controllers
 
         private List<string> formatAmenties(Service service)
         {
-            var amenities = service.Amenities.Trim().Split(",");
-            return amenities.ToList();
+            var amenities = new string[] { };
+            if (service.Amenities.Contains(','))
+            {
+                amenities = service.Amenities.Trim().Split(",");
+                return amenities.ToList();
+            } else
+            {
+                List<string> value = new List<string>();
+                value.Add(service.Amenities);
+                return value;
+            }
+   
         }
 
     }

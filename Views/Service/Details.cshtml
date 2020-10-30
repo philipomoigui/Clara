@@ -87,7 +87,7 @@
                     @foreach (var comment in Model.Comments)
                     {
                         <div class="media d-block d-sm-flex review">
-                            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-8.jpg" alt="Padmé Amidala"><span class="text-uppercase text-muted text-sm">@comment.Timestamp.ToString("MMM") @comment.Timestamp.Year</span></div>
+                            <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="~/img/Avatar/default-avatar.jpg" alt=""><span class="text-uppercase text-muted text-sm">@comment.Timestamp.ToString("MMM") @comment.Timestamp.Year</span></div>
                             <div class="media-body">
                                 <h6 class="mt-2 mb-1">@comment.User.Email</h6>
                                 <div class="mb-2">
@@ -98,17 +98,7 @@
                         </div>
                      }
 
-            
-                    <div class="media d-block d-sm-flex review">
-                        <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="../../../d19m59y37dris4.cloudfront.net/directory/1-5/img/avatar/avatar-4.jpg" alt="Jabba Hut"><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
-                        <div class="media-body">
-                            <h6 class="mt-2 mb-1">Jabba Hut</h6>
-                            <div class="mb-2">
-                                <i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
-                            </div>
-                            <p class="text-muted text-sm">Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.     </p>
-                        </div>
-                    </div>
+      
                     <div class="py-5">
                         <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview">Leave a review</button>
                         <div class="collapse mt-4" id="leaveReview">
@@ -119,31 +109,33 @@
                                 <input type="hidden" asp-for="CategoryId" value="@Model.Service.CategoryId" />
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <div class="form-group">
+                                        @*<div class="form-group">
                                             <label class="form-label" for="name">Your name *</label>
                                             <input class="form-control" type="text" name="name" id="name" placeholder="Enter your name">
-                                        </div>
+                                        </div>*@
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <div class="form-group">
                                             <label class="form-label" for="rating">Your rating *</label>
-                                            <select class="custom-select focus-shadow-0" name="rating" id="rating">
+                                            <select asp-for="Rating" class="custom-select focus-shadow-0" name="rating" id="rating">
                                                 <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
                                                 <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>
                                                 <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>
                                                 <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2/5)</option>
                                                 <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1/5)</option>
                                             </select>
+                                            <span asp-validation-for="Rating" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                @*<div class="form-group">
                                     <label class="form-label" for="email">Your email *</label>
                                     <input class="form-control" type="email" name="email" id="email" placeholder="Enter your  email">
-                                </div>
+                                </div>*@
                                 <div class="form-group">
                                     <label class="form-label" asp-for="Message">Review *</label>
                                     <textarea class="form-control" rows="4" asp-for="Message" id="review" placeholder="Enter your review" required="required"></textarea>
+                                    <span asp-validation-for="Message" class="text-danger"></span>
                                 </div>
                                 <button class="btn btn-primary" type="submit">Post review</button>
                                 <span class="text-danger">@commentMessage</span>
@@ -260,33 +252,34 @@
 
                                 @foreach (var service in Model.RandomServices)
                                 {
-                    <div class="col-md-3 mb-3 w-100 h-100">
-                        <div class="card h-100 border-0 shadow">
-                            <div class="card-img-top overflow-hidden dark-overlay bg-cover" style="background-image: url(https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698);min-height: 200px;">
-                                <a class="tile-link" href="detail.html"></a>
-                                <div class="card-img-overlay-bottom z-index-20">
-                                    <h4 class="text-white text-shadow">Take That</h4>
-                                    <p class="mb-2 text-xs">
-                                        <i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-gray-300"></i>
-                                    </p>
-                                </div>
-                                <div class="card-img-overlay-top d-flex justify-content-between align-items-center">
-                                    <div class="badge badge-transparent badge-pill px-3 py-2">Café</div><a class="card-fav-icon position-relative z-index-40" href="javascript: void();">
-                                        <svg class="svg-icon text-white">
-                                            <use xlink:href="#heart-1"> </use>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <p class="text-sm text-muted mb-3"> Cillum sunt reprehenderit ea non irure veniam dolore commodo labore fugiat est consequat velit. Cupidatat nisi qui ad si...</p>
-                                <p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">Matt Damon</a></p>
-                                <p class="text-sm mb-0">
-                                    <a class="mr-1" href="#">Nisi,</a><a class="mr-1" href="#">Ex,</a><a class="mr-1" href="#">Eiusmod</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>}
+                                    <div class="col-md-3 mb-3 w-100 h-100">
+                                        <div class="card h-100 border-0 shadow">
+                                            <div class="card-img-top overflow-hidden dark-overlay bg-cover" style="background-image: url(../../wwwroot/img/pexels-dennis-perreault-4030087.jpg);min-height: 200px;">
+                                                <a class="tile-link" href="detail.html"></a>
+                                                <div class="card-img-overlay-bottom z-index-20">
+                                                    <h4 class="text-white text-shadow">@service.BusinessName</h4>
+                                                    <p class="mb-2 text-xs">
+                                                        <i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-gray-300"></i>
+                                                    </p>
+                                                </div>
+                                                <div class="card-img-overlay-top d-flex justify-content-between align-items-center">
+                                                    <div class="badge badge-transparent badge-pill px-3 py-2">Café</div><a class="card-fav-icon position-relative z-index-40" href="javascript: void();">
+                                                        <svg class="svg-icon text-white">
+                                                            <use xlink:href="#heart-1"> </use>
+                                                        </svg>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="text-sm text-muted mb-3">@service</p>
+                                                <p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">Matt Damon</a></p>
+                                                <p class="text-sm mb-0">
+                                                    <a class="mr-1" href="#">@service.Category.CategoryName,</a><a class="mr-1" href="#">Ex,</a><a class="mr-1" href="#">Eiusmod</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
 
                             </div>
                         </div>
