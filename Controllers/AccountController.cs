@@ -46,35 +46,47 @@ namespace Clara.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+
+            try
             {
-                var user = new ApplicationUser
+                if (ModelState.IsValid)
                 {
-                    Email = model.Email,
-                    UserName = model.Email
-                };
+                    var user = new ApplicationUser
+                    {
+                        Email = model.Email,
+                        UserName = model.Email
+                    };
 
-                var result = await _userManager.CreateAsync(user, model.Password);
+                    var result = await _userManager.CreateAsync(user, model.Password);
 
-                if (result.Succeeded)
-                {
-                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+                    if (result.Succeeded)
+                    {
+                        var userId = user.Id;
 
-                    var conformationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
+                        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
-                    await _emailSender.sendEmailAsync(model.Email, "Confirm Your Email", $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(conformationLink)}'> Clicking Here </a>");
-                    
-                    await AddIdentityToUserProfile(model, model.Email);
+                        var conformationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
 
-                    return RedirectToAction("Success", "Account");
-                }
+                        await _emailSender.sendEmailAsync(model.Email, "Confirm Your Email", $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(conformationLink)}'> Clicking Here </a>");
 
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
+                        await AddIdentityToUserProfile(model, model.Email);
+
+                        return RedirectToAction("Success", "Account");
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
                 }
             }
+            catch (Exception)
+            {
+                return View("Error");
+                throw;
+            }
+
             return View(model);
         }
 
