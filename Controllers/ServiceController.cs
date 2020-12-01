@@ -41,7 +41,6 @@ namespace Clara.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public IActionResult Create()
         {
             CreateServiceViewModel model = new CreateServiceViewModel();
