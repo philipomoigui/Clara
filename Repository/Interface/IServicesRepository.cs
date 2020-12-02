@@ -17,6 +17,7 @@ namespace Clara.Repository.Interface
         IEnumerable<Service> GetPopularCategory(int categoryId);
         public IEnumerable<Service> GetUSerServices(string userId);
         public IEnumerable<Service> GetSearchResult(string search);
+        public IEnumerable<Service> GetServicesBySearch(string search);
         public IEnumerable<Service> GetServicesByCategory(string category);
         public IEnumerable<Service> GetServicesByLocation(string location);
         public IEnumerable<Service> GetServicesByLocation(string category, string location);

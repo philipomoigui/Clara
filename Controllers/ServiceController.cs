@@ -117,7 +117,7 @@ namespace Clara.Controllers
                     .Select(service => _mapper.Map<ServicesViewModel>(service))
                     .ToList();
 
-                serviceTop = $"{category} in {locationIncluded}";
+                serviceTop = $"{category} in {locationIncluded}, with search: {search}";
             }
 
             else if (!string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(location))
@@ -144,6 +144,14 @@ namespace Clara.Controllers
                     .ToList();
 
                 serviceTop = $"Services In {location}";
+            }
+            else if (!string.IsNullOrEmpty(search))
+            {
+                services = _repositoryManager.Service.GetServicesBySearch(search)
+                    .Select(service => _mapper.Map<ServicesViewModel>(service))
+                    .ToList();
+
+                serviceTop = $"Service: {search}";
             }
             else
             {

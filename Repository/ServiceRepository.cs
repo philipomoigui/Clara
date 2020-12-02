@@ -41,8 +41,9 @@ namespace Clara.Repository
             return FindByCondition(s => s.Category.CategoryName.Equals(category) && (s.City.Equals(location) || s.State.Equals(location)) && s.BusinessName.Contains(search))
                 .Include(s => s.Category)
                 .Include(s => s.User)
+                .ThenInclude(s => s.UserProfile)
                 .ToList();
-            
+
         }
 
         public async Task<Service> GetServiceById(Guid serviceId)
@@ -82,26 +83,35 @@ namespace Clara.Repository
             return FindByCondition(s => s.City.Contains(location) || s.State.Contains(location))
                 .Include(s => s.Category)
                 .Include(s => s.User)
-                .Include(s => s.UserProfile)
+                .ThenInclude(s => s.UserProfile)
+                .ToList();
+        }
+
+        public IEnumerable<Service> GetServicesBySearch(string search)
+        {
+            return FindByCondition(s => s.BusinessName.Contains(search))
+                .Include(s => s.Category)
+                .Include(s => s.User)
+                .ThenInclude(s => s.UserProfile)
                 .ToList();
         }
 
         public IEnumerable<Service> GetUSerServices(string userId)
         {
             return FindByCondition(u => u.UserId == userId)
-             .Include(s => s.Category)
-            .Include(s => s.User)
-            .ThenInclude(s => s.UserProfile)
-            .OrderBy(s => s.BusinessName)
-            .ToList();
+                .Include(s => s.Category)
+                .Include(s => s.User)
+                .ThenInclude(s => s.UserProfile)
+                .OrderBy(s => s.BusinessName)
+                .ToList();
         }
 
         public IEnumerable<Service> GetPopularCategory(int categoryId)
         {
             return FindByCondition(s => s.CategoryId.Equals(categoryId))
-                 .Include(s => s.Category)
-            .Include(s => s.User)
-            .ThenInclude(s => s.UserProfile)
+                .Include(s => s.Category)
+                .Include(s => s.User)
+                .ThenInclude(s => s.UserProfile)
   
                  .OrderBy(s => Guid.NewGuid())
                  .Take(6)

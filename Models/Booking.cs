@@ -15,7 +15,7 @@ namespace Clara.Models
         public DateTime Date { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public string ExpectedGuests { get; set; }
+        public int ExpectedGuests { get; set; }
         public string AdditionalDetails { get; set; }
     }
 }

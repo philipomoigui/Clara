@@ -79,12 +79,12 @@ namespace Clara.Controllers
                 await _hubContext.Clients.All.SendAsync("displayNotification", "");
 
                 await _emailSender.sendEmailAsync(model.Email, "Listing Successfully Booked", $"Hello {model.FirstName}, we are glad to inform you that the service {service.BusinessName}, you requested to book has been successfully booked <br/> </br> You will be contacted with further details shortly.");
-                await _emailSender.sendEmailAsync(service.User.Email, $"Your service {service.BusinessName} was just successfully booked!", "Hello, <br/> find attached below the details of the user that recently just booked your service. We hope you adhere to our User policy while dealing with Users.");
+                await _emailSender.sendEmailAsync(service.User.Email, $"Your service {service.BusinessName} was just successfully booked!", "Hello, <br/> find attached below the details of the user that recently just booked your service. We hope you adhere to our User Policies while dealing with Users.");
 
                 return RedirectToAction(nameof(Success));
             }
 
-            return View();
+            return View(model);
         }
 
         public IActionResult Success()
