@@ -61,7 +61,7 @@
                     <div class="col-sm-6 col-xl-4 mb-5 hover-animate" data-marker-id="59c0c8e33b1527bfe2abaf92">
                         <div class="card border-0 shadow">
                             <div class="card-img-top overflow-hidden dark-overlay bg-cover">
-                                <img src="~/img/listing/list-4.jpg" class="card-img" alt="Alternate Text" />
+                                <img src="~/uploads/@service.ImageUrl.Trim().Split(',')[1]" class="card-img" alt="Alternate Text" />
                                 <a class="tile-link" asp-action="Details" asp-controller="Service" asp-route-serviceId="@service.ServiceId" asp-route-categoryId="@service.CategoryId"></a>
                                 <div class="card-img-overlay-bottom z-index-20">
                                     <h4 class="text-white text-shadow">@service.BusinessName</h4>

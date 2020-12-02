@@ -99,16 +99,27 @@ namespace Clara.Controllers
             if (category == "Select Category")
                 category = null;
 
+            SearchParameters(category, location, search, out services, out serviceTop, locationIncluded);
 
+
+            ViewBag.servicesTop = serviceTop;
+            ViewBag.ServiceCount = services.Count();
+            ViewBag.CategoryList = categoryList;
+
+            return View(ServicesPagination<ServicesViewModel>.Create(services, pageSize, pageNumber ?? 1));
+        }
+
+        private void SearchParameters(string category, string location, string search, out List<ServicesViewModel> services, out string serviceTop, string locationIncluded)
+        {
             if (!string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(location) && !string.IsNullOrEmpty(search))
             {
                 services = _repositoryManager.Service.GetServicesByLocationAndSearch(category, location, search)
                     .Select(service => _mapper.Map<ServicesViewModel>(service))
                     .ToList();
-                
-                    serviceTop = $"{category} in {locationIncluded}";
-            } 
-            
+
+                serviceTop = $"{category} in {locationIncluded}";
+            }
+
             else if (!string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(location))
             {
                 services = _repositoryManager.Service.GetServicesByLocation(category, location)
@@ -125,7 +136,7 @@ namespace Clara.Controllers
                     .ToList();
 
                 serviceTop = $"{category} Services";
-            } 
+            }
             else if (!string.IsNullOrEmpty(location))
             {
                 services = _repositoryManager.Service.GetServicesByLocation(location)
@@ -142,14 +153,7 @@ namespace Clara.Controllers
 
                 serviceTop = "All Services";
             }
-
-            ViewBag.servicesTop = serviceTop;
-            ViewBag.ServiceCount = services.Count();
-            ViewBag.CategoryList = categoryList;
-
-            return View(ServicesPagination<ServicesViewModel>.Create(services, pageSize, pageNumber ?? 1));
         }
-
 
         [HttpGet]
         public async  Task<IActionResult> Details(Guid serviceId, int categoryId)
