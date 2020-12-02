@@ -27,8 +27,13 @@ namespace Clara.Extension_Methods
             var hasher = new PasswordHasher<ApplicationUser>();
 
             modelBuilder.Entity<ApplicationUser>().HasData(
-                new ApplicationUser { Email = "Test@mail.com", NormalizedUserName= "Test@mail.com", UserName = "Test@mail.com", EmailConfirmed = true, Id = Guid.NewGuid().ToString(), PasswordHash= hasher.HashPassword(null, "Test123")}
+                new ApplicationUser { Email = "Test@mail.com", NormalizedUserName= "Test@mail.com", UserName = "Test@mail.com", EmailConfirmed = true, Id = "1a2d2414-3baa-473b-baf2-0a3dd5e6a6e2", PasswordHash= hasher.HashPassword(null, "Test123")}
                 );
+
+            modelBuilder.Entity<UserProfile>().HasData(
+
+                new UserProfile { LastName = "Test", FirstName = "Just", UserId = "1a2d2414-3baa-473b-baf2-0a3dd5e6a6e2", Email = "Test@mail.com" }
+                ) ;
         }
     }
 }
