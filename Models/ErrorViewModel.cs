@@ -1,5 +1,3 @@
-using System;
-
 namespace Clara.Models
 {
     public class ErrorViewModel

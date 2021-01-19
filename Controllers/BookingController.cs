@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Clara.Infrastructure;
 using Clara.Models;
-using Clara.Repository;
 using Clara.Repository.Interface;
 using Clara.Utility;
 using Clara.ViewModels;
